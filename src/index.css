@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Tan+Mon+Cheri&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-cocoa bg-cream;
+  }
+
+  * {
+    @apply antialiased;
+  }
+}
