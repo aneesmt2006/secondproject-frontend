@@ -1,15 +1,222 @@
-@import url('https://fonts.googleapis.com/css2?family=Tan+Mon+Cheri&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+.lato-thin {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+h1 {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lato-bold {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-thin-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.lato-light-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lato-bold-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.lato-black-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===================================
+   🌼 Default Theme (Splash Screen)
+   =================================== */
 @layer base {
-  body {
-    @apply font-sans text-cocoa bg-cream;
+  :root {
+    /* Old theme colors */
+    --background: #fff9e6; /* cream */
+    --foreground: #4b2e05; /* cocoa */
+
+    --card: #ffffff;
+    --card-foreground: #4b2e05;
+    --popover: #ffffff;
+    --popover-foreground: #4b2e05;
+    --primary: #d99a5b;
+    --primary-foreground: #ffffff;
+    --secondary: #f6e8d0;
+    --secondary-foreground: #4b2e05;
+    --muted: #f0e5d0;
+    --muted-foreground: #7c6f57;
+    --accent: #e8caa6;
+    --accent-foreground: #4b2e05;
+    --destructive: #e53935;
+    --destructive-foreground: #ffffff;
+    --border: #e4d8b4;
+    --input: #e4d8b4;
+    --ring: #d99a5b;
+    --radius: 0.75rem;
   }
 
-  * {
-    @apply antialiased;
+  body {
+    @apply bg-[color:var(--background)] text-[color:var(--foreground)];
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+}
+
+/* ===================================
+   💗 Lovable Theme (Dashboard Only)
+   =================================== */
+@layer base {
+  .lovable-theme {
+    --background: 18 100% 95%;
+    --foreground: 15 35% 35%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 15 35% 35%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 15 35% 35%;
+
+    --primary: 15 85% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 20 100% 88%;
+    --secondary-foreground: 15 35% 35%;
+
+    --muted: 20 40% 92%;
+    --muted-foreground: 15 25% 55%;
+
+    --accent: 25 95% 70%;
+    --accent-foreground: 15 35% 35%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 20 30% 88%;
+    --input: 20 30% 88%;
+    --ring: 15 85% 65%;
+
+    --radius: 1rem;
+
+    /* Pregnancy tracker theme colors */
+    --peach-light: 18 100% 95%;
+    --peach: 20 100% 88%;
+    --peach-medium: 22 95% 82%;
+    --coral: 15 85% 65%;
+    --coral-dark: 12 75% 58%;
+
+    /* Gradients */
+    --gradient-peach: linear-gradient(
+      135deg,
+      hsl(18 100% 95%),
+      hsl(22 95% 82%),
+      hsl(25 90% 75%)
+    );
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(20 100% 98%));
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(15 85% 65% / 0.15);
+    --shadow-card: 0 2px 12px -2px hsl(15 60% 70% / 0.12);
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Apply HSL values correctly for Lovable theme */
+  .lovable-theme {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--background));
+  }
+
+  .locked-card {
+    position: relative;
+    opacity: 0.4;
+    pointer-events: none;
+    filter: blur(1px);
+  }
+
+  .locked-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+  }
+}
+
+/* ===================================
+   💫 Utility Classes
+   =================================== */
+@layer utilities {
+  .gradient-peach {
+    background: radial-gradient(
+      circle at center,
+      hsl(24 100% 93%) 0%,
+      /* soft cream in the middle */ hsl(22 95% 82%) 40%,
+      /* light peach */ hsl(18 80% 70%) 100% /* darker peach-orange edges */
+    );
+  }
+
+  .gradient-card {
+    background: linear-gradient(145deg, hsl(0 0% 100%), hsl(20 100% 98%));
+  }
+
+  .shadow-soft {
+    box-shadow: 0 4px 20px -2px hsl(15 85% 65% / 0.15);
+  }
+
+  .shadow-card {
+    box-shadow: 0 2px 12px -2px hsl(15 60% 70% / 0.12);
+  }
+
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

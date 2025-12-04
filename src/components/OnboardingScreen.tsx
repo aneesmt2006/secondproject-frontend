@@ -27,19 +27,19 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   // Onboarding slides content
   const slides: OnboardingSlide[] = [
     {
-      image: '/Gemini_Generated_Image_1u2yy1u2yy1u2yy1.png',
+      image: '/splash1.png',
       title: 'Your Health, Our Priority',
       description:
         'Welcome to your personalized pregnancy journey companion. Receive tailored insights, guidance, and support every step of the way, designed just for you and your baby\'s unique needs.',
     },
     {
-      image: '/Gemini_Generated_Image_1u2yy1u2yy1u2yy1.png',
-      title: 'Track Your Journey',
+      image: '/splash4.png',
+      title: 'What to expect, each Trimester',
       description:
         'Monitor your baby\'s growth, track symptoms, and celebrate milestones together. Stay informed with weekly updates tailored to your stage of pregnancy.',
     },
     {
-      image: '/Gemini_Generated_Image_1u2yy1u2yy1u2yy1.png',
+      image: '/check-health2.png',
       title: 'Expert Support',
       description:
         'Access reliable information, wellness tips, and personalized recommendations from healthcare experts. We\'re here to support you every step of the way.',
@@ -63,7 +63,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div className=" kooy min-h-screen bg-cream flex flex-col">
       {/* Skip button */}
       <div className="w-full px-6 py-4 flex justify-end">
         <button
@@ -77,16 +77,17 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       {/* Main content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 pb-12">
         {/* Character illustration */}
-        <div className="mb-8 transition-opacity duration-500 ease-in-out">
-          <img
-            src={slides[currentSlide].image}
-            alt="Pregnancy companion illustration"
-            className="w-64 h-64 md:w-80 md:h-80 object-contain"
-          />
-        </div>
+       <div className="mb-8 transition-opacity duration-500 ease-in-out">
+  <img
+    src={slides[currentSlide].image}
+    alt="Pregnancy companion illustration"
+    className="w-64 h-64 md:w-80 md:h-80 object-contain scale-110"
+  />
+</div>
+
 
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-cocoa text-center mb-6 leading-tight max-w-2xl">
+        <h1 className=" text-3xl md:text-4xl lg:text-5xl font-bold text-cocoa text-center mb-6 leading-tight max-w-2xl">
           {slides[currentSlide].title}
         </h1>
 

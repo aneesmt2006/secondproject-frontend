@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   💙 LOVABLE DOCTOR DASHBOARD THEME (SCOPED)
+   =========================================================
+   - Pure Lovable style
+   - Wrapped under `.doctor-theme` class
+   - Won’t affect default theme
+   ========================================================= */
+
+@layer base {
+  .doctor-theme {
+    --background: 220 25% 97%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 95%;
+    --secondary-foreground: 220 15% 25%;
+
+    --muted: 220 15% 93%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 265 80% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 217 91% 60%;
+    --radius: 1.5rem;
+
+    /* Glassmorphism */
+    --glass-bg: 255 255 255 / 0.7;
+    --glass-border: 255 255 255 / 0.3;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
+    /* Medical Colors */
+    --medical-success: 142 71% 45%;
+    --medical-warning: 38 92% 50%;
+    --medical-info: 199 89% 48%;
+
+    /* Gradients */
+    --gradient-bg: linear-gradient(
+      135deg,
+      hsl(220, 25%, 97%) 0%,
+      hsl(230, 35%, 95%) 50%,
+      hsl(240, 30%, 96%) 100%
+    );
+
+    color: hsl(var(--foreground));
+    background: var(--gradient-bg);
+    background-attachment: fixed;
+  }
+
+  .doctor-theme.dark {
+    --background: 220 25% 10%;
+    --foreground: 220 15% 90%;
+    --card: 220 20% 15%;
+    --card-foreground: 220 15% 90%;
+    --popover: 220 20% 15%;
+    --popover-foreground: 220 15% 90%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 220 15% 85%;
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 265 80% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 217 91% 60%;
+    --glass-bg: 31 38 135 / 0.2;
+    --glass-border: 255 255 255 / 0.1;
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    background: linear-gradient(135deg, hsl(220, 25%, 10%), hsl(220, 20%, 15%));
+  }
+
+  /* Scoped base text and background */
+  .doctor-theme * {
+  border-color: hsl(var(--border));
+}
+
+  .doctor-theme {
+    @apply text-foreground;
+  }
+
+  
+}
+
+@layer components {
+  /* Glassmorphism utility classes */
+  .doctor-theme .glass-card {
+    @apply backdrop-blur-md bg-white/40 border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)];
+  }
+
+  .doctor-theme .glass-nav {
+    @apply backdrop-blur-lg bg-white/30 border border-white/50 shadow-[0_8px_32px_0_rgba(31,38,135,0.2)];
+  }
+
+  .doctor-theme .glass-hover {
+    @apply transition-all duration-300 hover:bg-white/50 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] hover:scale-[1.01];
+  }
+
+  .doctor-theme .glass-strong {
+    @apply backdrop-blur-xl bg-white/50 border border-white/70 shadow-[0_8px_32px_0_rgba(31,38,135,0.2)];
+  }
+
+  
+}
+
+/* ===========================================
+   🌟 Fix top background when doctor-theme is in a div
+   =========================================== */
+.doctor-theme {
+  position: relative;
+  isolation: isolate; /* ✅ creates new stacking context safely without clipping popovers */
+}
+
+.doctor-theme::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: -100px;
+  background: linear-gradient(
+    135deg,
+    hsl(220 25% 97%) 0%,
+    hsl(230 35% 95%) 50%,
+    hsl(240 30% 96%) 100%
+  );
+  z-index: -1; /* ✅ keeps background behind everything */
+}
+
+/* ✅ Ensure popovers appear above all */
+.doctor-theme .popover-content,
+[data-radix-popper-content-wrapper] {
+  z-index: 50 !important;
+  border-radius: 1rem;
+  background: white !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+
+.doctor-theme .rdp-day[aria-selected='true'] {
+  transform: scale(1.05);
+  transition: transform 0.15s ease;
+}
+
+.doctor-theme .rdp-day[aria-selected='true']:hover {
+  transform: scale(1.08);
+}
+
+.doctor-theme .rdp-day_today:not([aria-selected='true']) {
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+
+
+

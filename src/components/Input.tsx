@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { Eye,EyeOff } from 'lucide-react';
+import usePasswordToggler from '../hooks/usePasswordToggler';
 /**
  * Input Component
  *
@@ -43,6 +44,13 @@ const Input: React.FC<InputProps> = ({
   icon,
   name,
 }) => {
+
+  const {showPassword,visiblePassword} = usePasswordToggler()
+
+  
+
+  
+  
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {label && (
@@ -58,7 +66,7 @@ const Input: React.FC<InputProps> = ({
           </div>
         )}
         <input
-          type={type}
+          type={showPassword?'text':type}
           name={name}
           value={value}
           onChange={onChange}
@@ -75,6 +83,15 @@ const Input: React.FC<InputProps> = ({
             transition-all duration-200
           `}
         />
+        {type ==='password' && (
+          <button
+          type='button'
+          onClick={visiblePassword}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-lavender"
+          >
+            {showPassword? <Eye size={20}/> : <EyeOff size={20}/>}
+          </button>
+        )}
       </div>
       {error && (
         <p className="text-sm text-wine flex items-center gap-1">

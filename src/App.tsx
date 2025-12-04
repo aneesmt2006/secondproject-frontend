@@ -1,49 +1,92 @@
-import { useState } from 'react';
-import OnboardingScreen from './components/OnboardingScreen';
-import RegistrationForm from './components/RegistrationForm';
+import { useRoutes } from "react-router-dom";
+import LoginPage from "./features/login/pages/LoginPage";
+import OtpVerifcationPage from "./features/otp/pages/otpVerifcationPage";
+import SplashWithRegistration from "./features/registration/pages/splashWithRegistrationPage";
+import DRregistrationPage from "./features/dr.registration/pages/dr.registrationPage";
+import { Toaster } from "sonner";
+import DrloginPage from "./features/dr.login/pages/DrloginPage";
+// import DoctorDemo from "./pages/DoctorDemo";
+import AdminLoginPage from "./features/adminLogin/Pages/LoginPage";
+import AdminMainPage from "./features/adminMain/pages/mainPage";
+import UserDashPage from "./features/userMain/pages/userDashPage";
+import DoctorDashPage from "./features/doctorMain/pages/doctorDashPage";
+import Profile from "./features/userMain/pages/profilePage";
+import ProtectedLayout from "./utils/protectedRoute";
+import DoctorProfile from "./features/doctorMain/pages/DoctorProfilePage";
+import ProtectedLayoutDR from "./utils/protectedRouteDR";
+import  "./services/api/interceptor";
+import BabyInsightsPage from "./features/userMain/pages/BabyInsightsPage";
+import SymptomsPage from "./features/userMain/pages/SymptomsPage";
 
-function App() {
-  const [currentScreen, setCurrentScreen] = useState<'onboarding' | 'registration' | 'main'>('onboarding');
-
-  const handleOnboardingComplete = () => {
-    setCurrentScreen('registration');
-  };
-
-  const handleRegistrationSubmit = (data: any) => {
-    console.log('Registration data:', data);
-    setCurrentScreen('main');
-  };
-
-  const handleGoogleSignUp = () => {
-    console.log('Google sign-up initiated');
-    setCurrentScreen('main');
-  };
-
+const App = () => {
+  
+  const routes = useRoutes([
+    {
+      path:'/',
+      element:<SplashWithRegistration/>
+    },
+    {
+      path:'/login',
+      element:<LoginPage/>
+    },
+    {
+      path:'/otp-verify',
+      element:<OtpVerifcationPage/>
+    },
+    // USER ROUTES * PROTECTED
+    {
+      element:<ProtectedLayout allowedRoles={["user"]}/>,
+      children:[
+        { path:'/dashboard',element:<UserDashPage/>},
+        {path:'/profile',element:<Profile/>},
+        {path:'/dashboard/baby-insights',element:<BabyInsightsPage/>},
+        {path:'/dashboard/symptoms',element:<SymptomsPage/>}
+      ]
+    },
+    // DOCTOR ROUTES * PROTECTED
+    {
+      element:<ProtectedLayoutDR allowedRoles={["doctor"]}/>,
+      children:[
+        {path:'/doctor/dashboard',element:<DoctorDashPage/>},
+        {path:'/doctor/profile',element:<DoctorProfile/>}
+      ]
+    },
+    {
+      path:'/check/dashboard',
+      element:<UserDashPage/>
+    },
+    {
+      path:'/doctor/register',
+      element:<DRregistrationPage/>
+    },
+    {
+      path:'/doctor/login',
+      element:<DrloginPage/>
+    },
+    // {
+    //   path:'/doctor/dashboard',
+    //   element:<DoctorDashPage/>
+    // }
+    {
+      path:'/super-admin/login',
+      element:<AdminLoginPage/>
+    },{
+      path:'/super-admin/dashboard',
+      element:<AdminMainPage/>
+    },
+    {
+      path:'/check/dash',
+      element:<UserDashPage/>
+    }
+   
+  ])
   return (
     <>
-      {currentScreen === 'onboarding' && (
-        <OnboardingScreen onComplete={handleOnboardingComplete} />
-      )}
-      {currentScreen === 'registration' && (
-        <RegistrationForm
-          onSubmit={handleRegistrationSubmit}
-          onGoogleSignUp={handleGoogleSignUp}
-        />
-      )}
-      {currentScreen === 'main' && (
-        <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-cocoa mb-4">
-              Welcome to Your Pregnancy Journey
-            </h1>
-            <p className="text-xl text-lavender">
-              Your personalized companion is ready to support you every step of the way.
-            </p>
-          </div>
-        </div>
-      )}
+    {routes}
+    <Toaster position="top-center" />
     </>
-  );
-}
+  )
+  
+};
 
 export default App;
