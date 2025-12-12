@@ -1,3 +1,4 @@
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, Baby } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -39,6 +40,13 @@ const FetusVisualSection = ({
   fetusWeekData,
   laoding
 }: FetusVisualSectionProps) => {
+  const [imgLoaded, setImgLoaded] = React.useState(false);
+
+  // Reset image loading state when the image source changes
+  React.useEffect(() => {
+    setImgLoaded(false);
+  }, [fetusWeekData?.fetusImage]);
+
   return (
     <AnimatePresence mode="wait" custom={direction}>
       <motion.div
@@ -49,31 +57,41 @@ const FetusVisualSection = ({
         animate="center"
         exit="exit"
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="flex flex-col items-center justify-center py-8"
+        className="flex flex-col items-center justify-center py-8 min-h-[400px]"
       >
         {hasLmp ? (
           <>
             {/* NORMAL FETUS VIEW */}
-           {laoding ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D4A373]"></div>
+            <div className="relative w-full flex justify-center mb-4">
+               {/* Loader - Show when either fetching data OR downloading image */}
+               {(laoding || !imgLoaded) && (
+                  <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  </div>
+               )}
+
+               {/* Image Container - Only show content if data is present (even if loading image) */}
+               {!laoding && fetusWeekData && (
+                 <motion.div
+                   animate={{ y: [0, -10, 0] }}
+                   transition={{
+                     duration: 3,
+                     repeat: Infinity,
+                     ease: "easeInOut",
+                   }}
+                   className={`w-48 h-48 relative transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                 >
+                   <img
+                     src={fetusWeekData.fetusImage}
+                     alt={`Fetus at ${currentWeek} weeks`}
+                     className="w-full h-full object-contain drop-shadow-2xl"
+                     onLoad={() => setImgLoaded(true)}
+                   />
+                 </motion.div>
+               )}
+               {/* Placeholder div to maintain height if totally empty/loading data */}
+               {laoding && <div className="w-48 h-48" />}
             </div>
-          ): <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="w-48 h-48 mb-4 relative"
-            >
-              <img
-                src={fetusWeekData?.fetusImage}
-                alt={`Fetus at ${currentWeek} weeks`}
-                className="w-full h-full object-contain drop-shadow-2xl"
-              />
-            </motion.div>
-        }
 
             <motion.h1 className="text-4xl md:text-5xl font-bold mb-4 flex items-center gap-2">
               <span className="text-[1.8rem] font-bold text-[#8B4513]">

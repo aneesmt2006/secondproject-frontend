@@ -1,22 +1,16 @@
 
 import { toast } from "sonner";
 import { otpVerify, resendOTP } from "../../../services/api/auth.service"
-// import { useAppSelector } from "../../../store/hooks";
-// import { userSelector } from "../../registration/slice/userSlice";
 import OtpInput from "../components/otpInput"
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import {  setUserData, userSelector } from "../../registration/slice/userSlice";
-
-
-
+import { setUserData, userSelector } from "../../registration/slice/userSlice";
 
 const OtpVerifcationPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const statedata = useAppSelector(userSelector)
-  // const selector = useAppSelector(userSelector);
-  // console.log("From OTP apge",selector)
+
   const onVerify = async(code:string) =>{
    
    try {
@@ -24,16 +18,14 @@ const OtpVerifcationPage = () => {
     
    if(response){
     console.log("OTP response-->",response)
-    // dispatch(setUserData(response.data!))
     toast.success(response.message)
-    // localStorage.clear()
-    // selector
+    
     dispatch(setUserData({
       full_name:response.data?.full_name??'',
       email:response.data?.email??'',
       id:response.data?.id??'',
       phone:response.data?.phone??'',
-      role:response.data?.role,
+      role: response.data?.role || 'user',
       lmp:response.data?.lmp??'',
       dateOfBirth:response.data?.dateOfBirth??null,
       accessToken:response.data?.accessToken??'',

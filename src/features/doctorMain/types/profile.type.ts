@@ -7,6 +7,8 @@ export interface CertificatePreview {
 }
 
 export interface ProfileData {
+  doctorId?:string,
+  specialization:string
   experience: string;
   address: string;
   profileImage?: string;
@@ -20,7 +22,8 @@ export interface ProfileData {
 }
 
 export interface drProfile {
-  doctorId?:string
+  doctorId?:string,
+  specialization?:string,
   experience: string;
   address: string;
   profileImageLink?: string;
@@ -40,6 +43,36 @@ export interface drBasicData {
   clinicName: string;
   status?:string
 }
+
+export interface drAppoinmentingData {
+  id:string,
+  fullName: string;
+  email: string;
+  specialization: string;
+  role?: "doctor";
+  clinicName: string;
+  status?:string
+}
+
+
+export interface DoctorBooksSlots {
+    doctorId:string,
+    doctorName?: string,
+    specialization:string,
+    profileImageLink:string,
+    online_fee:string,
+    slots:{time:string,status:string}[],
+    slotDuration:string
+    address:string
+}
+
+export interface DoctorBooksSlotsWithPageCount {
+   doctorSlots:DoctorBooksSlots[],
+   pageCounts:number
+}
+
+
+
 
 export interface IuploadFileResponse {
   fileLink: string;

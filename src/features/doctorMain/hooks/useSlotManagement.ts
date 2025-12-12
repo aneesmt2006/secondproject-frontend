@@ -13,7 +13,7 @@ export const useSlotManagement = () => {
     DAYS.reduce((acc, day) => ({
       ...acc,
       [day]: {
-        enabled: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(day),
+        enabled: ["", "", "", "", ""].includes(day),
         start: "09:00 AM",
         end: "05:00 PM",
         breaks: [],
@@ -38,7 +38,7 @@ export const useSlotManagement = () => {
                   ...newSchedule[day],
                   ...scheduleData[day],
                   breaks: Array.isArray(scheduleData[day].breaks) 
-                    ? scheduleData[day].breaks 
+                    ? scheduleData[day].breaks.filter((b) => b && b.start && b.end) 
                     : []
                 };
               }

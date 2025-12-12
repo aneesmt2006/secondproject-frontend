@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { useGoogleAuthforRoles } from "../../../hooks/useGoogleAuth";
 import { useAppDispatch } from "../../../store/hooks";
 import { setUserData, setUpdateUserField } from "../../registration/slice/userSlice";
-import { getUserProfile } from "../../../services/api/medical.service";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,17 +14,10 @@ const LoginPage = () => {
      let response
      try {
        response =  await loginAccount(email,password);
+      console.log("Login Response Data:", response.data);
       toast.success(response.message);
-      dispatch(setUserData(response.data!))
-
-      try {
-        const profileResponse = await getUserProfile();
-        if (profileResponse.data) {
-          dispatch(setUpdateUserField({ lmp: profileResponse.data.lmp }));
-        }
-      } catch (error) {
-        console.log("Error fetching profile on login:", error);
-      }
+      dispatch(setUserData({ ...response.data!, role: 'user' }))
+      dispatch(setUpdateUserField({ lmp: response.data!.lmp }));
 
       navigate('/dashboard',{replace:true})
      } catch (error) {

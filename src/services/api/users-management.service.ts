@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { fetusForm, SymptomsData } from "../../features/adminMain/types";
-import { drProfile, IuploadFileResponse, ProfileData, SlotData } from "../../features/doctorMain/types/profile.type";
+import {  DoctorBooksSlotsWithPageCount, drAppoinmentingData, drProfile, IuploadFileResponse, ProfileData, SlotData } from "../../features/doctorMain/types/profile.type";
 import { IDoctor } from "../../features/dr.registration/slice/doctorSlice";
 import { APIResponse } from "../types/api.response";
 import { axiosInstance } from "./auth.service";
@@ -12,8 +12,8 @@ export const updateProfileDR = async (data:ProfileData):Promise<APIResponse<IDoc
   return respose.data
 }
 
-export const getDoctor = async():Promise<APIResponse<drProfile>>=>{
-  const response = await axiosInstance.get<APIResponse<drProfile>>('/users/doctor/profile');
+export const getDoctor = async():Promise<APIResponse<ProfileData>>=>{
+  const response = await axiosInstance.get<APIResponse<ProfileData>>('/users/doctor/profile');
   return response.data
 }
 
@@ -142,5 +142,16 @@ export const upsertSlot = async(slotData:SlotData):Promise<APIResponse<SlotData>
 
 export const getSlot = async ():Promise<APIResponse<SlotData>>=>{
     const response = await axiosInstance.get<APIResponse<SlotData>>('/users/doctor/slot')
+    return response.data
+}
+
+// unused api
+export const getAllDoctorAppoinmentData = async():Promise<APIResponse<drAppoinmentingData>>=>{
+    const response = await axiosInstance.get<APIResponse<drAppoinmentingData>>('/users/doctor/profile/allAppoinments')
+    return response.data
+}
+
+export const getAllDoctorsSlots = async (date:string=new Date().toString(),specialization:string="",skip:number):Promise<APIResponse<DoctorBooksSlotsWithPageCount>>=>{
+    const response = await axiosInstance.get<APIResponse<DoctorBooksSlotsWithPageCount>>(`/users/book/slots?skip=${skip}&date=${date}&specialization=${specialization}`)
     return response.data
 }

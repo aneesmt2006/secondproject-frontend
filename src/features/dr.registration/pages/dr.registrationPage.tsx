@@ -37,7 +37,7 @@ const DRregistrationPage = () => {
       const response = await drOTPverify(otp, localStorage.getItem("DRemail")!);
       
       toast.success(response.message);
-      dispatch(setDoctorData(response.data!))
+      dispatch(setDoctorData({ ...response.data!, role: 'doctor' }))
       localStorage.clear();
       navigate("/doctor/dashboard", { replace: true });
       console.log(response);

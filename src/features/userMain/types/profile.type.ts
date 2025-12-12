@@ -3,7 +3,7 @@ import { PregnantProfile } from "../../../common/types/models";
 export type pregnantProfile = PregnantProfile;
 
 export interface updatePayload{
-  lmp: string;
+  lmp?: string;
   isFirstPregnancy: boolean;
   bloodGroup: string;
   height: string;

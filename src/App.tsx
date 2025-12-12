@@ -17,6 +17,7 @@ import ProtectedLayoutDR from "./utils/protectedRouteDR";
 import  "./services/api/interceptor";
 import BabyInsightsPage from "./features/userMain/pages/BabyInsightsPage";
 import SymptomsPage from "./features/userMain/pages/SymptomsPage";
+import AppointmentPage from "./features/userMain/pages/AppointmentPage";
 
 const App = () => {
   
@@ -40,7 +41,8 @@ const App = () => {
         { path:'/dashboard',element:<UserDashPage/>},
         {path:'/profile',element:<Profile/>},
         {path:'/dashboard/baby-insights',element:<BabyInsightsPage/>},
-        {path:'/dashboard/symptoms',element:<SymptomsPage/>}
+        {path:'/dashboard/symptoms',element:<SymptomsPage/>},
+        {path:'/dashboard/appointment',element:<AppointmentPage/>}
       ]
     },
     // DOCTOR ROUTES * PROTECTED
@@ -80,6 +82,8 @@ const App = () => {
     }
    
   ])
+
+ 
   return (
     <>
     {routes}

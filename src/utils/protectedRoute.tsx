@@ -1,6 +1,7 @@
 import { Navigate, Outlet} from "react-router-dom"
 import { userSelector } from "../features/registration/slice/userSlice"
 import { useAppSelector } from "../store/hooks"
+import { BottomTabBar } from "../features/userMain/components/BottomTabBar"
 
 export type  TallowedRoles = "user" | "doctor" | 'admin'
 export interface ProtectedLayoutProps {
@@ -19,7 +20,12 @@ const ProtectedLayout = ({allowedRoles}:ProtectedLayoutProps) =>{
     return <Navigate to='/unauthorized' replace/>
   }
 
-  return <Outlet/>
+  return (
+   <>
+     <Outlet/> 
+     {allowedRoles.includes('user') && (user.lmp && <BottomTabBar/>)}
+   </>
+  )
 }
 
 export default ProtectedLayout

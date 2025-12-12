@@ -24,7 +24,7 @@ const ProfileForm = ({
       className="glass-card rounded-3xl p-6 lg:p-8 space-y-8"
     >
       <h2 className="text-xl font-bold text-foreground mb-6">
-        Update Your Profile
+        Update Your Profile |  You must fill all fields | This form is using for verification 
       </h2>
 
       <ProfileImageSection

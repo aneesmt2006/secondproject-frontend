@@ -11,7 +11,6 @@ import { User, Calendar } from "lucide-react";
 import HeaderSection from "../components/ProfileHeaderSection";
 import ProfileForm from "../components/ProfileForm";
 import SlotTabs from "../components/SlotTabs";
-import { ProfileData } from "../types/profile.type";
 import { getDoctor } from "../../../services/api/users-management.service";
 import useProfileData from "../hooks/useProfileData";
 import { useDoctorProfileSubmit } from "../hooks/useDoctorProfileSubmit";
@@ -36,14 +35,13 @@ const DoctorProfilePage = () => {
 
   const [unavailableDates, setUnavailableDates] = useState<Date[]>([]);
   const [offlineUnavailableDates, setOfflineUnavailableDates] = useState<Date[]>([]);
-  const [, setdrData] = useState<ProfileData>();
 
   useEffect(() => {
     const loadDoctorProfil = async () => {
       try {
         const response = await getDoctor();
         // console.log("Use effect dr data fetched OK-----> ", response);
-        setdrData(response.data);
+        // setdrData(response.data);
         if (response.data) {
           setFormData(response.data);
         }

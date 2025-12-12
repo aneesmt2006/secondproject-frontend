@@ -189,17 +189,17 @@ const OnlineSlotForm = ({ unavailableDates, setUnavailableDates }: OnlineSlotFor
 
                   {/* Breaks Section */}
                   <div className="space-y-3 pl-0 md:pl-4 border-l-2 border-gray-100 ml-2 md:ml-0">
-                    {schedule[day].breaks.map((breakItem, index) => (
+                    {schedule[day].breaks?.map((breakItem, index) => (
                       <div key={index} className="flex flex-wrap items-center gap-4 animate-in fade-in slide-in-from-top-2">
                         <span className="text-sm text-gray-500 w-16">Break {index + 1}</span>
                         <div className="flex items-center gap-2">
                           <TimeSelect
-                            value={breakItem.start}
+                            value={breakItem?.start}
                             onChange={(v) => updateBreak(day, index, "start", v)}
                           />
                           <span className="text-gray-400">-</span>
                           <TimeSelect
-                            value={breakItem.end}
+                            value={breakItem?.end}
                             onChange={(v) => updateBreak(day, index, "end", v)}
                           />
                         </div>

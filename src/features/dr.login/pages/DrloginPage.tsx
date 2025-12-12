@@ -12,7 +12,7 @@ const DrloginPage = () => {
     const onSubmit = async (email:string,password:string) =>{
       try {
          const response =   await drLoginAccount(email,password)
-      dispatch(setDoctorData(response.data!))
+      dispatch(setDoctorData({ ...response.data!, role: 'doctor' }))
       toast.success(response.message)
       navigate('/doctor/dashboard',{replace:true})
       return true

@@ -71,9 +71,9 @@ export default {
       boxShadow: {
         glass: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
       },
-      fontFamily: {
-        'tan-mon-cheri': ['"Tan Mon Cheri"', 'serif'],
-        sans: ['"Tan Mon Cheri"', 'system-ui', 'sans-serif'],
+       fontFamily: {
+        sans: ['"Nunito"', "sans-serif"],
+        nunito: ['"Nunito"', "sans-serif"],
       },
     },
   },

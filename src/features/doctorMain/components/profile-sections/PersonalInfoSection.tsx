@@ -16,6 +16,22 @@ const PersonalInfoSection = ({ formData, errors, handleChange }: PersonalInfoSec
         Personal Information
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div className="space-y-2">
+          <Label htmlFor="specialization">Specialization </Label>
+          <Input
+            id="specialization"
+            type="string"
+            value={formData.specialization}
+            onChange={handleChange}
+            placeholder="eg: Gynecologist | Nutirionist "
+            className="glass-card"
+          />
+          {errors.specialization && (
+            <p className="text-red-500 text-xs">{errors.specialization}</p>
+          )}
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="experience">Experience (Years)</Label>
           <Input
@@ -32,12 +48,12 @@ const PersonalInfoSection = ({ formData, errors, handleChange }: PersonalInfoSec
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="address">Address</Label>
+          <Label htmlFor="address">Your main Role </Label>
           <Textarea
             id="address"
             value={formData.address}
             onChange={handleChange}
-            placeholder="eg: 123 Medical Street, Healthcare City"
+            placeholder="eg: Pregnancy /  childbirth / prenatal / Surgeon"
             className="glass-card min-h-[80px]"
           />
           {errors.address && (

@@ -14,6 +14,7 @@ interface UseProfileDataProps {
 
 const useProfileData = ({ onSubmitCallback }: UseProfileDataProps) => {
   const [formData, setFormData] = useState<ProfileData>({
+    specialization:"",
     experience: "",
     address: "",
     profileImage: "",

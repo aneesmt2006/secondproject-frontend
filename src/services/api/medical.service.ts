@@ -14,6 +14,7 @@ export const updateProfile = async(data:updatePayload):Promise<APIResponse<getUs
 
 export const getUserProfile = async():Promise<APIResponse<pregnantProfile>>=>{
     const response = await axiosInstance.get<APIResponse<pregnantProfile>>('/medical/patient/profile',{withCredentials:true});
+    
     return response.data 
 }
 

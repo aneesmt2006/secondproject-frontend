@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 export const DRprofileSchema = Yup.object().shape({
+  specialization:Yup.string().trim().required("Specialization is required"),
   profileImage: Yup.string().nullable(),
   experience: Yup.string().trim().required("Experience is required"),
   address: Yup.string().trim().required("Address is required"),

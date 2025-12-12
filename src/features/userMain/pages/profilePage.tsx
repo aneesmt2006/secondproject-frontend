@@ -18,6 +18,7 @@ import {
   getUserProfile,
   updateProfile,
 } from "../../../services/api/medical.service";
+import { getLmp, updateLmp } from "../../../services/api/auth.service";
 import { pregnantProfile, profileError } from "../types/profile.type";
 import { useAppDispatch } from "../../../store/hooks";
 import { setUpdateUserField } from "../../registration/slice/userSlice";
@@ -39,17 +40,31 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const loadUserProfile = async () => {
-      const response = await getUserProfile();
+      try {
+        const [profileResponse, lmpResponse] = await Promise.all([
+          getUserProfile(),
+          getLmp(),
+        ]);
 
+        const userProfile = profileResponse.data!;
+        const lmpData = lmpResponse.data;
 
-       const userProfile = response.data!
-      if (userProfile.lmp) {
-      setProfileData(userProfile);
-      setGetProfile(userProfile);
-      dispatch(setUpdateUserField({lmp:userProfile.lmp}))
-    }
+        // Merge LMP from auth service into the profile data
+        const combinedProfile = {
+          ...userProfile,
+          lmp: lmpData?.lmp || userProfile.lmp || "",
+        };
 
-      console.log("Datas....", response);
+        if (combinedProfile.lmp) {
+          setProfileData(combinedProfile);
+          setGetProfile(combinedProfile);
+          dispatch(setUpdateUserField({ lmp: combinedProfile.lmp }));
+        }
+
+        console.log("Merged Datas....", combinedProfile);
+      } catch (error) {
+        console.error("Error loading profile:", error);
+      }
     };
 
     loadUserProfile();
@@ -76,16 +91,33 @@ const handleSubmit = async () => {
     // Validate inputs
     await updateProfileSchema.validate(profileData, { abortEarly: false });
 
-    // 1️⃣ Update profile in backend
-    const response = await updateProfile(profileData);
+    // 1️⃣ Update profile in backend (Split Logic)
+    
+    // Update LMP in Auth Service
+    if (profileData.lmp) {
+      await updateLmp(profileData.lmp);
+    }
+
+    // Update Other Data in Medical Service
+    const {...medicalData } = profileData;
+    const response = await updateProfile(medicalData); // Type assertion if needed, or ensure type compatibility
+    
     toast.success(response.message);
 
-    const refreshed = await getUserProfile();
-    const updatedProfile = refreshed.data;
+    const [refreshedProfile, refreshedLmp] = await Promise.all([
+      getUserProfile(),
+      getLmp(),
+    ]);
+    
+    const updatedProfile = { 
+      ...refreshedProfile.data!, 
+      lmp: refreshedLmp.data?.lmp || refreshedProfile.data?.lmp || ""
+    };
+
    if (updatedProfile?.isFirstPregnancy) {
       setProfileData(updatedProfile);
       setGetProfile(updatedProfile);
-      dispatch(setUpdateUserField({lmp:updatedProfile.lmp}))
+      dispatch(setUpdateUserField({lmp:updatedProfile.lmp!})) // ensure string
     }
 
     setShowAnimation(true);
