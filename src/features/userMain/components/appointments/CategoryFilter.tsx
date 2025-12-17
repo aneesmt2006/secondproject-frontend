@@ -1,29 +1,35 @@
+
 interface CategoryFilterProps {
-  categories: string[];
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  categories: string[];
 }
 
-export const CategoryFilter = ({ categories, selectedCategory, setSelectedCategory }: CategoryFilterProps) => {
+export const CategoryFilter = ({ selectedCategory, setSelectedCategory, categories }: CategoryFilterProps) => {
+
   return (
-    <div className="flex gap-3 w-full md:w-1/2 justify-start md:justify-end items-center mt-3 md:mt-0 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-    {categories.map(cat => {
-      const active = selectedCategory === cat;
-      return (
+    <div className="w-full md:w-1/2 flex gap-3 overflow-x-auto pb-2 items-center md:justify-end scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+       <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+      `}</style>
+      {categories.map((category) => (
         <button
-          key={cat}
-          onClick={() => setSelectedCategory(cat)}
-          className={`px-4 md:px-5 py-2 rounded-full text-xs md:text-[13px] font-semibold whitespace-nowrap
-            backdrop-blur-xl border transition-all flex-shrink-0
-            ${active
-              ? "bg-[#5A3A2E] text-white shadow-[0_10px_22px_rgba(90,58,46,0.45)]"
-              : "bg-white/60 text-[#5A3A2E] border-white/40 hover:bg-white"
-            }`}
+          key={category}
+          onClick={() => setSelectedCategory(category)}
+          className={`
+            px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
+            ${
+              selectedCategory === category
+                ? "bg-[#4B2E05] text-white shadow-lg  backdrop-blur-md border border-[#4B2E05]/10"
+                : "bg-white/60 text-[#4B2E05] hover:bg-white/80 backdrop-blur-md shadow-sm border border-white/40"
+            }
+          `}
         >
-          {cat}
+          {category}
         </button>
-      );
-    })}
-  </div>
+      ))}
+    </div>
   );
 };

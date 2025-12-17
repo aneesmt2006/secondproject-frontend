@@ -1,13 +1,13 @@
 import { APIResponse } from "../types/api.response";
-import { pregnantProfile, updatePayload } from "../../features/userMain/types/profile.type";
+import { pregnantProfile, updatePayload } from '@/types/profile.type';
 import { axiosInstance } from "./auth.service";
-import { getUser } from "../../features/userMain/types/profile.type";
+
 // import { IUser } from "../../features/registration/slice/userSlice";
 
 
-export const updateProfile = async(data:updatePayload):Promise<APIResponse<getUser<Response>>>=>{
+export const updateProfile = async(data:updatePayload):Promise<APIResponse<pregnantProfile>>=>{
    console.log("Updation data from API",data)
-   const response  =  await axiosInstance.put<APIResponse< getUser<Response>>>('/medical/patient/profile/update',data);
+   const response  =  await axiosInstance.put<APIResponse<pregnantProfile>>('/medical/patient/profile/update',data);
     return response.data
 }
 

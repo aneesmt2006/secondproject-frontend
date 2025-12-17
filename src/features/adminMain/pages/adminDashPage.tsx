@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Users, Stethoscope, Calendar, DollarSign, Info, AlertTriangle, CheckCircle } from 'lucide-react';
-import AdminStatCard from '../../../components/AdminStatCard';
+import AdminStatCard from '../components/AdminStatCard';
 
 const AdminDashboard = () => {
   const [stats] = useState({

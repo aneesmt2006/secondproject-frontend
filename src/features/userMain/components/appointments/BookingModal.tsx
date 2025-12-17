@@ -1,20 +1,24 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { doctors, visitReasons } from "../../lib/mockData";
-import { displayRazorpay } from "../../../../utils/displayRazorpay.utils";
+import { doctors, visitReasons } from '@/features/userMain/constants/appointments.data';
+import { DoctorSlots } from "@/types/appointments.type";
+
 
 interface BookingModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   selectedDoctor: (typeof doctors)[0] | null;
-  slots:{time:string,status:string}[] | undefined
+  slots:DoctorSlots[]|undefined
   setSelectTime:(time:string)=>void,
   selectTime:string|null,
   drbasicData?:{fullName:string,clinicName:string}
+  onConfirm: () => void;
+  loading?: boolean;
 }
 
-export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slots,selectTime,setSelectTime,drbasicData }: BookingModalProps) => {
+
+export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slots,selectTime,setSelectTime,drbasicData, onConfirm, loading = false }: BookingModalProps) => {
   return (
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AnimatePresence>
@@ -51,7 +55,7 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                             </div>
                             <div className="flex-1">
                               <h2 className="text-xl font-bold text-[hsl(var(--foreground))]">
-                                DR . {drbasicData?.fullName}
+                                DR.{drbasicData?.fullName}
                               </h2>
                               <p className="text-sm text-[hsl(var(--primary))] font-medium">
                                 {selectedDoctor.specialty}
@@ -97,20 +101,30 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                             </label>
                           {slots && slots.length > 0 && !slots.every(s=>s.status.toLowerCase().includes('past')) ? (
                             <div className="grid grid-cols-3 gap-3">
-                              {slots.map((slot, i) => (
-                                <button
-                                  key={i}
-                                  className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${slot.status.toLowerCase().includes('past') ? `bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed decoration-slice`:''} ${
-                                    selectTime === slot.time 
-                                      ? "bg-[#E0825C] text-white border-[#E0825C] shadow-md"
-                                      : `bg-white border-gray-200 text-gray-600 ${!slot.status.toLowerCase().includes('past') && `hover:border-[#E0825C] hover:text-[#E0825C]`}`
-                                  }`}
-                                  disabled={slot.status.toLowerCase().includes('past')}
-                                  onClick={()=>setSelectTime(slot.time)}
-                                >
-                                  {slot.time.split(',')[1] }
-                                </button>
-                              ))}
+                              {slots.map((slot, i) => {
+                                const isPast = slot.status.toLowerCase().includes('past');
+                                const isBooked = slot.status.toLowerCase().includes('booked');
+                                const isDisabled = isPast || isBooked;
+
+                                return (
+                                  <button
+                                    key={i}
+                                    className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${
+                                      isPast 
+                                        ? "bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed" 
+                                        : isBooked 
+                                          ? "bg-red-50 text-red-400 border-red-100 cursor-not-allowed"
+                                          : selectTime === slot.time 
+                                            ? "bg-[#E0825C] text-white border-[#E0825C] shadow-md"
+                                            : "bg-white border-gray-200 text-gray-600 hover:border-[#E0825C] hover:text-[#E0825C]"
+                                    }`}
+                                    disabled={isDisabled}
+                                    onClick={()=>setSelectTime(slot.time)}
+                                  >
+                                    {slot.time.split(',')[1] }
+                                  </button>
+                                )
+                              })}
                             </div>
                           ) : (
                             <div className="flex flex-col items-center justify-center py-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
@@ -147,15 +161,22 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                         <div className="p-6 pt-4 shrink-0 border-t border-gray-50 bg-white z-20">
                           <button
                           // setIsModalOpen(false)
-                            onClick={() => displayRazorpay()}
-                            disabled={!selectTime}
-                            className={`w-full py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-xl transition-all active:scale-[0.98] ${
-                              selectTime 
+                            onClick={onConfirm}
+                            disabled={!selectTime || loading}
+                            className={`w-full py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
+                              selectTime && !loading
                                 ? "bg-[#E0825C] text-white shadow-[#E0825C]/20 hover:bg-[#d07550]" 
                                 : "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
                             }`}
                           >
-                            Confirm Appointment
+                            {loading ? (
+                              <>
+                                <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+                                <span>Processing...</span>
+                              </>
+                            ) : (
+                              "Confirm Appointment"
+                            )}
                           </button>
                         </div>
                       </>

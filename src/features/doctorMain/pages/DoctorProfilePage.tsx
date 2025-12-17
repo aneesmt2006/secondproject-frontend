@@ -5,7 +5,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../shared/components/tabs";
+} from "@/components/ui/tabs";
 import { User, Calendar } from "lucide-react";
 
 import HeaderSection from "../components/ProfileHeaderSection";

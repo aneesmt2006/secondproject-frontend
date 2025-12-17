@@ -1,14 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "../components/button";
-import { Progress } from "../components/progress";
-import Step1Maternal from "../components/step1Maternal";
-import Step2Medical from "../components/step2Maternal";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import Step1Maternal from '../components/Step1Maternal';
+import Step2Medical from '../components/Step2Maternal';
 import { useProfileData } from "../hooks/useProfileData";
-import { updateProfileSchema } from "../schemas/user.profile.shema";
+import { updateProfileSchema } from "../schemas/user.profile.schema";
 import { ValidationError } from "yup";
-// import { profileError, updatePayload } from "../types/profile.type";
-import { PredictionLottie } from "../components/predictionAnimation";
+import { PredictionLottie } from '../components/PredictionAnimation';
 
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
@@ -19,7 +18,7 @@ import {
   updateProfile,
 } from "../../../services/api/medical.service";
 import { getLmp, updateLmp } from "../../../services/api/auth.service";
-import { pregnantProfile, profileError } from "../types/profile.type";
+import { pregnantProfile, profileError } from '@/types/profile.type';
 import { useAppDispatch } from "../../../store/hooks";
 import { setUpdateUserField } from "../../registration/slice/userSlice";
 export default function ProfilePage() {
@@ -74,18 +73,20 @@ export default function ProfilePage() {
 const handleSubmit = async () => {
   try {
     const today = new Date();
-    const lmpDate = new Date(profileData.lmp);
+    if (profileData.lmp) {
+      const lmpDate = new Date(profileData.lmp);
 
-    if (lmpDate > today) {
-      toast("Invalid LMP date.", {
-        style: {
-          background: "#FFF7E8",
-          color: "#4B2E05",
-          border: "1px solid #F5D0A9",
-          fontWeight: "500",
-        },
-      });
-      return;
+      if (lmpDate > today) {
+        toast("Invalid LMP date.", {
+          style: {
+            background: "#FFF7E8",
+            color: "#4B2E05",
+            border: "1px solid #F5D0A9",
+            fontWeight: "500",
+          },
+        });
+        return;
+      }
     }
 
     // Validate inputs

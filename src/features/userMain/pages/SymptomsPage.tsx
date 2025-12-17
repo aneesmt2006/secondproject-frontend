@@ -2,8 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Check, Loader2, Activity, Heart } from "lucide-react";
-import { Button } from "../components/button";
-import { cn } from "../../shared/utils/utils";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useSymptomsData } from "../hooks/useSymptomsData";
 
 const SymptomsPage = () => {
@@ -74,7 +74,7 @@ const SymptomsPage = () => {
 
             {loading ? (
                  <div className="flex justify-center items-center h-64">
-                    <Loader2 className="w-10 h-10 animate-spin text-[#E0825C]" />
+                    <Loader2 className="w-10 h-10 animate-spin text-cocoa" />
                  </div>
             ) : (
                 <>

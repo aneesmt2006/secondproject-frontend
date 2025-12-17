@@ -7,7 +7,7 @@ import { userSelector } from "../../registration/slice/userSlice";
 import { getFetusWeekData } from "../../../services/api/users-management.service";
 import { fetusForm } from "../../adminMain/types";
 import { calculatePregnancyWeek } from "../../../utils/pregnancyUtils";
-import { Button } from "../../shared/components/button";
+import { Button } from "@/components/ui/button";
 // import babyInsightsBg from "../../../assets/images/weeks-back.png";
 
 const BabyInsightsPage = () => {
@@ -111,7 +111,7 @@ const BabyInsightsPage = () => {
           {loading ? (
             <div className="flex items-center justify-center h-[60vh]">
               <div className="flex flex-col items-center gap-4">
-                <div className="animate-spin rounded-full h-10 w-10 border-[3px] border-[#E0825C] border-t-transparent"></div>
+                <div className="animate-spin rounded-full h-10 w-10 border-[3px] border-cocoa border-t-transparent"></div>
                 <p className="text-[#8D6E63] font-medium animate-pulse">Loading insights...</p>
               </div>
             </div>

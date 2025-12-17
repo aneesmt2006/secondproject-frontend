@@ -1,6 +1,6 @@
 import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
-import OnboardingScreen from "../../../components/OnboardingScreen";
+import OnboardingScreen from '@/features/registration/components/OnboardingScreen';
 import {  registerAccount } from "../../../services/api/auth.service";
 import {  RegistrationData } from "../../../types/auth.type";
 import RegisterForm from "../components/registerForm";

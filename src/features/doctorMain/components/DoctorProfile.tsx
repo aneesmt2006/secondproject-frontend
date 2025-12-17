@@ -1,7 +1,7 @@
 // import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../shared/components/tabs";
-// // import { Button } from "../../shared/components/button";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// // import { Button } from "@/components/ui/button";
 // import { User, Calendar } from "lucide-react";
 
 // import HeaderSection from "./ProfileHeaderSection";

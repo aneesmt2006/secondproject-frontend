@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, Baby } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "../../../shared/components/button";
+import { Button } from '@/components/ui/button';
 import { fetusForm } from "../../../adminMain/types";
 
 
@@ -66,7 +66,7 @@ const FetusVisualSection = ({
                {/* Loader - Show when either fetching data OR downloading image */}
                {(laoding || !imgLoaded) && (
                   <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cocoa"></div>
                   </div>
                )}
 

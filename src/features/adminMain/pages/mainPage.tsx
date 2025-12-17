@@ -1,9 +1,9 @@
 import  { useState } from 'react'
-import AdminHeader from '../../../components/AdminHeader';
+import AdminHeader from '../components/AdminHeader';
 import AdminDashboard from './adminDashPage';
 import UserManagement from './adminUserPage';
 import DoctorManagement from './adminDrPage';
-import AdminSidebar from '../../../components/AdminSidebar';
+import AdminSidebar from '@/features/adminMain/components/AdminSidebar';
 import ContentManagement from '../components/ContentManagement';
 
 const AdminMainPage = () => {

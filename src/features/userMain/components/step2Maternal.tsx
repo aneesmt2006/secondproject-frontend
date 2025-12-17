@@ -1,10 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Input } from "../../shared/components/input";
-import { Label } from "../../shared/components/label";
-import { Switch } from "../../shared/components/switch";
-import { Textarea } from "../../shared/components/textarea";
-import { RadioGroup,RadioGroupItem } from "../../shared/components/radio-group";
-import { pregnantProfile } from "../types/profile.type";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup,RadioGroupItem } from "@/components/ui/radio-group";
+import { pregnantProfile } from '@/types/profile.type';
 
 interface Step2Props {
   profileData: pregnantProfile;

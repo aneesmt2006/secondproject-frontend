@@ -1,8 +1,8 @@
 import { Upload, FileText, Eye, X } from "lucide-react";
-import { Button } from "../../../shared/components/button";
-import { Input } from "../../../shared/components/input";
-import { Label } from "../../../shared/components/label";
-import { ProfileData } from "../../types/profile.type";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ProfileData } from '@/types/profile.type';
 
 interface CertificateSectionProps {
   formData: ProfileData;

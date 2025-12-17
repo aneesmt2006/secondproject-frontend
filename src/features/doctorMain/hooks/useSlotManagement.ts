@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getSlot, upsertSlot } from "../../../services/api/users-management.service";
-import { DaySchedule, SlotData } from "../types/profile.type";
+import { getSlot, upsertSlot, } from "@/services/api/appoinment.service";
+import { DaySchedule, SlotData } from '@/types/profile.type';
 
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export const useSlotManagement = () => {
+  const [isFetching, setIsFetching] = useState(true);
   const [loading, setLoading] = useState(false);
   const [slotDuration, setSlotDuration] = useState("30");
   const [notAvailableDates,setNotAvailableDates] = useState<string[]>([])
@@ -54,6 +55,8 @@ export const useSlotManagement = () => {
       } catch (error) {
         toast.error(error.data?.message)
         console.log("Error",error)
+      } finally {
+        setIsFetching(false);
       }
     }
     loadDoctorSlot()
@@ -137,6 +140,7 @@ export const useSlotManagement = () => {
     slotDuration,
     setSlotDuration,
     loading,
+    isFetching,
     toggleDay,
     updateTime,
     addBreak,

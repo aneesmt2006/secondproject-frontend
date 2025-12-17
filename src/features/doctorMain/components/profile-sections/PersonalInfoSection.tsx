@@ -1,7 +1,7 @@
-import { Input } from "../../../shared/components/input";
-import { Label } from "../../../shared/components/label";
-import { Textarea } from "../../../shared/components/textarea";
-import { ProfileData, ProfileErrors } from "../../types/profile.type";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { ProfileData, ProfileErrors } from '@/types/profile.type';
 
 interface PersonalInfoSectionProps {
   formData: ProfileData;

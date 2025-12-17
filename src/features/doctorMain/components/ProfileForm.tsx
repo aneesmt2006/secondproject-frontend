@@ -1,5 +1,5 @@
-import { Button } from "../../shared/components/button";
-import { ProfileFormProps } from "../types/profile.type";
+import { Button } from "@/components/ui/button";
+import { ProfileFormProps } from '@/types/profile.type';
 import ProfileImageSection from "./profile-sections/ProfileImageSection";
 import PersonalInfoSection from "./profile-sections/PersonalInfoSection";
 import ProfessionalInfoSection from "./profile-sections/ProfessionalInfoSection";

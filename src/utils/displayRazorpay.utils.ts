@@ -2,6 +2,7 @@
 import { toast } from "sonner";
 import { loadScript } from "./loadScript.utils";
 import { axiosInstance } from "../services/api/auth.service";
+import { APIResponse } from "@/services/types/api.response";
 export type TRazorpayOrderResponse = {
   keyId: string;
   currency: string;
@@ -12,9 +13,9 @@ export type TRazorpayOrderResponse = {
 };
 
 
-export const displayRazorpay = async () => {
+export const displayRazorpay = async (paymentData:{userId:string,doctorId:string,amount:number}) => {
   // Load Razorpay SDK
-  const sdkLoaded =  loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  const sdkLoaded =  await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 
   if (!sdkLoaded) {
     toast.error("Razorpay SDK failed to load, Are you online?");
@@ -22,7 +23,7 @@ export const displayRazorpay = async () => {
   }
 
   // Create order from backend
-  const result = await axiosInstance.post<TRazorpayOrderResponse>("/payment/create/order");
+  const result = await axiosInstance.post<APIResponse<TRazorpayOrderResponse>>("/payment/create/order", paymentData);
 
   if (!result || !result.data) {
     toast.error("Internal server error. Please try again later");
@@ -30,23 +31,23 @@ export const displayRazorpay = async () => {
   }
 
   // Destructure response safely
-  const { keyId, currency, amount, razorpayOrderId, tempOrderId, message } = result.data;
+  // const { keyId, currency, amount, razorpayOrderId, tempOrderId, message } = result.data;
 
-  if (message) toast.info(message);
+  // if (message) toast.info(message);
 
   // Razorpay checkout options
   const options = {
-    key: keyId,
-    amount: (amount * 100).toString(), // Razorpay requires paise
-    currency,
+    key: result.data.data?.keyId,
+    amount: (result.data.data!.amount * 100).toString(), // Razorpay requires paise
+    currency:result.data.data?.currency,
     name: "Mama's Time",
     description: "Doctor Appointment Payment",
-    order_id: razorpayOrderId,
+    order_id: result.data.data?.razorpayOrderId,
 
     handler: async (response: any) => {
       try {
         const verifyBody = {
-          orderCreationId: tempOrderId,
+          orderCreationId:result.data.data?.tempOrderId,
           razorpayPaymentId: response.razorpay_payment_id,
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,

@@ -1,9 +1,9 @@
-import DoctorCard from '../../../components/DoctorCard'
+import DoctorCard from '@/features/doctorMain/components/DoctorCard'
 import { Lock, Mail, Stethoscope } from 'lucide-react'
-import DoctorInput from '../../../components/DoctorInput'
-import DoctorButton from '../../../components/DoctorButton'
-import useDrlogin from '../hooks/useDrlogin'
-import { LoginProps } from '../types/dr.type'
+import DoctorInput from '@/features/doctorMain/components/DoctorInput'
+import DoctorButton from '@/features/doctorMain/components/DoctorButton'
+import useDrlogin from '@/features/dr.login/hooks/useDrlogin'
+import { LoginProps } from '@/features/dr.login/types/dr.type'
 
 const Drlogin:React.FC<LoginProps> = ({handleSubmitLogin,role}) => {
   const {handleChange,handleSubmit,isLoading,errors,formData} = useDrlogin({handleSubmitLogin,role})

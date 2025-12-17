@@ -6,7 +6,7 @@ import {
   uploadFileToSignedUrl,
   updateProfileDR,
 } from '../../../services/api/users-management.service';
-import { IselectedFile, ProfileData } from '../types/profile.type';
+import { IselectedFile, ProfileData } from '@/types/profile.type';
 
 export const useDoctorProfileSubmit = () => {
   const [loading, setLoading] = useState(false);

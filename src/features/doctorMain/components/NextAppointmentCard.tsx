@@ -1,5 +1,5 @@
 import { Calendar, Clock } from "lucide-react";
-import { Button } from "../../shared/components/button";
+import { Button } from "@/components/ui/button";
 
 export const NextAppointmentCard = () => {
   return (

@@ -1,11 +1,11 @@
 // import { useState } from "react";
-import { Label } from "../../shared/components/label";
-import { Input } from "../../shared/components/input";
-import { Button } from "../../shared/components/button";
-import { Checkbox } from "../../shared/components/checkbox";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../shared/components/select";
-import { Popover, PopoverContent, PopoverTrigger } from "../../shared/components/popover";
-import { Calendar as CalendarComponent } from "../../shared/components/calendar";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Calendar, Clock } from "lucide-react";
 
 interface OfflineSlotFormProps {

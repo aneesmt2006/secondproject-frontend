@@ -7,11 +7,11 @@ import {
   Stethoscope,
   Building2,
 } from "lucide-react";
-import DoctorButton from "../../../components/DoctorButton";
-import DoctorInput from "../../../components/DoctorInput";
-import useRegistration from "../hooks/useRegistration";
+import DoctorButton from '@/features/doctorMain/components/DoctorButton';
+import DoctorInput from '@/features/doctorMain/components/DoctorInput';
+import useRegistration from "@/features/dr.registration/hooks/useRegistration";
 import OTPModal from "./OTPmodal";
-import { DRregistrationProps } from "../types/dr.types";
+import { DRregistrationProps } from '@/features/dr.registration/types/dr.types';
 
 /**
  * Doctor Registration Page

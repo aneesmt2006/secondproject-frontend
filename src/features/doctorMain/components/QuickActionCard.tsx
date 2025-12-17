@@ -1,5 +1,5 @@
 import { LucideIcon } from "lucide-react";
-import { Button } from "../../shared/components/button";
+import { Button } from "@/components/ui/button";
 
 interface QuickActionCardProps {
   icon: LucideIcon;

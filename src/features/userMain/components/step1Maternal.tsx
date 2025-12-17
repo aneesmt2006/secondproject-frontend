@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 import { Calendar, User } from "lucide-react";
-import { Input } from "../../shared/components/input";
-import { Label } from "../../shared/components/label";
-import { Switch } from "../../shared/components/switch";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './select'
-import { pregnantProfile } from "../types/profile.type";
+} from '@/components/ui/select'
+import { pregnantProfile } from '@/types/profile.type';
 
 interface Step1Props {
   profileData: pregnantProfile;

@@ -27,7 +27,10 @@ export const useSymptomsData = () => {
 
   useEffect(() => {
     const fetchSymptoms = async () => {
-      if (!currentWeek) return;
+      if (!currentWeek) {
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       try {
         const response = await weekSymptoms(currentWeek);

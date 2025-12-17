@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../shared/components/dialog';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '../../shared/components/drawer';
-import { Calendar } from '../../shared/components/calendar';
-import { Textarea } from '../../shared/components/textarea';
-import { Button } from '../../shared/components/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { Calendar } from '@/components/ui/calendar';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
-import { useIsMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { X } from 'lucide-react';
 
 interface CalendarDialogProps {

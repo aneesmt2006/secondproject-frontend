@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import OnboardingScreen from '../components/OnboardingScreen';
+import OnboardingScreen from '@/features/registration/components/OnboardingScreen';
 import RegistrationForm from '../components/RegistrationForm';
 import { registerAccount } from '../services/api/auth.service';
 import { RegistrationData } from '../types/auth.type';

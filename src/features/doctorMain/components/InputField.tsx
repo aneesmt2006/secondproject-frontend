@@ -1,5 +1,5 @@
-import { Input } from "../../shared/components/input";
-import { Label } from "../../shared/components/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export const ProfileField = ({
   label,

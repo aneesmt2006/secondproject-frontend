@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, MapPin, Calendar as CalendarIcon } from "lucide-react";
-import { doctors } from "../../lib/mockData";
+import { doctors } from '@/features/userMain/constants/appointments.data';
 
 interface DoctorListProps {
   filteredDoctors: typeof doctors;
@@ -51,11 +51,14 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                 </div>
 
                 {/* Status Badge */}
-                <span className={`inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap border 
-                  ${doctor.availability.includes('Slots Available') 
-                    ? 'bg-[#A7F3D0] text-[#065F46] border-[#065F46]/20' 
+                <span onClick={()=>{
+                  setSelectedDoctor(doctor);
+                  setIsModalOpen(true);
+                }} className={`cursor-pointer inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap border 
+                  ${!doctor.availability.includes('Slots Available') 
+                    ? 'bg-[#beb7affb]  ' 
                     : 'bg-red-50 text-red-600 border-red-100'}`}>
-                  {doctor.availability.includes('Slots Available') ? 'Available Today' : 'Unavailable'}
+                  {!doctor.availability.includes('Slots Available') ? 'Check availability ' : 'Check availability'}
                 </span>
               </div>
 
@@ -104,7 +107,20 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
               </div>
             </div>
           </motion.div>
-        )):<p>No doctors ava</p>}
+        )) : (
+          <div className="col-span-2 flex flex-col items-center justify-center py-16 md:py-24 px-4">
+             <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 animate-pulse">
+               <CalendarIcon className="w-10 h-10 text-orange-300 opacity-50" />
+             </div>
+             <h3 className="text-xl md:text-2xl font-bold text-[#4B2E05] mb-2 text-center">
+               No Doctors Available
+             </h3>
+             <p className="text-[#8B5E3C] text-center max-w-md leading-relaxed">
+               We couldn't find any doctors for the selected criteria. 
+               Try changing the date or category to view more options.
+             </p>
+          </div>
+        )}
       </div>
   );
 };

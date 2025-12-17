@@ -1,7 +1,6 @@
-
 import axios from "axios";
+import {  DoctorProfileWithPageCounts, drProfile, IuploadFileResponse, ProfileData } from "@/types/profile.type";
 import { fetusForm, SymptomsData } from "../../features/adminMain/types";
-import {  DoctorBooksSlotsWithPageCount, drAppoinmentingData, drProfile, IuploadFileResponse, ProfileData, SlotData } from "../../features/doctorMain/types/profile.type";
 import { IDoctor } from "../../features/dr.registration/slice/doctorSlice";
 import { APIResponse } from "../types/api.response";
 import { axiosInstance } from "./auth.service";
@@ -135,23 +134,23 @@ export const weekSymptoms = async(week:number):Promise<APIResponse<SymptomsData>
     return response.data
 }
 
-export const upsertSlot = async(slotData:SlotData):Promise<APIResponse<SlotData>>=>{
-    const resposne = await axiosInstance.post<APIResponse<SlotData>>('/users/doctor/slot/upsert',slotData)
-    return resposne.data
-}
+// export const upsertSlot = async(slotData:SlotData):Promise<APIResponse<SlotData>>=>{
+//     const resposne = await axiosInstance.post<APIResponse<SlotData>>('/users/doctor/slot/upsert',slotData)
+//     return resposne.data
+// }
 
-export const getSlot = async ():Promise<APIResponse<SlotData>>=>{
-    const response = await axiosInstance.get<APIResponse<SlotData>>('/users/doctor/slot')
-    return response.data
-}
+// export const getSlot = async ():Promise<APIResponse<SlotData>>=>{
+//     const response = await axiosInstance.get<APIResponse<SlotData>>('/users/doctor/slot')
+//     return response.data
+// }
 
-// unused api
-export const getAllDoctorAppoinmentData = async():Promise<APIResponse<drAppoinmentingData>>=>{
-    const response = await axiosInstance.get<APIResponse<drAppoinmentingData>>('/users/doctor/profile/allAppoinments')
-    return response.data
-}
+// // unused api
+// export const getAllDoctorAppoinmentData = async():Promise<APIResponse<drAppoinmentingData>>=>{
+//     const response = await axiosInstance.get<APIResponse<drAppoinmentingData>>('/users/doctor/profile/allAppoinments')
+//     return response.data
+// }
 
-export const getAllDoctorsSlots = async (date:string=new Date().toString(),specialization:string="",skip:number):Promise<APIResponse<DoctorBooksSlotsWithPageCount>>=>{
-    const response = await axiosInstance.get<APIResponse<DoctorBooksSlotsWithPageCount>>(`/users/book/slots?skip=${skip}&date=${date}&specialization=${specialization}`)
+export const getAllDoctorsApmntProfile = async (specialization:string="",skip:number):Promise<APIResponse<DoctorProfileWithPageCounts>>=>{
+    const response = await axiosInstance.get<APIResponse<DoctorProfileWithPageCounts>>(`/users/doctor/profile/filter?page=${skip}&specialization=${specialization}`)
     return response.data
 }

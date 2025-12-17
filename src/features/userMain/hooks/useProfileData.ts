@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { pregnantProfile,profileError } from "../types/profile.type";
+import { pregnantProfile,profileError } from '@/types/profile.type';
 import { animate } from "framer-motion";
 // import { getUser } from "../../../services/api/user.service";
 // import { profileSchema } from "../schemas/user.profile.shema";
@@ -11,11 +11,18 @@ export const useProfileData = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [profileData, setProfileData] = useState<pregnantProfile>({
-    lmp: "",
-    isFirstPregnancy: true,
+    _id: "",
+    userId: "",
+    fullName: "",
+    dateOfBirth: "",
     bloodGroup: "",
     height: "",
     weight: "",
+    mobile: "",
+    emergencyContact: "",
+    email: "",
+    lmp: "",
+    isFirstPregnancy: true,
     gestationalDiabetes: false,
     gestationalSugar: "",
     bloodPressure: false,

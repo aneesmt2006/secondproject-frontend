@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './dialog';
-import { Button } from '../../shared/components/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 

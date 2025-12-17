@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { Button } from "../../shared/components/button";
+import { Button } from "@/components/ui/button";
 
 interface HeaderSectionProps {
   title: string;

@@ -9,7 +9,7 @@ import Pagination from '../components/Pagination';
 import { USERS_PER_PAGE } from '../constants/userManagementConstants';
 import { getAllUsers } from '../../../services/api/auth.service';
 import { getAllUserProfile } from '../../../services/api/medical.service';
-import { pregnantProfile } from '../../userMain/types/profile.type';
+import { pregnantProfile } from '@/types/profile.type';
 
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -33,7 +33,7 @@ const UserManagement = () => {
           .filter((user) => profilesData.some((p) => p.userId === user.id))
           .map((user) => {
             const profile = profilesData.find((p) => p.userId === user.id);
-            return { ...user, ...profile };
+            return { ...profile, ...user, status: user.status };
           });
 
         setUsers(filteredUsers);

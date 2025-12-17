@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DoctorRegistration from "../components/RegisterForm";
-import { drFormData } from "../types/dr.types";
+import { drFormData } from '../types/dr.types';
 import {
   drOTPverify,
   drRegisterAccount,

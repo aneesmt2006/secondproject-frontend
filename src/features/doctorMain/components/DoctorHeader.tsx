@@ -1,6 +1,6 @@
 // import { Bell, User } from "lucide-react";
-// import { Avatar, AvatarFallback, AvatarImage } from "../../shared/components/avatar";
-// // import { Badge } from "../../shared/components/badge";
+// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+// // import { Badge } from "@/components/ui/badge";
 
 // interface DoctorHeaderProps {
 //   doctorName: string;
@@ -61,8 +61,8 @@
 // };
 import { Bell, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "../../shared/components/avatar";
-// import { Badge } from "../../shared/components/badge";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+// import { Badge } from "@/components/ui/badge";
 
 interface DoctorHeaderProps {
   doctorName: string;

@@ -1,11 +1,11 @@
-import { DesktopNavbar } from "../components/DesktopNavbar";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { DesktopNavbar } from '@/features/userMain/components/DesktopNavbar';
 import { useAppointmentLogic } from "../hooks/useAppointmentLogic";
-import { AppointmentHero } from "../components/appointments/AppointmentHero";
-import { DateSelector } from "../components/appointments/DateSelector";
-import { CategoryFilter } from "../components/appointments/CategoryFilter";
-import { DoctorList } from "../components/appointments/DoctorList";
-import { BookingModal } from "../components/appointments/BookingModal";
+import { AppointmentHero } from '@/features/userMain/components/appointments/AppointmentHero';
+import { DateSelector } from '@/features/userMain/components/appointments/DateSelector';
+import { CategoryFilter } from '@/features/userMain/components/appointments/CategoryFilter';
+import { DoctorList } from '@/features/userMain/components/appointments/DoctorList';
+import { BookingModal } from '@/features/userMain/components/appointments/BookingModal';
 
 const AppointmentPage = () => {
   const {
@@ -32,9 +32,12 @@ const AppointmentPage = () => {
     page,
     setPage,
     totalPage,
-    selectedTime,
-    setSelectedTime,
-    drBasicDet
+    selectedTimeDate,
+    setSelectedTimeDate,
+    drBasicDet,
+    handleBooking,
+    selectedDoctorSlots,
+    isBookingLoading
   } = useAppointmentLogic();
 
   return (
@@ -56,7 +59,7 @@ const AppointmentPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="mt-1 max-w-6xl mx-auto px-4 md:px-6 lg:px-8 
-          flex flex-col md:flex-row items-center md:items-center 
+          flex flex-col md:flex-row items-center 
           gap-4 md:gap-8"
         >
           
@@ -79,30 +82,42 @@ const AppointmentPage = () => {
           />
         </motion.div>
 
-        <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ delay: 0.4, duration: 0.5 }}
-        >
-          {!loading && (
-            <DoctorList
-              filteredDoctors={filteredDoctors}
-              setSelectedDoctor={setSelectedDoctor}
-              setIsModalOpen={setIsModalOpen}
-            />
-          )}
-        </motion.div>
-        
-        {loading && (
-          <div className="flex justify-center my-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          </div>
-        )}
+        {/* Content Area with smooth transitions and min-height */}
+        <div className=" mt-8">
+           <AnimatePresence mode="wait">
+             {loading ? (
+                <motion.div 
+                  key="loader"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex justify-center items-center h-[300px] md:h-[400px]"
+                >
+                   <div className="animate-spin rounded-full h-10 w-10 md:h-14 md:w-14 border-b-4 border-cocoa border-t-transparent shadow-lg shadow-orange-500/20"></div>
+                </motion.div>
+             ) : (
+                <motion.div
+                  key="list"
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  <DoctorList
+                    filteredDoctors={filteredDoctors}
+                    setSelectedDoctor={setSelectedDoctor}
+                    setIsModalOpen={setIsModalOpen}
+                  />
+                </motion.div>
+             )}
+           </AnimatePresence>
+        </div>
 
         <div className="flex justify-center items-center gap-4 mt-8">
           <button
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0 || loading}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1 || loading}
             className="px-4 py-2 rounded-lg bg-white/50 hover:bg-white/80 disabled:opacity-50 transition-colors text-sm font-medium text-gray-700"
           >
             Previous
@@ -110,7 +125,7 @@ const AppointmentPage = () => {
           {/* <span className="text-sm font-medium text-gray-600">Page {page + 1}</span> */}
           <button
             onClick={() => setPage((p) => p + 1)}
-            disabled={loading || filteredDoctors.length >= totalPage}
+            disabled={loading || filteredDoctors.length <= totalPage-filteredDoctors.length}
             className="px-4 py-2 rounded-lg bg-white/50 hover:bg-white/80 disabled:opacity-50 transition-colors text-sm font-medium text-gray-700"
           >
             Next
@@ -121,10 +136,12 @@ const AppointmentPage = () => {
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           selectedDoctor={selectedDoctor||null}
-          slots={selectedDoctor?.slots}
-          selectTime={selectedTime}
-          setSelectTime={setSelectedTime}
+          slots={selectedDoctorSlots}
+          selectTime={selectedTimeDate}
+          setSelectTime={setSelectedTimeDate}
           drbasicData={drBasicDet}
+          onConfirm={handleBooking}
+          loading={isBookingLoading}
         />
       </motion.div>
     </div>

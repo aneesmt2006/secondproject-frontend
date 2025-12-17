@@ -1,8 +1,8 @@
 import { Upload } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../../../shared/components/avatar";
-import { Input } from "../../../shared/components/input";
-import { Label } from "../../../shared/components/label";
-import { ProfileData } from "../../types/profile.type";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ProfileData } from '@/types/profile.type';
 
 interface ProfileImageSectionProps {
   formData: ProfileData;

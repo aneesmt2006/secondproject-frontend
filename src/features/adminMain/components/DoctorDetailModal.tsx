@@ -1,5 +1,5 @@
 import { CheckCircle, XCircle } from 'lucide-react';
-import Modal from '../../../components/AdminModal';
+import Modal from '../components/AdminModal';
 import { Doctor } from '../types';
 
 interface DoctorDetailModalProps {

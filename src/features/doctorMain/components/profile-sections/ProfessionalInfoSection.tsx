@@ -1,6 +1,6 @@
-import { Input } from "../../../shared/components/input";
-import { Label } from "../../../shared/components/label";
-import { ProfileData, ProfileErrors } from "../../types/profile.type";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ProfileData, ProfileErrors } from '@/types/profile.type';
 
 interface ProfessionalInfoSectionProps {
   formData: ProfileData;

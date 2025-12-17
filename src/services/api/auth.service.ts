@@ -5,7 +5,7 @@ import { APIResponse } from "../types/api.response";
 import { drFormData } from "../../features/dr.registration/types/dr.types";
 import { IDoctor } from "../../features/dr.registration/slice/doctorSlice";
 import { User } from "../../features/adminMain/types";
-import { drBasicData } from "../../features/doctorMain/types/profile.type";
+import { drBasicData } from "@/types/profile.type";
 
 
 

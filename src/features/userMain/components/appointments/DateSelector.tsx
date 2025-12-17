@@ -1,8 +1,8 @@
 import { format, isSameDay } from "date-fns";
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar } from "../calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface DateSelectorProps {
   viewStartDate: Date;

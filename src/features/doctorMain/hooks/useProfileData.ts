@@ -3,7 +3,7 @@ import {
   ProfileData,
   ProfileErrors,
   CertificatePreview,
-} from "../types/profile.type";
+} from '@/types/profile.type';
 import { ValidationError } from "yup";
 import { toast } from "sonner";
 import { DRprofileSchema } from "../schemas/dr.profile.schema";

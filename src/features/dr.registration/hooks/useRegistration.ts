@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { drRegisterSchema } from "../schemas/dr.register.schema";
 import { ValidationError } from "yup";
-import { drFormData,FormErrors, useRegistrationProps } from "../types/dr.types";
+import { drFormData,FormErrors, useRegistrationProps } from '../types/dr.types';
 
 const useRegistration = ({onSubmit}:useRegistrationProps) => {
   const [formData, setFormData] = useState<drFormData>({
