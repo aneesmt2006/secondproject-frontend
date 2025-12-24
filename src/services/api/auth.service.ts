@@ -1,5 +1,5 @@
 import axios from "axios";
-import { lmp, RegistrationData } from "../../types/auth.type";
+import { RegistrationData } from "../../types/auth.type";
 import { IUser } from "../../features/registration/slice/userSlice";
 import { APIResponse } from "../types/api.response";
 import { drFormData } from "../../features/dr.registration/types/dr.types";
@@ -52,16 +52,6 @@ export const loginAccount = async(email:string,password:string):Promise<APIRespo
 }
 
 
-export const getLmp = async():Promise<APIResponse<lmp>>=>{
-  const response = await axiosInstance.get<APIResponse<lmp>>('/account/auth/basic-profile');
-  return response.data
-}
-
-export const updateLmp = async(lmp:string):Promise<APIResponse<Response>>=>{
-  const response = await axiosInstance.put<APIResponse<Response>>('/account/auth/basic-profile',{lmp});
-  return response.data
-}
-
 export const drRegisterAccount =async(data:drFormData):Promise<APIResponse<Response>>=>{
    const response = await axiosInstance.post<APIResponse<Response>>('/account/auth/dr/register',data);
    return response.data
@@ -110,10 +100,7 @@ export const updateUserStatus = async(id:string,status:boolean):Promise<APIRespo
   return response.data
 }
 
-export const getdrEssentialDet = async(id:string):Promise<APIResponse<{fullName:string,clinicName:string}>>=>{
-  const response = await axiosInstance.get<APIResponse<{fullName:string,clinicName:string}>>(`/account/auth/dr/drEssential/${id}`)
-  return response.data
-}
+
 
 
 

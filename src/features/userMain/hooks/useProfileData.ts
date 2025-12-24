@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pregnantProfile,profileError } from '@/types/profile.type';
 import { animate } from "framer-motion";
-// import { getUser } from "../../../services/api/user.service";
-// import { profileSchema } from "../schemas/user.profile.shema";
-// import { updateProfile } from "../../../services/api/user.service";
-// import { ValidationError } from "yup";
+import { step1Schema } from "../schemas/user.profile.schema";
+import { toast } from "sonner";
 
 export const useProfileData = () => {
   const navigate = useNavigate();
@@ -37,6 +35,8 @@ export const useProfileData = () => {
 
 
   const [error, setError] = useState<profileError>({
+    fullName: "",
+    dateOfBirth: "",
     lmp: "",
     familyRelated: "",
     knownAllergies: "",
@@ -61,11 +61,33 @@ export const useProfileData = () => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNext = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (currentStep === 1) {
-      setCurrentStep(2); 
-    } 
+    try {
+      // Clear previous errors before validating
+      setError({});
+
+      if (currentStep === 1) {
+        // Validate Step 1 fields only
+        await step1Schema.validate(profileData, { abortEarly: false });
+        setCurrentStep(2); 
+      }
+    } catch (err) {
+      console.log("Validation Error:", err);
+      if (err.inner) {
+        const fieldErrors: Partial<Record<keyof profileError, string>> = {};
+        err.inner.forEach((e) => {
+          if (e.path) {
+            fieldErrors[e.path as keyof profileError] = e.message;
+          }
+        });
+        setError(fieldErrors as profileError);
+        
+        // Find the first error message and toast it
+        const firstError = Object.values(fieldErrors)[0];
+        if (firstError) toast.error(firstError);
+      }
+    }
   };
 
   const handleBack = () => {

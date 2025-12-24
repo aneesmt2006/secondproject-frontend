@@ -12,6 +12,7 @@ import { WeekCalendar } from "./WeekCalendar";
 import { CalendarDialog } from "./CalendarDialog";
 import { ChatbotButton } from "./ChatbotButton";
 import { Link } from "react-router-dom";
+import { NotificationButton } from "./NotificationButton";
 import { usePregnancyDashboard } from "../hooks/usePregnancyDashboard";
 import { formatDate } from "../../../utils/pregnancyUtils";
 import FetusVisualSection from "./dashboard-sections/FetusVisualSection";
@@ -71,10 +72,13 @@ export const PregnancyDashboard = () => {
         className="relative z-10 p-6 pb-0 pt-6 md:pt-28"
       >
         <div className="flex justify-between items-center mb-6">
-          <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-card">
-            <Link to="/profile">
-              <User className="w-5 h-5 text-primary" />
-            </Link>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-card">
+              <Link to="/profile">
+                <User className="w-5 h-5 text-primary" />
+              </Link>
+            </div>
+            <NotificationButton />
           </div>
 
           <div className="flex items-center gap-2">
@@ -144,7 +148,7 @@ export const PregnancyDashboard = () => {
           currentWeek={currentWeek}
           currentDay={currentDay}
           fetusWeekData={fetusWeekData}
-          loading={laoding}
+          laoding={laoding}
         />
       </motion.div>
 

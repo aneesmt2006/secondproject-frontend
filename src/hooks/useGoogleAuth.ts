@@ -12,34 +12,33 @@ export const useGoogleAuthforRoles = ({
   pathRedirect,
   role,
   dispatch
-}: googleAuthforRolesProps) => {
+}: googleAuthforRolesProps): (() => void) => {
   const ResponseGoogle = async (authResult: GoogleAuthResult) => {
     
     try {
       if (authResult["code"]) {
-        console.log(authResult.code);
-        let response;
-        if (role === "user") {
-          response = await googleAuth(authResult.code, role);
-            if(response){
-          localStorage.setItem('email',String(response.data))
-         }
-          // Fetch profile data
-           try {
-             const profileResponse = await getUserProfile();
-             if (profileResponse.data) {
-                dispatch(setUpdateUserField({ lmp: profileResponse.data.lmp }));
-             }
-           } catch (e) { console.error(e) }
-        } else {
-          response = await googleAuth(authResult.code, role);
-        }
-       
-
+        const response = await googleAuth(authResult.code, role);
         
-        dispatch(setUserData(response.data!))
+        if (response.data && role === "user") {
+          localStorage.setItem('email', String(response.data.email || ""));
+        }
+
+        dispatch(setUserData({ ...response.data!, role: role as any }));
+
+        if (role === "user") {
+          // Sync profile data from medical service to get updated LMP
+          try {
+            const profileResponse = await getUserProfile();
+            if (profileResponse.data) {
+              dispatch(setUpdateUserField({ lmp: profileResponse.data.lmp }));
+            }
+          } catch (profileError) {
+            console.error("Error syncing profile after Google login:", profileError);
+          }
+        }
+
         toast.success(response.message);
-        navigate(`${pathRedirect}`,{replace:true});
+        navigate(`${pathRedirect}`, { replace: true });
       }
     } catch (error) {
       console.log(error);

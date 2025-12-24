@@ -71,6 +71,17 @@ export interface updatePayload {
   emergencyContact?: string;
   email?: string;
   lmp?: string;
+  isFirstPregnancy?: boolean;
+  gestationalDiabetes?: boolean;
+  gestationalSugar?: string;
+  bloodPressure?: boolean;
+  bpReading?: string;
+  thyroidProblems?: boolean;
+  pcosPcod?: boolean;
+  takingSupplements?: string;
+  knownAllergies?: string;
+  familyRelated?: string;
+  otherHealthIssues?: string;
   allergies?: string[];
   chronicConditions?: string[];
   pastSurgeries?: string[];
@@ -104,6 +115,7 @@ export interface ProfileData {
   doctorId?: string;
   
   fullName?: string;
+  clinicName?: string;
   email?: string;
   phone?: string;
   
@@ -124,6 +136,8 @@ export interface ProfileData {
 
 export interface drProfile {
   doctorId?:string,
+  fullName?: string,
+  clinicName?: string,
   specialization?:string,
   experience: string;
   address: string;
@@ -157,6 +171,8 @@ export interface drAppoinmentingData {
 export interface DoctorBooksSlots {
     doctorId:string,
     doctorName?: string,
+    fullName?: string,
+    clinicName?: string,
     specialization:string,
     profileImageLink:string,
     online_fee:string,
@@ -173,6 +189,8 @@ export interface DoctorProfileWithPageCounts {
 
 
 export interface ProfileErrors {
+  fullName?: string;
+  clinicName?: string;
   specialization?: string;
   experience?: string;
   address?: string;

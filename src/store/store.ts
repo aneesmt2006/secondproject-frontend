@@ -3,18 +3,18 @@ import {persistStore,persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import userReducer from "../features/registration/slice/userSlice";
 import doctorReducer from "../features/dr.registration/slice/doctorSlice";
-
+import notificationReducer from "@/features/userMain/slice/notificationSlice";
 
 const persistConfig = {
   key:"root",
   storage,
-  whitelist:['user','doctor']
+  whitelist:['user','doctor', 'notifications']
 }
-
 
 const rootReducer = combineReducers({
   user:userReducer,
-  doctor:doctorReducer
+  doctor:doctorReducer,
+  notifications: notificationReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig,rootReducer);

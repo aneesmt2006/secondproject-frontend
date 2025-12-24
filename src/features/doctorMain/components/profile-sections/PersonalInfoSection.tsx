@@ -17,7 +17,37 @@ const PersonalInfoSection = ({ formData, errors, handleChange }: PersonalInfoSec
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <div className="space-y-2">
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            id="fullName"
+            type="text"
+            value={formData.fullName}
+            onChange={handleChange}
+            placeholder="Dr. John Doe"
+            className="glass-card"
+          />
+          {errors.fullName && (
+            <p className="text-red-500 text-xs">{errors.fullName}</p>
+          )}
+        </div>
+
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="clinicName">Clinic Name</Label>
+          <Input
+            id="clinicName"
+            type="text"
+            value={formData.clinicName}
+            onChange={handleChange}
+            placeholder="eg: City Dental Clinic"
+            className="glass-card"
+          />
+          {errors.clinicName && (
+            <p className="text-red-500 text-xs">{errors.clinicName}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="specialization">Specialization </Label>
           <Input
             id="specialization"

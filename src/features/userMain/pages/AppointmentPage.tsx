@@ -34,10 +34,11 @@ const AppointmentPage = () => {
     totalPage,
     selectedTimeDate,
     setSelectedTimeDate,
-    drBasicDet,
     handleBooking,
     selectedDoctorSlots,
-    isBookingLoading
+    isBookingLoading,
+    isRecurring,
+    setIsRecurring
   } = useAppointmentLogic();
 
   return (
@@ -139,9 +140,10 @@ const AppointmentPage = () => {
           slots={selectedDoctorSlots}
           selectTime={selectedTimeDate}
           setSelectTime={setSelectedTimeDate}
-          drbasicData={drBasicDet}
           onConfirm={handleBooking}
           loading={isBookingLoading}
+          isRecurring={isRecurring}
+          setIsRecurring={setIsRecurring}
         />
       </motion.div>
     </div>

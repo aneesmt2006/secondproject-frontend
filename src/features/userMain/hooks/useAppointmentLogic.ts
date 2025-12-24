@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { startOfToday, addDays, subDays } from "date-fns";
 import { doctorBooking, DoctorSlots } from '@/types/appointments.type';
 import { getAllDoctorsApmntProfile } from "@/services/api/users-management.service";
-import { getdrEssentialDet } from "../../../services/api/auth.service";
 import { useAppSelector } from "@/store/hooks";
 import { userSelector } from "@/features/registration/slice/userSlice";
 import { appoinmentCreate, getDrAvailableSlots } from "@/services/api/appoinment.service";
@@ -22,6 +21,13 @@ export const useAppointmentLogic = () => {
   const [selectedDoctorSlots,setSelectedDoctorSlots] = useState<DoctorSlots[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isRecurring, setIsRecurring] = useState(false);
+  
+  useEffect(() => {
+    if (!isModalOpen) {
+      setIsRecurring(false);
+    }
+  }, [isModalOpen]);
 
   // Responsive items count
   useEffect(() => {
@@ -45,7 +51,6 @@ export const useAppointmentLogic = () => {
   // State for doctors and pagination
   const [filteredDoctors, setFilteredDoctors] = useState<doctorBooking[]>([]);
   const [selectedTimeDate,setSelectedTimeDate] = useState<string|null>(null)
-  const [drBasicDet,setDrBasicDet] = useState<{fullName:string,clinicName:string}>()
   const [loading, setLoading] = useState(true);
   const [isBookingLoading, setIsBookingLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -73,7 +78,8 @@ export const useAppointmentLogic = () => {
          
           const mappedDoctors = response.data.profiles.map((dr) => ({
             doctorId: dr.doctorId,
-            name: dr.doctorName || "Doctor", // Fallback if name is missing
+            fullName: dr.fullName || dr.doctorName || "Doctor", // Fallback if name is missing
+            clinicName: dr.clinicName || "Clinic",
             specialty: dr.specialization,
             qualification: "MBBS", // Placeholder
             location: "Online", // Placeholder
@@ -108,8 +114,7 @@ export const useAppointmentLogic = () => {
     if(isModalOpen && selectedDoctor?.doctorId){
       const loadTheDoctor=async()=>{
         try {
-          const [basicDet,allslots] = await Promise.all([getdrEssentialDet(selectedDoctor?.doctorId),getDrAvailableSlots(selectedDoctor.doctorId,selectedDate)])
-           setDrBasicDet(basicDet.data)
+          const allslots = await getDrAvailableSlots(selectedDoctor.doctorId,selectedDate)
            console.log("Slots data,,-->",allslots.data)
            setSelectedDoctorSlots(allslots.data!.slots)
         } catch (error) {
@@ -136,12 +141,14 @@ export const useAppointmentLogic = () => {
         doctorId,
         appointmentDate: selectedDate,
         appointmentTime: selectedTime,
-        amount
+        amount,
+        isRecurring
       });
 
       if (response && response.success) {
-        await displayRazorpay({ userId, doctorId, amount });
+        await displayRazorpay({ userId, doctorId, amount,appoinmentId:response.data!.appointmentId});
         setIsModalOpen(false);
+        setIsRecurring(false);
       }
     } catch (error) {
       console.error("Booking failed:", error);
@@ -176,9 +183,10 @@ export const useAppointmentLogic = () => {
     totalPage,
     selectedTimeDate,
     setSelectedTimeDate,
-    drBasicDet,
     handleBooking,
     selectedDoctorSlots,
-    isBookingLoading
+    isBookingLoading,
+    isRecurring,
+    setIsRecurring
   };
 };

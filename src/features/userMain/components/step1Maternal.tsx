@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, User } from "lucide-react";
+import { Calendar, User, Heart, Activity } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -10,18 +10,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { pregnantProfile } from '@/types/profile.type';
+import { profileError, pregnantProfile } from '@/types/profile.type';
 
 interface Step1Props {
   profileData: pregnantProfile;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   setProfileData: React.Dispatch<React.SetStateAction<pregnantProfile>>;
+  errors?: profileError;
 }
 
 export default function Step1Maternal({
   profileData,
   handleChange,
   setProfileData,
+  errors,
 }: Step1Props) {
   return (
     <motion.div
@@ -32,6 +34,51 @@ export default function Step1Maternal({
       transition={{ duration: 0.3 }}
       className="space-y-8"
     >
+      {/* Personal Information */}
+      <div className="space-y-4">
+        <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
+          <User className="w-6 h-6" />
+          Personal Information
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="fullName" className="text-cocoa">
+              Full Name
+            </Label>
+            <Input
+              id="fullName"
+              type="text"
+              name="fullName"
+              placeholder="e.g., Jane Doe"
+              value={profileData.fullName}
+              onChange={handleChange}
+              className={`border-periwinkle/30 focus:border-periwinkle ${errors?.fullName ? 'border-destructive' : ''}`}
+            />
+            {errors?.fullName && (
+              <p className="text-destructive text-xs mt-1">{errors.fullName}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="dateOfBirth" className="text-cocoa">
+              Date of Birth
+            </Label>
+            <Input
+              id="dateOfBirth"
+              type="date"
+              name="dateOfBirth"
+              value={profileData.dateOfBirth}
+              onChange={handleChange}
+              className={`border-periwinkle/30 focus:border-periwinkle ${errors?.dateOfBirth ? 'border-destructive' : ''}`}
+            />
+            {errors?.dateOfBirth && (
+              <p className="text-destructive text-xs mt-1">{errors.dateOfBirth}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Maternal Health Details */}
       <div className="space-y-4">
         <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
@@ -71,9 +118,9 @@ export default function Step1Maternal({
       </div>
 
       {/* Physical Attributes */}
-      <div className="space-y-4">
+      <div className="space-y-4 pt-4 border-t border-lilac/10">
         <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
-          <User className="w-6 h-6" />
+          <Activity className="w-6 h-6" />
           Physical Attributes
         </h2>
 

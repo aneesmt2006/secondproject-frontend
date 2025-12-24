@@ -3,7 +3,7 @@ import { doctorBooking } from '@/types/appointments.type';
 export const doctors: doctorBooking[] = [
   {
     doctorId: '1',
-    name: 'Dr. K V Shyam Kumar',
+    fullName: 'Dr. K V Shyam Kumar',
     specialty: 'Senior Obstetrician & Surgeon',
     qualification: 'MBBS, MD, DGO',
     location: 'Payyanur, Near Bus Stand',
@@ -15,7 +15,7 @@ export const doctors: doctorBooking[] = [
   },
   {
     doctorId: '2',
-    name: 'Dr. Vinod K. Nair',
+    fullName: 'Dr. Vinod K. Nair',
     specialty: 'Consultant Gynecologist',
     qualification: 'MBBS, MS (OBG)',
     location: 'Kodoth House, Payyanur',
@@ -27,7 +27,7 @@ export const doctors: doctorBooking[] = [
   },
   {
     doctorId: '3',
-    name: 'Dr. Veena',
+    fullName: 'Dr. Veena',
     specialty: 'Gynecologist',
     qualification: 'MBBS, DGO',
     location: 'Payyanur',
@@ -39,7 +39,7 @@ export const doctors: doctorBooking[] = [
   },
   {
     doctorId: '4',
-    name: 'Dr. Shyamala',
+    fullName: 'Dr. Shyamala',
     specialty: 'Fertility Specialist',
     qualification: 'MBBS, MD',
     location: 'Payyanur',

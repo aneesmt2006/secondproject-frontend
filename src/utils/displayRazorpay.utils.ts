@@ -13,7 +13,7 @@ export type TRazorpayOrderResponse = {
 };
 
 
-export const displayRazorpay = async (paymentData:{userId:string,doctorId:string,amount:number}) => {
+export const displayRazorpay = async (paymentData:{userId:string,doctorId:string,amount:number,appoinmentId:string}) => {
   // Load Razorpay SDK
   const sdkLoaded =  await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 

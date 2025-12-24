@@ -25,7 +25,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
               <div className="w-16 h-16 md:w-28 md:h-28 rounded-[14px] md:rounded-[18px] overflow-hidden shadow-sm group-hover:border-[#E0825C]/20 transition-colors">
                 <img
                   src={doctor.image}
-                  alt={doctor.name}
+                  alt={doctor.fullName}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
@@ -43,7 +43,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
               <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-1">
                 <div className="w-full">
                   <h3 className="text-sm md:text-lg font-bold text-[#4B2E05] leading-tight md:leading-snug group-hover:text-[#d07550] transition-colors truncate">
-                    {doctor.name}
+                    {doctor.fullName}
                   </h3>
                   <p className="text-[11px] md:text-sm text-[#d99a5b] font-semibold mt-0.5 truncate">
                     {doctor.specialty}
@@ -54,9 +54,9 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                 <span onClick={()=>{
                   setSelectedDoctor(doctor);
                   setIsModalOpen(true);
-                }} className={`cursor-pointer inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap border 
+                }} className={`cursor-pointer inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap  
                   ${!doctor.availability.includes('Slots Available') 
-                    ? 'bg-[#beb7affb]  ' 
+                    ? 'bg-[#fffffffb]  ' 
                     : 'bg-red-50 text-red-600 border-red-100'}`}>
                   {!doctor.availability.includes('Slots Available') ? 'Check availability ' : 'Check availability'}
                 </span>

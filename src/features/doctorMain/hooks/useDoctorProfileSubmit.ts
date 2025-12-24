@@ -8,6 +8,7 @@ import {
 } from '../../../services/api/users-management.service';
 import { IselectedFile, ProfileData } from '@/types/profile.type';
 
+
 export const useDoctorProfileSubmit = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -68,7 +69,9 @@ export const useDoctorProfileSubmit = () => {
       }
 
       const finalResponse = await updateProfileDR(data);
+     
       toast.success(finalResponse.message);
+      
       navigate('/doctor/dashboard', { replace: true });
     } catch (error) {
       console.error(error);

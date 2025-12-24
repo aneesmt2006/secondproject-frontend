@@ -24,8 +24,6 @@ export type googleAuthforRolesProps = {
   navigate: ReturnType<typeof useNavigate>
 }
 
-export type lmp = {
-  lmp:string
-}
+
 
 

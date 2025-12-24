@@ -1,3 +1,5 @@
+import { userSelector } from '@/features/registration/slice/userSlice';
+import { useAppSelector } from '@/store/hooks';
 import { motion } from 'framer-motion';
 import { Calendar, BarChart3, Dumbbell, Home, GraduationCap } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -18,8 +20,10 @@ const tabs: TabItem[] = [
 
 export const BottomTabBar = () => {
   const location = useLocation();
+  const user= useAppSelector(userSelector)
 
   return (
+    <>{user.lmp && 
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
       <div className="pointer-events-auto">
         {/* Floating Action Button Style Container */}
@@ -68,6 +72,6 @@ export const BottomTabBar = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>}</>
   );
 };

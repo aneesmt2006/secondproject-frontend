@@ -43,7 +43,13 @@ const DoctorProfilePage = () => {
         // console.log("Use effect dr data fetched OK-----> ", response);
         // setdrData(response.data);
         if (response.data) {
-          setFormData(response.data);
+          // Map doctorName to fullName if fullName is missing but doctorName exists
+          const dataWithFallback = {
+            ...response.data,
+            fullName: response.data.fullName || (response.data as any).doctorName || "",
+            clinicName: response.data.clinicName || (response.data as any).clinicName || ""
+          };
+          setFormData(dataWithFallback);
         }
       } catch (error) {
         console.error("Failed to load doctor profile", error);

@@ -1,10 +1,7 @@
-import { appoinmentConfirm, appoinmentSuccess, DoctorSlotsWithDuration } from "@/types/appointments.type"
+import { appoinmentConfirm, appoinmentSuccess, AppointmentsDet, DoctorSlotsWithDuration, AppointmentCompletionData, UserVisitHistory } from "@/types/appointments.type"
 import { axiosInstance } from "./auth.service"
 import { APIResponse } from "../types/api.response"
 import { SlotData } from "@/types/profile.type"
-
-
-
 
 export const appoinmentCreate = async(data:appoinmentConfirm):Promise<APIResponse<appoinmentSuccess>>=>{
     const response = await axiosInstance.post<APIResponse<appoinmentSuccess>>('/appoinment/booking/create',data)
@@ -26,13 +23,17 @@ export const getDrAvailableSlots = async(doctorId:string,date:Date):Promise<APIR
     return response.data
 }
 
+export const doctorPatients = async(date:string):Promise<APIResponse<AppointmentsDet[]>>=>{
+    const response = await axiosInstance.get<APIResponse<AppointmentsDet[]>>(`/appoinment/booking/getDrappointments?date=${date}`);
+    return response.data
+}
 
+export const completeAppointment = async(data: AppointmentCompletionData): Promise<APIResponse<any>> => {
+    const response = await axiosInstance.post<APIResponse<any>>('/appoinment/booking/complete', data);
+    return response.data;
+}
 
-
-
-
-
-
-
-
-
+export const getUserVisitHistory = async(): Promise<APIResponse<UserVisitHistory>> => {
+    const response = await axiosInstance.get<APIResponse<UserVisitHistory>>('/appoinment/booking/user/history');
+    return response.data;
+}

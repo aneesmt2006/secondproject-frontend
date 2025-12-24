@@ -1,5 +1,5 @@
 export interface LoginProps {
-  onSubmit: (email: string, password: string) => void;
+  onSubmit: (email: string, password: string) => void | Promise<void>;
   onGoogleSignIn: () => void;
   onForgotPassword: () => void;
   onSignUpClick: () => void;

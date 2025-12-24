@@ -12,13 +12,25 @@ interface BookingModalProps {
   slots:DoctorSlots[]|undefined
   setSelectTime:(time:string)=>void,
   selectTime:string|null,
-  drbasicData?:{fullName:string,clinicName:string}
   onConfirm: () => void;
   loading?: boolean;
+  isRecurring: boolean;
+  setIsRecurring: (value: boolean) => void;
 }
 
 
-export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slots,selectTime,setSelectTime,drbasicData, onConfirm, loading = false }: BookingModalProps) => {
+export const BookingModal = ({ 
+  isModalOpen, 
+  setIsModalOpen, 
+  selectedDoctor, 
+  slots, 
+  selectTime, 
+  setSelectTime, 
+  onConfirm, 
+  loading = false,
+  isRecurring,
+  setIsRecurring
+}: BookingModalProps) => {
   return (
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AnimatePresence>
@@ -55,13 +67,13 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                             </div>
                             <div className="flex-1">
                               <h2 className="text-xl font-bold text-[hsl(var(--foreground))]">
-                                DR.{drbasicData?.fullName}
+                                Dr.{selectedDoctor.fullName}
                               </h2>
                               <p className="text-sm text-[hsl(var(--primary))] font-medium">
                                 {selectedDoctor.specialty}
                               </p>
                               <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">
-                                {drbasicData?.clinicName}
+                                {selectedDoctor.clinicName}
                               </p>
                             </div>
                             <Dialog.Close className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
@@ -134,6 +146,37 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                           )}
                         </div>
 
+                          {/* Recurring Appointment Option */}
+                          <div className="pb-8">
+                            <div 
+                              onClick={() => setIsRecurring(!isRecurring)}
+                              className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                                isRecurring 
+                                  ? "bg-orange-50 border-orange-200 shadow-sm" 
+                                  : "bg-gray-50/50 border-gray-100 hover:border-gray-200"
+                              }`}
+                            >
+                              <div className="flex gap-3 items-center">
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                                  isRecurring ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-400"
+                                }`}>
+                                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                  </svg>
+                                </div>
+                                <div>
+                                  <p className="text-sm font-bold text-gray-800">Recurring Appointment</p>
+                                  <p className="text-[10px] text-gray-500 font-medium">Schedule this visit periodically</p>
+                                </div>
+                              </div>
+                              <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ${isRecurring ? "bg-orange-500" : "bg-gray-300"}`}>
+                                <motion.div 
+                                  animate={{ x: isRecurring ? 24 : 0 }}
+                                  className="w-4 h-4 bg-white rounded-full shadow-sm" 
+                                />
+                              </div>
+                            </div>
+                          </div>
                           {/* Visit Reason */}
                           <div className="pb-4">
                             <label className="text-xs font-bold text-[hsl(var(--muted-foreground))] uppercase tracking-wider mb-3 block">
@@ -150,6 +193,8 @@ export const BookingModal = ({ isModalOpen, setIsModalOpen, selectedDoctor ,slot
                               ))}
                             </div>
                           </div>
+
+                          
                         </div>
 
                          {/* Scroll Indicator */}

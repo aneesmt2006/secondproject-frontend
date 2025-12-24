@@ -14,6 +14,8 @@ import Profile from "./features/userMain/pages/profilePage";
 import ProtectedLayout from "./utils/protectedRoute";
 import DoctorProfile from "./features/doctorMain/pages/DoctorProfilePage";
 import ProtectedLayoutDR from "./utils/protectedRouteDR";
+import DoctorAppointmentsPage from "./features/doctorMain/pages/DoctorAppointmentsPage";
+
 import  "./services/api/interceptor";
 import BabyInsightsPage from "./features/userMain/pages/BabyInsightsPage";
 import SymptomsPage from "./features/userMain/pages/SymptomsPage";
@@ -50,7 +52,8 @@ const App = () => {
       element:<ProtectedLayoutDR allowedRoles={["doctor"]}/>,
       children:[
         {path:'/doctor/dashboard',element:<DoctorDashPage/>},
-        {path:'/doctor/profile',element:<DoctorProfile/>}
+        {path:'/doctor/profile',element:<DoctorProfile/>},
+        {path:'/doctor/appointments',element:<DoctorAppointmentsPage/>}
       ]
     },
     {

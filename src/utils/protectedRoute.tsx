@@ -2,6 +2,7 @@ import { Navigate, Outlet} from "react-router-dom"
 import { userSelector } from "../features/registration/slice/userSlice"
 import { useAppSelector } from "../store/hooks"
 import { BottomTabBar } from "../features/userMain/components/BottomTabBar"
+import { NotificationModal } from "../features/userMain/components/NotificationModal"
 
 export type  TallowedRoles = "user" | "doctor" | 'admin'
 export interface ProtectedLayoutProps {
@@ -24,10 +25,11 @@ const ProtectedLayout = ({allowedRoles}:ProtectedLayoutProps) =>{
    <>
      <Outlet/> 
      {allowedRoles.includes('user') && (user.lmp && <BottomTabBar/>)}
+     {(allowedRoles.includes('user') || allowedRoles.includes('doctor')) && <NotificationModal />}
    </>
   )
 }
 
-export default ProtectedLayout
+export default ProtectedLayout;
 
 

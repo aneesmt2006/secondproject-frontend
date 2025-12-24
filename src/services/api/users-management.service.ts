@@ -1,13 +1,12 @@
 import axios from "axios";
 import {  DoctorProfileWithPageCounts, drProfile, IuploadFileResponse, ProfileData } from "@/types/profile.type";
 import { fetusForm, SymptomsData } from "../../features/adminMain/types";
-import { IDoctor } from "../../features/dr.registration/slice/doctorSlice";
 import { APIResponse } from "../types/api.response";
 import { axiosInstance } from "./auth.service";
 
 // doctor apis
-export const updateProfileDR = async (data:ProfileData):Promise<APIResponse<IDoctor>>=>{
-  const respose =   await axiosInstance.put<APIResponse<IDoctor>>('/users/doctor/profile/update',data)
+export const updateProfileDR = async (data:ProfileData):Promise<APIResponse<ProfileData>>=>{
+  const respose =   await axiosInstance.put<APIResponse<ProfileData>>('/users/doctor/profile/update',data)
   return respose.data
 }
 
