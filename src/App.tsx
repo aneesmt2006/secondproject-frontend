@@ -15,6 +15,7 @@ import ProtectedLayout from "./utils/protectedRoute";
 import DoctorProfile from "./features/doctorMain/pages/DoctorProfilePage";
 import ProtectedLayoutDR from "./utils/protectedRouteDR";
 import DoctorAppointmentsPage from "./features/doctorMain/pages/DoctorAppointmentsPage";
+import MedicalRecordPage from "./features/doctorMain/pages/MedicalRecordPage";
 
 import  "./services/api/interceptor";
 import BabyInsightsPage from "./features/userMain/pages/BabyInsightsPage";
@@ -53,7 +54,8 @@ const App = () => {
       children:[
         {path:'/doctor/dashboard',element:<DoctorDashPage/>},
         {path:'/doctor/profile',element:<DoctorProfile/>},
-        {path:'/doctor/appointments',element:<DoctorAppointmentsPage/>}
+        {path:'/doctor/appointments',element:<DoctorAppointmentsPage/>},
+        {path:'/doctor/medical-record/:id',element:<MedicalRecordPage/>}
       ]
     },
     {

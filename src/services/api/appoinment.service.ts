@@ -37,3 +37,8 @@ export const getUserVisitHistory = async(): Promise<APIResponse<UserVisitHistory
     const response = await axiosInstance.get<APIResponse<UserVisitHistory>>('/appoinment/booking/user/history');
     return response.data;
 }
+
+export const cancelAppointment = async(appointmentId: string): Promise<APIResponse<any>> => {
+    const response = await axiosInstance.put<APIResponse<any>>('/appoinment/booking/cancel', { appointmentId });
+    return response.data;
+}

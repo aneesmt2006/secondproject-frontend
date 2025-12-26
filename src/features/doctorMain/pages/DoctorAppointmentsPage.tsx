@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { 
   Calendar as CalendarIcon, 
@@ -21,8 +22,20 @@ import { doctorSelector } from "../../dr.registration/slice/doctorSlice";
 import "../../../theme/doctor.css";
 import { CompleteAppointmentModal } from "../components/CompleteAppointmentModal";
 import { AppointmentsDet } from "../../../types/appointments.type";
+import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const DoctorAppointmentsPage = () => {
+  const navigate = useNavigate();
   const { fullName } = useAppSelector(doctorSelector);
   const { 
     activeFilter, 
@@ -31,10 +44,19 @@ const DoctorAppointmentsPage = () => {
     setSelectedDate, 
     appointments, 
     counts,
-    isLoading
+    isLoading,
+    handleCancelAppointment
   } = useDoctorAppointments();
 
   const completion = useCompleteAppointment();
+  const [appointmentIdToCancel, setAppointmentIdToCancel] = useState<string | null>(null);
+
+  const confirmCancel = async () => {
+    if (appointmentIdToCancel) {
+      await handleCancelAppointment(appointmentIdToCancel);
+      setAppointmentIdToCancel(null);
+    }
+  };
 
   return (
     <div className="doctor-theme min-h-screen pb-48 md:pb-8">
@@ -190,6 +212,8 @@ const DoctorAppointmentsPage = () => {
                         key={i} 
                         appointment={appointment} 
                         onComplete={() => completion.handleOpen(appointment)}
+                        onViewRecords={() => navigate(`/doctor/medical-record/${appointment.userId}`)}
+                        onCancel={(id) => setAppointmentIdToCancel(id)}
                       />
                     ))}
                   </motion.div>
@@ -220,6 +244,26 @@ const DoctorAppointmentsPage = () => {
           completionState={completion}
         />
       )}
+
+      <AlertDialog  open={!!appointmentIdToCancel} onOpenChange={(open) => !open && setAppointmentIdToCancel(null)}>
+        <AlertDialogContent className="bg-slate-50 rounded-[2rem] border-none shadow-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className=" text-xl font-bold text-slate-900">Cancel Appointment?</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500 font-medium">
+              Are you sure you want to cancel this consultation? This action will notify the patient and cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2 mt-4">
+            <AlertDialogCancel className="rounded-xl bg- border-slate-200 font-bold hover:bg-slate-50 ">Keep Appointment</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmCancel}
+              className="rounded-xl bg-rose-500 hover:bg-rose-600 font-bold text-black shadow-lg shadow-rose-200"
+            >
+              Yes, Cancel
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

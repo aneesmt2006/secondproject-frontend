@@ -1,6 +1,7 @@
-import { doctorPatients } from '@/services/api/appoinment.service';
+import { doctorPatients, cancelAppointment } from '@/services/api/appoinment.service';
 import { AppointmentsDet } from '@/types/appointments.type';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export type AppointmentStatus = 'Upcoming' | 'Completed' | 'Canceled' | 'Emergency' | 'Recurring';
 
@@ -110,22 +111,37 @@ export const useDoctorAppointments = () => {
   //   return true;
   // });
 
-useEffect(()=>{
-    const loadAppointmentPatients = async () => {
-      try {
-        setIsLoading(true);
-        const response = await doctorPatients(selectedDate);
-        console.log(response);
-        setAppointments(response.data);
-      } catch (error) {
-        console.error("Error loading appointments:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const loadAppointmentPatients = async () => {
+    try {
+      setIsLoading(true);
+      const response = await doctorPatients(selectedDate);
+      console.log(response);
+      setAppointments(response.data);
+    } catch (error) {
+      console.error("Error loading appointments:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadAppointmentPatients();
-  }, [selectedDate])
+  }, [selectedDate]);
+
+  const handleCancelAppointment = async (appointmentId: string) => {
+    try {
+      const response = await cancelAppointment(appointmentId);
+      if (response.success) {
+        toast.success("Appointment canceled successfully");
+        await loadAppointmentPatients();
+      } else {
+        toast.error(response.message || "Failed to cancel appointment");
+      }
+    } catch (error) {
+      console.error("Error canceling appointment:", error);
+      toast.error("An error occurred while canceling the appointment");
+    }
+  };
 
   const counts = {
     Upcoming: mockAppointments.filter(app => app.status === 'Upcoming').length,
@@ -143,5 +159,6 @@ useEffect(()=>{
     appointments: appointments ?? [],
     counts,
     isLoading,
+    handleCancelAppointment
   };
 };

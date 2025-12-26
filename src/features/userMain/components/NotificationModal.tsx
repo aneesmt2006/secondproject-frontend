@@ -9,10 +9,7 @@ import { useEffect } from 'react';
 import { connectSocket } from '@/services/socket/socket.service';
 import { doctorSelector } from '@/features/dr.registration/slice/doctorSlice';
 
-const NotificationItem = ({ notification }: { notification: INotification }) => {
-  const { role } = useAppSelector(userSelector);
-  const isDoctor = role === 'doctor';
-
+const NotificationItem = ({ notification, isDoctor }: { notification: INotification; isDoctor: boolean }) => {
   const getIcon = (type: string) => {
     switch (type) {
       case 'appointment':
@@ -57,26 +54,34 @@ const NotificationItem = ({ notification }: { notification: INotification }) => 
 
 export const NotificationModal = () => {
   const { notifications, unreadCount, isModalOpen } = useAppSelector(notificationSelector);
-  const { role ,id:userId} = useAppSelector(userSelector);
-  const {role:drRole} = useAppSelector(doctorSelector)
+  const { role, id: userId } = useAppSelector(userSelector);
+  const { role: drRole, id: doctorId } = useAppSelector(doctorSelector);
   const dispatch = useAppDispatch();
-  const isDoctor = drRole??role
+  const isDoctor = drRole === 'doctor' || role === 'doctor';
 
   const handleClose = () => dispatch(setModalOpen(false));
 
 
-  useEffect(()=>{
-   const socket =  connectSocket(userId as string)
-   
-   socket.on(`user:${userId}`,(data)=>{
-    console.log('🔔Notification:',data.message)
-    dispatch(addNotifications(data))
-   })
+  useEffect(() => {
+    const emittingId = userId || doctorId;
+    if (!emittingId) return;
 
-   return ()=>{
-    socket.off(`user:${userId}`)
-   }
-  },[userId])
+    const socket = connectSocket(emittingId);
+
+    // Listen to both user:* and doctor:* if needed, but keeping user:* as per your request
+    const eventName = drRole === 'doctor' ? `doctor:${emittingId}` : `user:${emittingId}`;
+    
+    console.log("Event name--->",eventName)
+    socket.on(eventName, (data) => {
+      console.log('🔔 Notification:', data.message);
+      dispatch(addNotifications(data));
+    });
+
+    return () => {
+      socket.off(eventName);
+    };
+  }, [userId, doctorId, drRole, dispatch]);
+
   return (
     <AnimatePresence>
       {isModalOpen && (
@@ -138,8 +143,8 @@ export const NotificationModal = () => {
               <div className="flex-1 overflow-y-auto p-4 scrollbar-hide">
                 {notifications.length > 0 ? (
                   <AnimatePresence mode="popLayout">
-                    {notifications.map((notification,i) => (
-                      <NotificationItem key={i} notification={notification} />
+                    {notifications.map((notification, i) => (
+                      <NotificationItem key={i} notification={notification} isDoctor={isDoctor} />
                     ))}
                   </AnimatePresence>
                 ) : (

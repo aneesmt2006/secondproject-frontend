@@ -14,9 +14,11 @@ import { AppointmentsDet } from "@/types/appointments.type";
 interface DoctorAppointmentCardProps {
   appointment: AppointmentsDet;
   onComplete?: () => void;
+  onViewRecords?: () => void;
+  onCancel?: (appointmentId: string) => void;
 }
 
-export const DoctorAppointmentCard = ({ appointment, onComplete }: DoctorAppointmentCardProps) => {
+export const DoctorAppointmentCard = ({ appointment, onComplete, onViewRecords, onCancel }: DoctorAppointmentCardProps) => {
   const isOnline = appointment.consultationStatus === 'Online';
   
   return (
@@ -44,10 +46,12 @@ export const DoctorAppointmentCard = ({ appointment, onComplete }: DoctorAppoint
             </div>
           </div>
 
-          <div className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest flex items-center gap-1.5 border-2 ${
+          <div 
+            onClick={() => !isOnline && onViewRecords?.()}
+            className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest flex items-center gap-1.5 border-2 cursor-pointer transition-all hover:scale-105 active:scale-95 ${
             isOnline 
-              ? 'bg-slate-50 text-slate-900 border-slate-200' 
-              : 'bg-indigo-50 text-indigo-700 border-indigo-100'
+              ? 'bg-slate-50 text-slate-900 border-slate-200 pointer-events-none opacity-50' 
+              : 'bg-indigo-50 text-indigo-700 border-indigo-100 hover:bg-primary hover:text-white hover:border-primary'
           }`}>
             {isOnline ? (
               <Video className="w-3 h-3" />
@@ -112,7 +116,10 @@ export const DoctorAppointmentCard = ({ appointment, onComplete }: DoctorAppoint
               Complete
             </button>
             
-            <button className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-all text-[10px] font-bold group/btn">
+            <button 
+              onClick={() => appointment.appointmentId && onCancel?.(appointment.appointmentId)}
+              className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-all text-[10px] font-bold group/btn"
+            >
               <XCircle className="w-3 h-3 opacity-60 group-hover/btn:opacity-100" />
               Cancel
             </button>
