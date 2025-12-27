@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import {
-  getSignedUrl,
-  uploadFileToSignedUrl,
+  SignedUrlCreateSubmitToS3,
+  // uploadFileToSignedUrl,
   updateProfileDR,
+  uploadFileToSignedUrl,
 } from '../../../services/api/users-management.service';
 import { IselectedFile, ProfileData } from '@/types/profile.type';
 
@@ -38,20 +39,18 @@ export const useDoctorProfileSubmit = () => {
           });
         }
 
-        const response = await getSignedUrl(selectedFiles);
+        const response = await SignedUrlCreateSubmitToS3(selectedFiles);
         const signedData = response.data;
 
         if (hasNewCertificates) {
-          const newLinks = signedData!
-            .slice(0, data.certificateFiles!.length)
-            .map((obj) => obj?.fileLink);
+          const newLinks = signedData!.map((obj) => obj?.key);
 
           data.certificateLinks = [...newLinks, ...existingCertificateLinks];
         }
 
         if (hasNewProfileImage) {
           data.profileImageLink =
-            signedData![signedData!.length - 1]?.fileLink;
+            signedData![signedData!.length - 1]?.key;
         }
 
         const allFiles: File[] = [

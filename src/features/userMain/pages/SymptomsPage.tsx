@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Check, Loader2, Activity, Heart } from "lucide-react";
@@ -6,23 +6,23 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useSymptomsData } from "../hooks/useSymptomsData";
 
+
 const SymptomsPage = () => {
   const navigate = useNavigate();
-  const { normalSymptoms, abnormalSymptoms, loading } = useSymptomsData();
-  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
-  const [selectedAbnormal, setSelectedAbnormal] = useState<string[]>([]);
-
-  const toggleSymptom = (symptom: string) => {
-    setSelectedSymptoms((prev) =>
-      prev.includes(symptom) ? prev.filter((item) => item !== symptom) : [...prev, symptom]
-    );
-  };
-
-  const toggleAbnormal = (symptom: string) => {
-    setSelectedAbnormal((prev) =>
-      prev.includes(symptom) ? prev.filter((item) => item !== symptom) : [...prev, symptom]
-    );
-  };
+  
+  const { 
+    normalSymptoms, 
+    abnormalSymptoms, 
+    loading, 
+    selectedSymptoms,
+    selectedAbnormal,
+    submitting,
+    toggleSymptom,
+    toggleAbnormal,
+    handleSaveLog
+  } = useSymptomsData({
+    onLogSuccess: () => navigate(-1)
+  });
 
   const today = new Date();
   const dateString = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
@@ -178,12 +178,17 @@ const SymptomsPage = () => {
                 <div className="mt-8 md:mt-12 mb-8 flex justify-center w-full">
                   <Button 
                     className="w-full max-w-md h-14 rounded-full bg-gradient-to-r from-[#5A2D0C] to-[#4A250A] hover:to-[#5A2D0C] text-white font-bold text-lg shadow-[0_8px_25px_-5px_rgba(90,45,12,0.3)] transition-all hover:shadow-[0_12px_30px_-5px_rgba(90,45,12,0.4)] active:scale-[0.98] border border-white/10"
-                    onClick={() => navigate(-1)}
+                    onClick={handleSaveLog}
+                    disabled={submitting}
                   >
-                    <span className="flex items-center gap-2">
-                      Save Today's Log
-                      <Check className="w-4 h-4 text-[#E0825C]" />
-                    </span>
+                    {submitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        Save Today's Log
+                        <Check className="w-4 h-4 text-[#E0825C]" />
+                      </span>
+                    )}
                   </Button>
                 </div>
                 </>

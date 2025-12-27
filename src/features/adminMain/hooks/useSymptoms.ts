@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SymptomsData } from '../types';
-import { AllWeekSymptoms, symptomsCreate, symptomsUpdate } from '../../../services/api/users-management.service';
+import { AllWeekSymptoms, symptomsCreate, symptomsUpdate } from '../../../services/api/tracking.service';
 import { toast } from 'sonner';
 
 export const useSymptoms = () => {

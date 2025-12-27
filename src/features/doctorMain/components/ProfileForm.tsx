@@ -51,6 +51,7 @@ const ProfileForm = ({
         handleRemoveCertificate={handleRemoveCertificate}
       />
 
+
       <FeeSection formData={formData} handleChange={handleChange} />
 
       <div className="flex justify-end">

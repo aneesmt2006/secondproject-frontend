@@ -7,6 +7,7 @@ import {
 import { ValidationError } from "yup";
 import { toast } from "sonner";
 import { DRprofileSchema } from "../schemas/dr.profile.schema";
+import { readSignedUrl } from "@/services/api/users-management.service";
 
 interface UseProfileDataProps {
   onSubmitCallback: (data: ProfileData) => void;
@@ -30,6 +31,7 @@ const useProfileData = ({ onSubmitCallback }: UseProfileDataProps) => {
   const [errors, setErrors] = useState<ProfileErrors>({});
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [certificateFiles, setCertificateFiles] = useState<File[]>([]);
+
 
   // 🔹 Normal input handler
   const handleChange = (
@@ -102,13 +104,40 @@ const useProfileData = ({ onSubmitCallback }: UseProfileDataProps) => {
   };
 
   // 🔹 View certificate
-  const handleViewCertificate = (url: string, name: string) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = name;
-    link.click();
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
+  const [currentPdfUrl, setCurrentPdfUrl] = useState<string | null>(null);
+  const [currentFileName, setCurrentFileName] = useState<string>('');
+
+  const handleViewCertificate = async (url: string, name: string) => {
+    // Check if it's a blob URL (preview)
+    if (url.startsWith('blob:') || url.startsWith('data:')) {
+      setCurrentPdfUrl(url);
+      setCurrentFileName(name);
+      setIsPdfViewerOpen(true);
+      return;
+    }
+
+    // It's a key or remote URL.
+    try {
+      const response = await readSignedUrl(url);
+      if (response.success && response.data) {
+         setCurrentPdfUrl(response.data);
+         setCurrentFileName(name);
+         setIsPdfViewerOpen(true);
+      } else {
+         toast.error("Failed to retrieve document");
+      }
+    } catch (error) {
+       console.error("Error fetching signed URL:", error);
+       toast.error("Error opening document");
+    }
   };
 
+  const closePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+    setCurrentPdfUrl(null);
+  };
+  
   // 🔹 Form submit
   const handleSubmition = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,6 +164,7 @@ const useProfileData = ({ onSubmitCallback }: UseProfileDataProps) => {
     }
   };
 
+
   return {
     formData,
     setFormData,
@@ -145,6 +175,11 @@ const useProfileData = ({ onSubmitCallback }: UseProfileDataProps) => {
     handleRemoveCertificate,
     handleViewCertificate,
     handleSubmition,
+    // PDF Viewer State helpers
+    isPdfViewerOpen,
+    currentPdfUrl,
+    currentFileName,
+    closePdfViewer
   };
 };
 

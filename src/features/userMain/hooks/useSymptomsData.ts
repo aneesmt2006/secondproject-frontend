@@ -2,13 +2,22 @@ import { useState, useEffect } from "react";
 import { useAppSelector } from "../../../store/hooks";
 import { userSelector } from "../../registration/slice/userSlice";
 import { calculatePregnancyWeek } from "../../../utils/pregnancyUtils";
-import { weekSymptoms } from "../../../services/api/users-management.service";
+import { weekSymptoms, logDailySymptoms } from "@/services/api/tracking.service";
+import { toast } from "sonner";
 
-export const useSymptomsData = () => {
+interface UseSymptomsDataProps {
+  onLogSuccess?: () => void;
+}
+
+export const useSymptomsData = ({ onLogSuccess }: UseSymptomsDataProps = {}) => {
   const [normalSymptoms, setNormalSymptoms] = useState<string[]>([]);
   const [abnormalSymptoms, setAbnormalSymptoms] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   
+  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const [selectedAbnormal, setSelectedAbnormal] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+
   const { lmp } = useAppSelector(userSelector);
   const hasLmp = !!(lmp && lmp.trim() !== "");
   const currentDate = new Date();
@@ -16,14 +25,6 @@ export const useSymptomsData = () => {
   const { week: currentWeek } = hasLmp 
     ? calculatePregnancyWeek(currentDate, lmp!) 
     : { week: 1 };
-
-  const parseHtmlToSymptoms = (htmlString: string): string[] => {
-    if (!htmlString) return [];
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, "text/html");
-    const paragraphs = doc.querySelectorAll("p");
-    return Array.from(paragraphs).map((p) => p.textContent || "").filter(text => text.trim() !== "");
-  };
 
   useEffect(() => {
     const fetchSymptoms = async () => {
@@ -35,8 +36,9 @@ export const useSymptomsData = () => {
       try {
         const response = await weekSymptoms(currentWeek);
         if (response.data) {
-          setNormalSymptoms(parseHtmlToSymptoms(response.data.normalSymptoms));
-          setAbnormalSymptoms(parseHtmlToSymptoms(response.data.abnormalSymptoms));
+          // API returns array of strings directly now
+          setNormalSymptoms(response.data.normalSymptoms || []);
+          setAbnormalSymptoms(response.data.abnormalSymptoms || []);
         }
       } catch (error) {
         console.error("Failed to fetch symptoms:", error);
@@ -48,10 +50,53 @@ export const useSymptomsData = () => {
     fetchSymptoms();
   }, [currentWeek]);
 
+  const toggleSymptom = (symptom: string) => {
+    setSelectedSymptoms((prev) =>
+      prev.includes(symptom) ? prev.filter((item) => item !== symptom) : [...prev, symptom]
+    );
+  };
+
+  const toggleAbnormal = (symptom: string) => {
+    setSelectedAbnormal((prev) =>
+      prev.includes(symptom) ? prev.filter((item) => item !== symptom) : [...prev, symptom]
+    );
+  };
+
+  const handleSaveLog = async () => {
+    if (selectedSymptoms.length === 0 && selectedAbnormal.length === 0) {
+      toast.error("Please select at least one symptom to log");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await logDailySymptoms({
+        week: currentWeek,
+        selectedNormalSymptoms: selectedSymptoms,
+        selectedAbnormalSymptoms: selectedAbnormal
+      });
+      toast.success("Symptoms logged successfully!");
+      if (onLogSuccess) {
+        onLogSuccess();
+      }
+    } catch (error) {
+      console.error("Failed to log symptoms", error);
+      toast.error("Failed to log symptoms. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return {
     normalSymptoms,
     abnormalSymptoms,
     loading,
-    currentWeek
+    currentWeek,
+    selectedSymptoms,
+    selectedAbnormal,
+    submitting,
+    toggleSymptom,
+    toggleAbnormal,
+    handleSaveLog
   };
 };

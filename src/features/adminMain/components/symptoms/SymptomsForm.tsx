@@ -11,6 +11,18 @@ interface SymptomsFormProps {
   onPreview: () => void;
 }
 
+const arrayToHtml = (arr: string[] = []) => {
+  if (!Array.isArray(arr)) return "";
+  return arr.map(s => `<p>${s}</p>`).join("");
+};
+
+const htmlToArray = (html: string) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const nodes = doc.querySelectorAll("p, li");
+  return Array.from(nodes).map(n => n.textContent || "").filter(t => t.trim() !== "");
+};
+
 export const SymptomsForm = ({ formData, setFormData, onSave, onCancel, onPreview }: SymptomsFormProps) => {
   const modules = {
     toolbar: [
@@ -58,8 +70,8 @@ export const SymptomsForm = ({ formData, setFormData, onSave, onCancel, onPrevie
           <div className="bg-white rounded-lg border border-rose/20 overflow-hidden">
             <ReactQuill
               theme="snow"
-              value={formData.normalSymptoms}
-              onChange={(content) => setFormData({ ...formData, normalSymptoms: content })}
+              value={arrayToHtml(formData.normalSymptoms)}
+              onChange={(content) => setFormData({ ...formData, normalSymptoms: htmlToArray(content) })}
               modules={modules}
               placeholder="List normal symptoms..."
               className="h-48 mb-12"
@@ -75,8 +87,8 @@ export const SymptomsForm = ({ formData, setFormData, onSave, onCancel, onPrevie
           <div className="bg-white rounded-lg border border-rose/20 overflow-hidden">
             <ReactQuill
               theme="snow"
-              value={formData.abnormalSymptoms}
-              onChange={(content) => setFormData({ ...formData, abnormalSymptoms: content })}
+              value={arrayToHtml(formData.abnormalSymptoms)}
+              onChange={(content) => setFormData({ ...formData, abnormalSymptoms: htmlToArray(content) })}
               modules={modules}
               placeholder="List abnormal symptoms..."
               className="h-48 mb-12"

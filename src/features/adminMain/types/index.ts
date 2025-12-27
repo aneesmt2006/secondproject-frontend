@@ -54,6 +54,12 @@ export interface FetusPreviewModalProps {
 
 export interface SymptomsData {
   week: number;
-  normalSymptoms: string;
-  abnormalSymptoms: string;
+  normalSymptoms: string[];
+  abnormalSymptoms: string[];
+}
+
+export interface LogSymptomsPayload {
+  week: number;
+  selectedNormalSymptoms: string[];
+  selectedAbnormalSymptoms: string[];
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {  DoctorProfileWithPageCounts, drProfile, IuploadFileResponse, ProfileData } from "@/types/profile.type";
-import { fetusForm, SymptomsData } from "../../features/adminMain/types";
+import { fetusForm } from "../../features/adminMain/types";
 import { APIResponse } from "../types/api.response";
 import { axiosInstance } from "./auth.service";
 
@@ -16,8 +16,14 @@ export const getDoctor = async():Promise<APIResponse<ProfileData>>=>{
 }
 
 
-export const getSignedUrl = async(array:object[]):Promise<APIResponse<IuploadFileResponse[]>>=>{
+export const SignedUrlCreateSubmitToS3 = async(array:object[]):Promise<APIResponse<IuploadFileResponse[]>>=>{
      const response = await axiosInstance.post<APIResponse<IuploadFileResponse[]>>('/users/upload/signed-url',{array})
+     return response.data
+}
+
+
+export const readSignedUrl = async(key:string):Promise<APIResponse<string>>=>{
+     const response = await axiosInstance.get<APIResponse<string>>(`/users/upload/read-signed-url?key=${key}`)
      return response.data
 }
 
@@ -111,27 +117,27 @@ export const getAllDoctorsProfile = async():Promise<APIResponse<drProfile[]>>=>{
 
 
 
-export const symptomsCreate = async (symptomData:SymptomsData):Promise<APIResponse<SymptomsData>>=>{
-   const response = await axiosInstance.post<APIResponse<SymptomsData>>('/users/super-admin/symptoms/create',symptomData)
-   return response.data
-}
+// export const symptomsCreate = async (symptomData:SymptomsData):Promise<APIResponse<SymptomsData>>=>{
+//    const response = await axiosInstance.post<APIResponse<SymptomsData>>('/users/super-admin/symptoms/create',symptomData)
+//    return response.data
+// }
 
 
-export const symptomsUpdate = async (symptomData:SymptomsData):Promise<APIResponse<SymptomsData>>=>{
-   const response = await axiosInstance.put<APIResponse<SymptomsData>>('/users/super-admin/symptoms/update',symptomData)
-   return response.data
-}
+// export const symptomsUpdate = async (symptomData:SymptomsData):Promise<APIResponse<SymptomsData>>=>{
+//    const response = await axiosInstance.put<APIResponse<SymptomsData>>('/users/super-admin/symptoms/update',symptomData)
+//    return response.data
+// }
 
 
-export const AllWeekSymptoms = async ():Promise<APIResponse<SymptomsData[]>>=>{
-   const response = await axiosInstance.get<APIResponse<SymptomsData[]>>('/users/super-admin/symptoms/weeks')
-   return response.data
-}
+// export const AllWeekSymptoms = async ():Promise<APIResponse<SymptomsData[]>>=>{
+//    const response = await axiosInstance.get<APIResponse<SymptomsData[]>>('/users/super-admin/symptoms/weeks')
+//    return response.data
+// }
 
-export const weekSymptoms = async(week:number):Promise<APIResponse<SymptomsData>>=>{
-    const response = await axiosInstance.get<APIResponse<SymptomsData>>(`/users/super-admin/symptoms/current-week/${week}`)
-    return response.data
-}
+// export const weekSymptoms = async(week:number):Promise<APIResponse<SymptomsData>>=>{
+//     const response = await axiosInstance.get<APIResponse<SymptomsData>>(`/users/super-admin/symptoms/current-week/${week}`)
+//     return response.data
+// }
 
 // export const upsertSlot = async(slotData:SlotData):Promise<APIResponse<SlotData>>=>{
 //     const resposne = await axiosInstance.post<APIResponse<SlotData>>('/users/doctor/slot/upsert',slotData)

@@ -98,8 +98,12 @@ export interface CertificatePreview {
 }
 
 export interface IuploadFileResponse {
-  fileLink: string;
+  key: string;
   signedUrl: string;
+}
+
+export interface IreadSignedUrl {
+  readSignedUrl:string
 }
 
 export interface IselectedFile {
