@@ -14,9 +14,10 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
         <div className="origin-top scale-[0.90] pt-28 pb-1 md:pb-14 lg:pb-16 px-4 md:px-6 lg:px-10 max-w-7xl mx-auto bg-transparent relative">
           
           {/* Back Button */}
+          {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="absolute top-16 md:top-28 left-4 md:left-10 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md shadow-sm border border-white/50 flex items-center justify-center text-[#5A3A2E] hover:bg-white transition-all lg:hidden"
+            className="absolute top-16 md:top-28 left-4 md:left-10 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md shadow-sm border border-white/50 flex md:hidden items-center justify-center text-[#5A3A2E] hover:bg-white transition-all lg:hidden"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -25,11 +26,11 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
             {/* Left */}
             <div className="flex-1 space-y-5 md:space-y-7 text-center md:text-left">
               <div
-                className="inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2 bg-white/70 backdrop-blur-xl rounded-full 
+                className="inline-flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 lg:px-5 lg:py-2 bg-white/70 backdrop-blur-xl rounded-full 
         border border-white/60 shadow-card transition-smooth"
               >
-                <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#E0825C] animate-pulse" />
-                <span className="text-[9px] md:text-[11px] font-semibold text-[#E0825C] tracking-[0.2em] uppercase">
+                <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-[#E0825C] animate-pulse" />
+                <span className="text-[8px] md:text-[9px] lg:text-[11px] font-semibold text-[#E0825C] tracking-[0.15em] md:tracking-[0.2em] uppercase">
                   Verified Specialists in Payyanur
                 </span>
               </div>

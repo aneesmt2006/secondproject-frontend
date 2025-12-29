@@ -33,6 +33,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useMedicalRecord } from "../hooks/useMedicalRecord";
 
 const DoctorAppointmentsPage = () => {
   const navigate = useNavigate();
@@ -45,8 +46,10 @@ const DoctorAppointmentsPage = () => {
     appointments, 
     counts,
     isLoading,
-    handleCancelAppointment
+    handleCancelAppointment,
+
   } = useDoctorAppointments();
+  const {laodMedicalData} = useMedicalRecord()
 
   const completion = useCompleteAppointment();
   const [appointmentIdToCancel, setAppointmentIdToCancel] = useState<string | null>(null);
@@ -212,7 +215,10 @@ const DoctorAppointmentsPage = () => {
                         key={i} 
                         appointment={appointment} 
                         onComplete={() => completion.handleOpen(appointment)}
-                        onViewRecords={() => navigate(`/doctor/medical-record/${appointment.userId}`)}
+                        onViewRecords={() => {
+                          navigate(`/doctor/medical-record/${appointment.userId}`);
+                          laodMedicalData(appointment.userId!)
+                        }}
                         onCancel={(id) => setAppointmentIdToCancel(id)}
                       />
                     ))}

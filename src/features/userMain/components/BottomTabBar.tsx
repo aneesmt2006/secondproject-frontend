@@ -15,20 +15,19 @@ const tabs: TabItem[] = [
   { icon: BarChart3, label: 'Insights', path: '/dashboard/baby-insights' },
   { icon: Calendar, label: 'Appts', path: '/dashboard/appointment' },
   { icon: Dumbbell, label: 'Exercise', path: '/dashboard/exercise' },
-  { icon: GraduationCap, label: 'Learn', path: '/dashboard/fetus-knowledge' }, // Using GraduationCap for Learn/Knowledge, or keep Baby? Screenshot implies 'Learn' usually -> GraduationCap or Book. I'll stick to 'Learn' with GraduationCap to match standard apps, or stick to Baby if it's strictly fetus. User code had Baby. I'll use GraduationCap to match 'Learn'. 
+  { icon: GraduationCap, label: 'Learn', path: '/dashboard/fetus-knowledge' },
 ];
 
 export const BottomTabBar = () => {
   const location = useLocation();
-  const user= useAppSelector(userSelector)
+  const user = useAppSelector(userSelector);
 
   return (
-    <>{user.lmp && 
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
-      <div className="pointer-events-auto">
-        {/* Floating Action Button Style Container */}
-        <div className="bg-white/75 backdrop-blur-xl border-t border-white/60 pb-5 pt-3 px-2 shadow-[0_-8px_30px_-5px_rgba(0,0,0,0.05)] rounded-t-3xl">
-          <div className="flex justify-between items-end max-w-sm mx-auto relative px-2">
+    <>
+      {user.lmp && (
+        <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm">
+          {/* Glassy Container */}
+          <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[35px] p-1.5 shadow-[0_8px_32px_rgba(224,130,92,0.15)] flex justify-between items-center relative overflow-hidden">
             {tabs.map((tab) => {
               const isActive = location.pathname === tab.path;
 
@@ -36,32 +35,41 @@ export const BottomTabBar = () => {
                 <Link
                   key={tab.label}
                   to={tab.path}
-                  className="relative flex flex-col items-center justify-end w-14 h-14 group"
+                  className="relative z-10 flex-1 flex flex-col items-center justify-center gap-1 py-3 rounded-[28px] transition-all duration-300 group tap-highlight-transparent"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
-                  {/* Active Indicator (Floating Circle) */}
+                  {/* Active Pill Background (Slide Animation) */}
                   {isActive && (
                     <motion.div
-                      layoutId="activeTabCircle"
-                      className="absolute -top-10 w-14 h-14 bg-gradient-to-b from-[#F28C64] to-[#e8754a]
- rounded-full shadow-[0_8px_16px_rgba(242,140,100,0.5)] border-[3px] border-white flex items-center justify-center z-10"
-                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    >
-                        {/* We render the icon inside the circle for active state to ensure it moves with it and has contrast */}
-                        <tab.icon className="w-6 h-6 text-white" strokeWidth={2.5} />
-                    </motion.div>
+                      layoutId="activeTabPill"
+                      className="absolute inset-0 bg-[#E0825C]/10 rounded-[28px] shadow-sm border border-[#E0825C]/5"
+                      transition={{ 
+                        type: "spring", 
+                        stiffness: 300, 
+                        damping: 30,
+                        duration: 0.3
+                      }}
+                    />
                   )}
-
-                  {/* Standard Icon (Hidden when active) */}
-                  {!isActive && (
-                    <div className="mb-1 text-slate-600 group-hover:text-[#F28C64] transition-colors duration-300">
-                      <tab.icon className="w-6 h-6" strokeWidth={2} />
-                    </div>
-                  )}
+                  
+                  {/* Icon */}
+                  <div className="relative z-20">
+                    <tab.icon 
+                      className={`w-[22px] h-[22px] transition-all duration-300 ${
+                        isActive 
+                          ? 'text-[#E0825C] scale-105' 
+                          : 'text-[#9ca3af] group-hover:text-[#E0825C]/70'
+                      }`} 
+                      strokeWidth={isActive ? 2.5 : 2}
+                    />
+                  </div>
 
                   {/* Label */}
                   <span
-                    className={`text-[10px] font-bold transition-all duration-300 ${
-                      isActive ? 'text-[#F28C64] translate-y-1' : 'text-slate-600 group-hover:text-[#F28C64]'
+                    className={`text-[9px] font-bold tracking-wide transition-all duration-300 relative z-20 ${
+                      isActive 
+                        ? 'text-[#E0825C]' 
+                        : 'text-[#9ca3af] group-hover:text-[#E0825C]/70'
                     }`}
                   >
                     {tab.label}
@@ -70,8 +78,11 @@ export const BottomTabBar = () => {
               );
             })}
           </div>
+          
+          {/* Outer glow effect for the bar */}
+          <div className="absolute -inset-4 bg-[#E0825C]/5 blur-3xl -z-10 rounded-full" />
         </div>
-      </div>
-    </div>}</>
+      )}
+    </>
   );
 };

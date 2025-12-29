@@ -1,6 +1,10 @@
-import { CheckCircle, XCircle } from 'lucide-react';
+import { useState } from 'react';
+import { CheckCircle, XCircle, Eye } from 'lucide-react';
+import { toast } from 'sonner';
 import Modal from '../components/AdminModal';
 import { Doctor } from '../types';
+import PdfViewerModal from '@/components/PdfViewerModal';
+import { readSignedUrl } from '@/services/api/users-management.service';
 
 interface DoctorDetailModalProps {
   isOpen: boolean;
@@ -15,9 +19,37 @@ const DoctorDetailModal = ({
   doctor,
   onUpdateStatus,
 }: DoctorDetailModalProps) => {
+  // PDF Viewer State
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
+  const [currentPdfUrl, setCurrentPdfUrl] = useState<string | null>(null);
+  const [currentFileName, setCurrentFileName] = useState<string>('');
+
+  // Handler to view certificate
+  const handleViewCertificate = async (url: string, name: string) => {
+    try {
+      const response = await readSignedUrl(url);
+      if (response.success && response.data) {
+        setCurrentPdfUrl(response.data);
+        setCurrentFileName(name);
+        setIsPdfViewerOpen(true);
+      } else {
+        toast.error("Failed to retrieve document");
+      }
+    } catch (error) {
+      console.error("Error fetching signed URL:", error);
+      toast.error("Error opening document");
+    }
+  };
+
+  const closePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+    setCurrentPdfUrl(null);
+  };
+
   if (!doctor) return null;
 
   return (
+    <>
     <Modal isOpen={isOpen} onClose={onClose} title="Doctor Profile">
       <div className="space-y-6">
         <div className="flex items-start gap-4">
@@ -77,24 +109,71 @@ const DoctorDetailModal = ({
           )}
         </div>
 
-        {doctor.qualifications && (
+        {doctor.qualifications && doctor.qualifications.length > 0 && (
           <div>
             <h4 className="font-semibold text-cocoa mb-2">
               Qualifications Documents
             </h4>
-            {doctor.qualifications.map((i, index) => (
-              <a
-                key={index}
-                href={i}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block mb-2"
-              >
-                <p className="text-blue-500 bg-white p-4 rounded-lg hover:underline truncate">
-                  {i}
-                </p>
-              </a>
-            ))}
+            <div className="space-y-2">
+              {doctor.qualifications.map((url, index) => {
+                const fileName = url.split('/').pop() || `Certificate ${index + 1}`;
+                return (
+                  <div
+                    key={index}
+                    className="bg-white p-4 rounded-lg border border-rose/20 flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <svg
+                        className="w-5 h-5 text-rose flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      <span className="text-sm font-medium text-cocoa truncate">
+                        {fileName}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <button
+                        onClick={() => handleViewCertificate(url, fileName)}
+                        className="p-2 rounded-lg bg-rose/10 text-rose hover:bg-rose/20 transition-colors"
+                        title="View Certificate"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                        title="Download Certificate"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -131,6 +210,14 @@ const DoctorDetailModal = ({
         )}
       </div>
     </Modal>
+    
+    <PdfViewerModal 
+      isOpen={isPdfViewerOpen}
+      onClose={closePdfViewer}
+      pdfUrl={currentPdfUrl}
+      fileName={currentFileName}
+    />
+    </>
   );
 };
 

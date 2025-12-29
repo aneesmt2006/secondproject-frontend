@@ -29,37 +29,49 @@ const MedicalRecordPage = () => {
     patient 
   } = useMedicalRecord();
 
+  // Show loading state while patient data is being fetched
+  if (!patient) {
+    return (
+      <div className="doctor-theme min-h-screen pb-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+          <p className="text-slate-600 font-medium">Loading patient data...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="doctor-theme min-h-screen pb-20">
       {/* Background handled by .doctor-theme::before */}
       
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 w-full glass-nav border-b border-white/20 px-4 py-4 mb-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      {/* Floating Top Elements - Scrollable */}
+      <div className="w-full py-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={() => navigate(-1)}
-                className="rounded-full hover:bg-white/40 transition-colors"
+                className="rounded-full bg-white/90 hover:bg-white shadow-lg border border-slate-200/50 backdrop-blur-sm transition-all hover:scale-110"
             >
               <ArrowLeft className="w-5 h-5 text-slate-700" />
             </Button>
-            <div>
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg border border-slate-200/50">
               <h1 className="text-xl font-bold text-slate-900 tracking-tight leading-none">Medical Dashboard</h1>
-              <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1.5">{patient.id} • Digital Health Folder</p>
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1.5">Digital Health Folder</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-             <Button variant="outline" className="rounded-xl border-slate-200 bg-white/50 h-10 text-xs font-bold gap-2 hover:bg-white transition-all">
+             <Button variant="outline" className="rounded-xl border-slate-200 bg-white/90 backdrop-blur-sm shadow-lg h-10 text-xs font-bold gap-2 hover:bg-white transition-all hover:scale-105">
                 <Download className="w-4 h-4" /> Export All
              </Button>
-             <Button className="rounded-xl bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 h-10 text-xs font-bold gap-2">
+             <Button className="rounded-xl bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 h-10 text-xs font-bold gap-2 hover:scale-105 transition-all">
                 <CheckCircle2 className="w-4 h-4" /> Finalize Record
              </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
         <div className="space-y-10">

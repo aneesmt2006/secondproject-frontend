@@ -85,15 +85,16 @@ export const DateSelector = ({
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="flex justify-between gap-1"
           >
-            {visibleDates.map((date) => {
+            {visibleDates.map((date, index) => {
               const active = isSameDay(date, selectedDate);
               return (
                 <button
                   key={date.toISOString()}
                   onClick={() => setSelectedDate(date)}
-                  className={`font-nunito flex flex-col justify-center items-center
+                  className={`font-nunito flex-col justify-center items-center
                     flex-1 h-[4.5rem] rounded-2xl border backdrop-blur-xl
                     transition-all duration-200
+                    ${index >= 5 ? 'md:hidden lg:flex' : 'flex'}
                     ${active
                       ? "bg-[#E0825C] text-white border-[#E0825C]/30 shadow-[0_8px_20px_rgba(224,130,92,0.3)] scale-[1.05]"
                       : "bg-white/50 text-[#5A3A2E] border-white/40 hover:bg-white/70"

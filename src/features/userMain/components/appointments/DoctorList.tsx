@@ -16,9 +16,9 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
             key={doctor.doctorId || i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-white/60 backdrop-blur-xl border border-white/80 rounded-[20px] md:rounded-[24px] p-2.5 md:p-5
+            className="group relative bg-white/60 backdrop-blur-xl border border-white/80 rounded-[20px] md:rounded-[24px] p-2.5 md:p-3 lg:p-5
             shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-4px_rgba(0,0,0,0.1)]
-            transition-all duration-300 hover:-translate-y-1 flex flex-col sm:flex-row gap-3 md:gap-6 items-start text-center sm:text-left"
+            transition-all duration-300 hover:-translate-y-1 flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-6 items-start text-center sm:text-left"
           >
             {/* Doctor Image Container */}
             <div className="relative shrink-0 self-center sm:self-start">
@@ -54,7 +54,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                 <span onClick={()=>{
                   setSelectedDoctor(doctor);
                   setIsModalOpen(true);
-                }} className={`cursor-pointer inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap  
+                }} className={`cursor-pointer inline-flex md:hidden lg:inline-flex text-[10px] uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-bold whitespace-nowrap  
                   ${!doctor.availability.includes('Slots Available') 
                     ? 'bg-[#fffffffb]  ' 
                     : 'bg-red-50 text-red-600 border-red-100'}`}>
@@ -100,8 +100,8 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                   text-xs md:text-sm font-semibold shadow-md shadow-[#E0825C]/20 hover:shadow-[#d07550]/30 
                   transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 group/btn"
                 >
-                  <span className="hidden sm:inline">Book Visit</span>
-                  <span className="sm:hidden">Book</span>
+                  <span className="hidden lg:inline">Book Visit</span>
+                  <span className="lg:hidden">Book</span>
                   <CalendarIcon className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                 </button>
               </div>

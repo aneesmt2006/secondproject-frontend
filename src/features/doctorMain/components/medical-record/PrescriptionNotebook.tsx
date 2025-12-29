@@ -148,7 +148,7 @@ export const PrescriptionNotebook = ({ patient }: PrescriptionNotebookProps) => 
                 ))}
              </div>
              
-             <Button variant="outline" className="w-full border-slate-200 text-slate-500 font-bold text-xs h-12 rounded-2xl hover:bg-slate-50">
+             <Button variant="outline" className="w-full bg-primary border-slate-200 text-white font-bold text-xs h-12 rounded-2xl hover:bg-slate-50">
                 Load More History
              </Button>
           </div>

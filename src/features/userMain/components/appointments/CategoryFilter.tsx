@@ -19,7 +19,7 @@ export const CategoryFilter = ({ selectedCategory, setSelectedCategory, categori
           key={category}
           onClick={() => setSelectedCategory(category)}
           className={`
-            px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-200
+            px-3 py-1 md:px-2 md:py-1 lg:px-4 lg:py-2 rounded-full text-xs md:text-[11px] lg:text-sm font-medium whitespace-nowrap transition-all duration-200
             ${
               selectedCategory === category
                 ? "bg-[#4B2E05] text-white shadow-lg  backdrop-blur-md border border-[#4B2E05]/10"

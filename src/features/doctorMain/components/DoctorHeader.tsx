@@ -75,49 +75,49 @@ export const DoctorHeader = ({ doctorName, avatarUrl, rating = 4.9, patientCount
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 mt-6 mb-6">
-      <div className="glass-strong rounded-3xl p-4">
+    <div className="max-w-7xl mx-auto px-2 md:px-6 lg:px-8 mt-4 md:mt-6 mb-4 md:mb-6">
+      <div className="glass-strong rounded-2xl md:rounded-3xl p-3 md:p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-12 w-12 ring-2 ring-primary/20 relative">
+          <div className="flex items-center gap-2 md:gap-3">
+            <Avatar className="h-10 w-10 md:h-12 md:w-12 ring-2 ring-primary/20 relative">
               <AvatarImage src={avatarUrl} alt={doctorName} />
-              <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">
+              <AvatarFallback className="bg-primary text-primary-foreground text-xs md:text-sm font-bold">
                 {doctorName.split(' ').map(n => n[0]).join('').slice(0, 3).toUpperCase()}
               </AvatarFallback>
-              <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-medical-success border-2 border-white"></span>
+              <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-medical-success border-2 border-white"></span>
             </Avatar>
             <div>
-              <h1 className="text-xl font-bold text-foreground">
+              <h1 className="text-sm md:text-xl font-bold text-foreground line-clamp-1">
                 Hello, {doctorName}!
               </h1>
               <button 
                 onClick={() => navigate("/doctor/profile")}
-                className="text-xs text-primary hover:underline font-medium"
+                className="text-[10px] md:text-xs text-primary hover:underline font-medium"
               >
-                View Your Profile & Settings →
+                View Profile →
               </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
-            <div className="hidden sm:flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-6">
+            <div className="hidden sm:flex items-center gap-2 md:gap-4">
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">{rating}</p>
-                <p className="text-xs text-muted-foreground">Rating</p>
+                <p className="text-base md:text-2xl font-bold text-foreground">{rating}</p>
+                <p className="text-[10px] md:text-xs text-muted-foreground">Rating</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">{patientCount}+</p>
-                <p className="text-xs text-muted-foreground">Patients</p>
+                <p className="text-base md:text-2xl font-bold text-foreground">{patientCount}+</p>
+                <p className="text-[10px] md:text-xs text-muted-foreground">Patients</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 md:gap-2">
               <NotificationButton />
               <button 
                 onClick={() => navigate("/doctor/profile")}
-                className="glass-card p-2 rounded-xl glass-hover"
+                className="glass-card p-1.5 md:p-2 rounded-lg md:rounded-xl glass-hover"
               >
-                <User className="w-4 h-4 text-foreground" />
+                <User className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground" />
               </button>
             </div>
           </div>

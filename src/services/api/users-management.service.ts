@@ -66,6 +66,8 @@ export const uploadImageToCloundinary = async(selectedFiles:File[]):Promise<stri
 }
 
 
+
+
 export const fetusCreate = async(data: fetusForm):Promise<APIResponse<Response>>=>{
     const selectedFiles :File[]=[];
     selectedFiles.push(data.fetusFile!)

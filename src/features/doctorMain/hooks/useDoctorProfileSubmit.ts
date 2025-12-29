@@ -6,6 +6,7 @@ import {
   // uploadFileToSignedUrl,
   updateProfileDR,
   uploadFileToSignedUrl,
+  uploadImageToCloundinary,
 } from '../../../services/api/users-management.service';
 import { IselectedFile, ProfileData } from '@/types/profile.type';
 
@@ -24,7 +25,7 @@ export const useDoctorProfileSubmit = () => {
 
       const existingCertificateLinks = data.certificateLinks || [];
 
-      if (hasNewCertificates || hasNewProfileImage) {
+      if (hasNewCertificates) {
         if (hasNewCertificates) {
           selectedFiles = data.certificateFiles!.map((file) => ({
             fileName: file.name,
@@ -32,12 +33,12 @@ export const useDoctorProfileSubmit = () => {
           }));
         }
 
-        if (hasNewProfileImage) {
-          selectedFiles.push({
-            fileName: data.profileImageFile!.name,
-            fileType: data.profileImageFile!.type,
-          });
-        }
+        // if (hasNewProfileImage) {
+        //   selectedFiles.push({
+        //     fileName: data.profileImageFile!.name,
+        //     fileType: data.profileImageFile!.type,
+        //   });
+        // }
 
         const response = await SignedUrlCreateSubmitToS3(selectedFiles);
         const signedData = response.data;
@@ -48,14 +49,10 @@ export const useDoctorProfileSubmit = () => {
           data.certificateLinks = [...newLinks, ...existingCertificateLinks];
         }
 
-        if (hasNewProfileImage) {
-          data.profileImageLink =
-            signedData![signedData!.length - 1]?.key;
-        }
+       
 
         const allFiles: File[] = [
           ...(data.certificateFiles || []),
-          ...(data.profileImageFile ? [data.profileImageFile] : []),
         ];
 
         for (let i = 0; i < signedData!.length; i++) {
@@ -66,6 +63,18 @@ export const useDoctorProfileSubmit = () => {
           );
         }
       }
+
+       if (hasNewProfileImage) {
+           try {
+            const profileImageUploaded = await uploadImageToCloundinary([data.profileImageFile!])
+            console.log("profile image---",profileImageUploaded)
+           data.profileImageLink = profileImageUploaded?.length?profileImageUploaded[0].toString():''
+           } catch (error) {
+            console.log("Profile image uplaod err",error)
+            toast.error("Profile image issue , try again later")
+           }
+            
+       }
 
       const finalResponse = await updateProfileDR(data);
      

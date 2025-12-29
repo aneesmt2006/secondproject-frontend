@@ -38,7 +38,8 @@ const AppointmentPage = () => {
     selectedDoctorSlots,
     isBookingLoading,
     isRecurring,
-    setIsRecurring
+    setIsRecurring,
+    isSlotsLoading
   } = useAppointmentLogic();
 
   return (
@@ -142,6 +143,7 @@ const AppointmentPage = () => {
           setSelectTime={setSelectedTimeDate}
           onConfirm={handleBooking}
           loading={isBookingLoading}
+          slotsLoading={isSlotsLoading}
           isRecurring={isRecurring}
           setIsRecurring={setIsRecurring}
         />

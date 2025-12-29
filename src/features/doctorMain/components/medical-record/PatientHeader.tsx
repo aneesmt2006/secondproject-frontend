@@ -41,19 +41,19 @@ export const PatientHeader = ({ patient }: PatientHeaderProps) => {
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-xl font-bold text-slate-900 truncate tracking-tight">{patient.name}</h2>
-              <Badge variant="secondary" className="bg-blue-50 text-blue-600 border-blue-100 font-bold px-2 py-0.5 uppercase text-[9px] tracking-widest whitespace-nowrap">
+              <Badge variant="secondary" className="bg-blue-50 text-blue-600 border-blue-100 font-bold px-2 py-0.5 uppercase text-[11px] tracking-widest whitespace-nowrap">
                 {patient.status}
               </Badge>
             </div>
-            <p className="text-slate-500 text-xs font-medium mt-0.5">{patient.gender}, {patient.age} Yrs • ID: {patient.id}</p>
+            <p className="text-slate-500 text-sm font-medium mt-0.5">{patient.gender}, {patient.age} Yrs</p>
           </div>
 
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="rounded-xl bg-white/60 h-8 px-3 gap-1.5 border-slate-200 shadow-sm transition-all hover:scale-105">
-              <Phone className="w-3.5 h-3.5 text-primary" /> <span className="text-[10px] font-bold text-slate-700">Call</span>
+              <Phone className="w-3.5 h-3.5 text-primary" /> <span className="text-xs font-bold text-slate-700">Call</span>
             </Button>
             <Button variant="outline" size="sm" className="rounded-xl bg-white/60 h-8 px-3 gap-1.5 border-slate-200 shadow-sm transition-all hover:scale-105">
-              <Mail className="w-3.5 h-3.5 text-primary" /> <span className="text-[10px] font-bold text-slate-700">Email</span>
+              <Mail className="w-3.5 h-3.5 text-primary" /> <span className="text-xs font-bold text-slate-700">Email</span>
             </Button>
           </div>
         </div>
@@ -68,10 +68,10 @@ export const PatientHeader = ({ patient }: PatientHeaderProps) => {
             { label: "ALLERGIES", value: patient.allergies, icon: AlertCircle, color: "rose" },
         ].map((stat) => (
           <div key={stat.label} className="bg-white/40 border border-slate-200/50 rounded-xl p-3 transition-all hover:bg-white/60 group">
-            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">{stat.label}</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">{stat.label}</p>
             <div className="flex items-baseline gap-1">
-                <span className={`text-sm font-bold ${stat.color === 'rose' ? 'text-rose-500' : 'text-slate-900'}`}>{stat.value.split(' ')[0]}</span>
-                <span className="text-[9px] font-bold text-slate-400 uppercase">{stat.value.split(' ')[1]}</span>
+                <span className={`text-base font-bold ${stat.color === 'rose' ? 'text-rose-500' : 'text-slate-900'}`}>{stat.value.split(' ')[0]}</span>
+                <span className="text-[11px] font-bold text-slate-400 uppercase">{stat.value.split(' ')[1]}</span>
             </div>
           </div>
         ))}
@@ -86,9 +86,9 @@ export const PatientHeader = ({ patient }: PatientHeaderProps) => {
          <div className="relative z-10 flex flex-col gap-4">
             <div className="flex items-start justify-between">
                 <div className="space-y-0.5">
-                    <p className="text-[8px] font-black uppercase tracking-[0.2em] opacity-80">Pregnancy Status</p>
-                    <h4 className="text-xl font-black tracking-tight">Week {patient.pregnancy.week}</h4>
-                    <p className="text-[10px] font-medium opacity-90">{patient.pregnancy.trimester}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Pregnancy Status</p>
+                    <h4 className="text-2xl font-black tracking-tight">Week {patient.pregnancy.week}</h4>
+                    <p className="text-xs font-medium opacity-90">{patient.pregnancy.trimester}</p>
                 </div>
                 <div className="bg-white/20 p-1.5 rounded-lg backdrop-blur-md">
                     <Calendar className="w-3.5 h-3.5" />
@@ -103,7 +103,7 @@ export const PatientHeader = ({ patient }: PatientHeaderProps) => {
                         className="h-full bg-white rounded-full"
                     />
                 </div>
-                <div className="flex justify-between items-center text-[8px] font-bold uppercase tracking-wider">
+                <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider">
                     <span className="opacity-70">Start</span>
                     <span>Due: {patient.pregnancy.dueDate}</span>
                 </div>

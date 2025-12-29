@@ -15,7 +15,7 @@ import { getDoctor } from "../../../services/api/users-management.service";
 import useProfileData from "../hooks/useProfileData";
 import { useDoctorProfileSubmit } from "../hooks/useDoctorProfileSubmit";
 
-import PdfViewerModal from "../components/PdfViewerModal";
+import PdfViewerModal from "@/components/PdfViewerModal";
 
 const DoctorProfilePage = () => {
   const { loading, handleSubmit } = useDoctorProfileSubmit();

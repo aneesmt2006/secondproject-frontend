@@ -57,7 +57,7 @@ export const useCompleteAppointment = () => {
     }
 
     const dates: PreviewDate[] = [];
-    let currentDate = new Date();
+    const currentDate = new Date();
     const visits = Math.max(1, totalVisits);
     const interval_step = Math.max(1, repeatValue);
     

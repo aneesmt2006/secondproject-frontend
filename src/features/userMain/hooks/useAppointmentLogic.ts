@@ -22,6 +22,7 @@ export const useAppointmentLogic = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isRecurring, setIsRecurring] = useState(false);
+  const [isSlotsLoading, setIsSlotsLoading] = useState(false);
   
   useEffect(() => {
     if (!isModalOpen) {
@@ -113,17 +114,26 @@ export const useAppointmentLogic = () => {
   useEffect(()=>{
     if(isModalOpen && selectedDoctor?.doctorId){
       const loadTheDoctor=async()=>{
+        setIsSlotsLoading(true);
+        setSelectedDoctorSlots([]); // Clear previous slots
         try {
           const allslots = await getDrAvailableSlots(selectedDoctor.doctorId,selectedDate)
            console.log("Slots data,,-->",allslots.data)
-           setSelectedDoctorSlots(allslots.data!.slots)
+           if (allslots.data && allslots.data.slots) {
+             setSelectedDoctorSlots(allslots.data.slots)
+           } else {
+             setSelectedDoctorSlots([]);
+           }
         } catch (error) {
           console.log(error)
+          setSelectedDoctorSlots([]);
+        } finally {
+          setIsSlotsLoading(false);
         }
       }
       loadTheDoctor()
     }
-  },[isModalOpen ,selectedDoctor?.doctorId])
+  },[isModalOpen ,selectedDoctor?.doctorId, selectedDate])
 
 
   const handleBooking = async () => {
@@ -187,6 +197,7 @@ export const useAppointmentLogic = () => {
     selectedDoctorSlots,
     isBookingLoading,
     isRecurring,
-    setIsRecurring
+    setIsRecurring,
+    isSlotsLoading
   };
 };

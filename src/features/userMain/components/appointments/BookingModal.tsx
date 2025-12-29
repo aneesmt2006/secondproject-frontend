@@ -14,6 +14,7 @@ interface BookingModalProps {
   selectTime:string|null,
   onConfirm: () => void;
   loading?: boolean;
+  slotsLoading?: boolean;
   isRecurring: boolean;
   setIsRecurring: (value: boolean) => void;
 }
@@ -28,6 +29,7 @@ export const BookingModal = ({
   setSelectTime, 
   onConfirm, 
   loading = false,
+  slotsLoading = false,
   isRecurring,
   setIsRecurring
 }: BookingModalProps) => {
@@ -111,40 +113,48 @@ export const BookingModal = ({
                             <label className="text-xs font-bold text-[hsl(var(--muted-foreground))] uppercase tracking-wider mb-3 block pt-2">
                               Select Time Slot
                             </label>
-                          {slots && slots.length > 0 && !slots.every(s=>s.status.toLowerCase().includes('past')) ? (
-                            <div className="grid grid-cols-3 gap-3">
-                              {slots.map((slot, i) => {
-                                const isPast = slot.status.toLowerCase().includes('past');
-                                const isBooked = slot.status.toLowerCase().includes('booked');
-                                const isDisabled = isPast || isBooked;
+                            {slotsLoading ? (
+                               <div className="flex justify-center items-center py-12">
+                                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#E0825C]"></div>
+                               </div>
+                            ) : (
+                                <>
+                                  {slots && slots.length > 0 && !slots.every(s=>s.status.toLowerCase().includes('past')) ? (
+                                    <div className="grid grid-cols-3 gap-3">
+                                      {slots.map((slot, i) => {
+                                        const isPast = slot.status.toLowerCase().includes('past');
+                                        const isBooked = slot.status.toLowerCase().includes('booked');
+                                        const isDisabled = isPast || isBooked;
 
-                                return (
-                                  <button
-                                    key={i}
-                                    className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${
-                                      isPast 
-                                        ? "bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed" 
-                                        : isBooked 
-                                          ? "bg-red-50 text-red-400 border-red-100 cursor-not-allowed"
-                                          : selectTime === slot.time 
-                                            ? "bg-[#E0825C] text-white border-[#E0825C] shadow-md"
-                                            : "bg-white border-gray-200 text-gray-600 hover:border-[#E0825C] hover:text-[#E0825C]"
-                                    }`}
-                                    disabled={isDisabled}
-                                    onClick={()=>setSelectTime(slot.time)}
-                                  >
-                                    {slot.time.split(',')[1] }
-                                  </button>
-                                )
-                              })}
-                            </div>
-                          ) : (
-                            <div className="flex flex-col items-center justify-center py-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                              <p className="text-sm font-medium text-gray-500">No available slots</p>
-                              <p className="text-xs text-gray-400 mt-1">Please check another date</p>
-                            </div>
-                          )}
-                        </div>
+                                        return (
+                                          <button
+                                            key={i}
+                                            className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${
+                                              isPast 
+                                                ? "bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed" 
+                                                : isBooked 
+                                                  ? "bg-red-50 text-red-400 border-red-100 cursor-not-allowed"
+                                                  : selectTime === slot.time 
+                                                    ? "bg-[#E0825C] text-white border-[#E0825C] shadow-md"
+                                                    : "bg-white border-gray-200 text-gray-600 hover:border-[#E0825C] hover:text-[#E0825C]"
+                                            }`}
+                                            disabled={isDisabled}
+                                            onClick={()=>setSelectTime(slot.time)}
+                                          >
+                                            {slot.time.split(',')[1] }
+                                          </button>
+                                        )
+                                      })}
+                                    </div>
+                                  ) : (
+                                    <div className="flex flex-col items-center justify-center py-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                                      <p className="text-sm font-medium text-gray-500">No available slots</p>
+                                      <p className="text-xs text-gray-400 mt-1">Please check another date</p>
+                                    </div>
+                                  )}
+                                </>
+                            )}
+                          </div>
 
                           {/* Recurring Appointment Option */}
                           <div className="pb-8">
