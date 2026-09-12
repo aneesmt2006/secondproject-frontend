@@ -1,6 +1,6 @@
-import axios from "axios";
+﻿import axios from "axios";
 import {  DoctorProfileWithPageCounts, drProfile, IuploadFileResponse, ProfileData } from "@/types/profile.type";
-import { fetusForm } from "../../features/adminMain/types";
+import { fetusForm } from "../../features/admin-dashboard/types";
 import { APIResponse } from "../types/api.response";
 import { axiosInstance } from "./auth.service";
 
@@ -161,3 +161,4 @@ export const getAllDoctorsApmntProfile = async (specialization:string="",skip:nu
     const response = await axiosInstance.get<APIResponse<DoctorProfileWithPageCounts>>(`/users/doctor/profile/filter?page=${skip}&specialization=${specialization}`)
     return response.data
 }
+

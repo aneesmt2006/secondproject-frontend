@@ -40,7 +40,7 @@ export const displayRazorpay = async (paymentData:{userId:string,doctorId:string
     key: result.data.data?.keyId,
     amount: (result.data.data!.amount * 100).toString(), // Razorpay requires paise
     currency:result.data.data?.currency,
-    name: "Mama's Time",
+    name: "Tomome",
     description: "Doctor Appointment Payment",
     order_id: result.data.data?.razorpayOrderId,
 
@@ -53,8 +53,8 @@ export const displayRazorpay = async (paymentData:{userId:string,doctorId:string
           razorpaySignature: response.razorpay_signature,
         };
 
-         await axiosInstance.post("/payment/create/verify", verifyBody);
-
+        const res = await axiosInstance.post("/payment/create/verify", verifyBody);
+        console.log('Payment result---->',res)
         toast.info("Payment Verified");
       } catch (error) {
         console.log(error)
@@ -63,13 +63,13 @@ export const displayRazorpay = async (paymentData:{userId:string,doctorId:string
     },
 
     prefill: {
-      name: "Mama's Time",
+      name: "Tomome",
       email: "MamasInfo@example.com",
-      contact: "9999999999",
+      contact: "+91 6238869782",
     },
 
     notes: {
-      address: "Mama's Time Corporate Office",
+      address: "Tomome's  Corporate Office",
     },
 
     theme: {

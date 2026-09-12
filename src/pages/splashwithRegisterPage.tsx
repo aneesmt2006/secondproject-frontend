@@ -1,6 +1,6 @@
-
+﻿
 import { useState } from 'react';
-import OnboardingScreen from '@/features/registration/components/OnboardingScreen';
+import OnboardingScreen from '@/features/patient-auth/components/OnboardingScreen';
 import RegistrationForm from '../components/RegistrationForm';
 import { registerAccount } from '../services/api/auth.service';
 import { RegistrationData } from '../types/auth.type';
@@ -70,3 +70,4 @@ const SplashwithRegisterPage = () => {
 }
 
 export default SplashwithRegisterPage
+

@@ -49,3 +49,11 @@ export type Patient = {
 
   lastReport: LastReport;
 };
+
+
+export interface MedicalPrescription {
+appointmentId : string,
+userId:string,
+doctorName:string,
+content:string,
+}

@@ -45,8 +45,8 @@ export interface AppointmentsDet {
   age: number;
   isFirstPregnancy?: boolean;
   trimester: string;
-  appoinmentDate?: string;
-  appoinmentTime?: string;
+  appointmentDate?: string;
+  appointmentTime?: string;
   consultationStatus?: string;
   userId?: string;
   appointmentId?: string;
@@ -62,8 +62,8 @@ export interface UserAppointment {
   appointmentId: string;
   doctorName: string;
   specialization: string;
-  appoinmentDate: string;
-  appoinmentTime: string;
+  appointmentDate: string;
+  appointmentTime: string;
   reason: string;
   notes?: string;
   status: 'Completed' | 'Upcoming' | 'Cancelled' | 'Scheduled';

@@ -1,10 +1,10 @@
-import axios from "axios";
+﻿import axios from "axios";
 import { RegistrationData } from "../../types/auth.type";
-import { IUser } from "../../features/registration/slice/userSlice";
+import { IUser } from "../../features/patient-auth/slice/userSlice";
 import { APIResponse } from "../types/api.response";
-import { drFormData } from "../../features/dr.registration/types/dr.types";
-import { IDoctor } from "../../features/dr.registration/slice/doctorSlice";
-import { User } from "../../features/adminMain/types";
+import { drFormData } from "../../features/doctor-auth/types/dr.types";
+import { IDoctor } from "../../features/doctor-auth/slice/doctorSlice";
+import { User } from "../../features/admin-dashboard/types";
 import { drBasicData } from "@/types/profile.type";
 
 
@@ -99,6 +99,7 @@ export const updateUserStatus = async(id:string,status:boolean):Promise<APIRespo
   const response = await axiosInstance.put<APIResponse<User>>(`/account/auth/admin/updateUserStatus/${id}`,{status})
   return response.data
 }
+
 
 
 

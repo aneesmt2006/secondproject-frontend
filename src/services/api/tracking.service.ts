@@ -1,4 +1,4 @@
-import { SymptomsData, LogSymptomsPayload } from "@/features/adminMain/types"
+﻿import { SymptomsData, LogSymptomsPayload } from "@/features/admin-dashboard/types"
 import { axiosInstance } from "./auth.service"
 import { APIResponse } from "../types/api.response"
 

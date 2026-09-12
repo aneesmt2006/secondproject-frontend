@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { doctorSelector } from "../features/dr.registration/slice/doctorSlice";
+﻿import { Navigate, Outlet } from "react-router-dom";
+import { doctorSelector } from "../features/doctor-auth/slice/doctorSlice";
 import { useAppSelector } from "../store/hooks";
 import { ProtectedLayoutProps, TallowedRoles } from "./protectedRoute";
-import { NotificationModal } from "@/features/userMain/components/NotificationModal";
+import { NotificationModal } from "@/features/patient-dashboard/components/NotificationModal";
 
 const ProtectedLayoutDR = ({ allowedRoles }: ProtectedLayoutProps) => {
   const { accessToken, role } = useAppSelector(doctorSelector);
@@ -26,3 +26,4 @@ const ProtectedLayoutDR = ({ allowedRoles }: ProtectedLayoutProps) => {
 };
 
 export default ProtectedLayoutDR;
+

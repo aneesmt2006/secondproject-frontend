@@ -1,9 +1,9 @@
-import { toast } from "sonner";
-import { googleAuthforRolesProps } from "../features/registration/types/register.type"; 
+﻿import { toast } from "sonner";
+import { googleAuthforRolesProps } from "../features/patient-auth/types/register.type"; 
 import { googleAuth } from "../services/api/auth.service";
-import { GoogleAuthResult } from "../features/registration/types/register.type";
+import { GoogleAuthResult } from "../features/patient-auth/types/register.type";
 import { useGoogleLogin } from "@react-oauth/google";
-import { setUserData, setUpdateUserField } from "../features/registration/slice/userSlice";
+import { setUserData, setUpdateUserField } from "../features/patient-auth/slice/userSlice";
 import { getUserProfile } from "../services/api/medical.service";
 
 
@@ -54,3 +54,4 @@ export const useGoogleAuthforRoles = ({
 
   return googleLogin;
 };
+

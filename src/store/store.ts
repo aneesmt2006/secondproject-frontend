@@ -1,9 +1,9 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+﻿import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {persistStore,persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import userReducer from "../features/registration/slice/userSlice";
-import doctorReducer from "../features/dr.registration/slice/doctorSlice";
-import notificationReducer from "@/features/userMain/slice/notificationSlice";
+import userReducer from "../features/patient-auth/slice/userSlice";
+import doctorReducer from "../features/doctor-auth/slice/doctorSlice";
+import notificationReducer from "@/features/patient-dashboard/slice/notificationSlice";
 
 const persistConfig = {
   key:"root",
@@ -43,3 +43,4 @@ export const persistor = persistStore(store)
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+

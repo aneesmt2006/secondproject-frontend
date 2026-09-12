@@ -1,8 +1,8 @@
-import { Navigate, Outlet} from "react-router-dom"
-import { userSelector } from "../features/registration/slice/userSlice"
+﻿import { Navigate, Outlet, useLocation } from "react-router-dom"
+import { userSelector } from "../features/patient-auth/slice/userSlice"
 import { useAppSelector } from "../store/hooks"
-import { BottomTabBar } from "../features/userMain/components/BottomTabBar"
-import { NotificationModal } from "../features/userMain/components/NotificationModal"
+import { BottomTabBar } from "../features/patient-dashboard/components/BottomTabBar"
+import { NotificationModal } from "../features/patient-dashboard/components/NotificationModal"
 
 export type  TallowedRoles = "user" | "doctor" | 'admin'
 export interface ProtectedLayoutProps {
@@ -12,6 +12,11 @@ export interface ProtectedLayoutProps {
 const ProtectedLayout = ({allowedRoles}:ProtectedLayoutProps) =>{
 
   const user = useAppSelector(userSelector)
+  const location = useLocation()
+  const isExcludedPath = 
+    location.pathname === '/dashboard/chat' || 
+    location.pathname === '/profile' || 
+    location.pathname === '/dashboard/video';
 
   if(!user.accessToken){
     return <Navigate to='/login' replace/>
@@ -24,12 +29,13 @@ const ProtectedLayout = ({allowedRoles}:ProtectedLayoutProps) =>{
   return (
    <>
      <Outlet/> 
-     {allowedRoles.includes('user') && (user.lmp && <BottomTabBar/>)}
+     {allowedRoles.includes('user') && user.lmp && !isExcludedPath && <BottomTabBar/>}
      {(allowedRoles.includes('user') || allowedRoles.includes('doctor')) && <NotificationModal />}
    </>
   )
 }
 
 export default ProtectedLayout;
+
 
 
