@@ -1,4 +1,4 @@
-﻿import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { DesktopNavbar } from '@/features/patient-dashboard/components/DesktopNavbar';
 import { useAppointmentLogic } from "../hooks/useAppointmentLogic";
 import { AppointmentHero } from '@/features/patient-dashboard/components/appointments/AppointmentHero';
@@ -43,7 +43,7 @@ const AppointmentPage = () => {
   } = useAppointmentLogic();
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_center,hsl(24_100%_93%)_0%,hsl(22_95%_82%)_40%,hsl(18_80%_70%)_100%)] font-outfit pb-32">
+    <div className="min-h-screen bg-patient-theme font-outfit pb-32 transition-colors duration-500">
       <DesktopNavbar />
       <motion.div 
         initial={{ opacity: 0 }}
@@ -96,7 +96,7 @@ const AppointmentPage = () => {
                   transition={{ duration: 0.2 }}
                   className="flex justify-center items-center h-[300px] md:h-[400px]"
                 >
-                   <div className="animate-spin rounded-full h-10 w-10 md:h-14 md:w-14 border-b-4 border-cocoa border-t-transparent shadow-lg shadow-orange-500/20"></div>
+                   <div className="animate-spin rounded-full h-10 w-10 md:h-14 md:w-14 border-b-4 border-cocoa border-t-transparent shadow-lg shadow-patient-primary/20"></div>
                 </motion.div>
              ) : (
                 <motion.div

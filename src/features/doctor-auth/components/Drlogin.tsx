@@ -1,4 +1,4 @@
-﻿import DoctorCard from '@/features/doctor-dashboard/components/DoctorCard'
+import DoctorCard from '@/features/doctor-dashboard/components/DoctorCard'
 import { Lock, Mail, Stethoscope } from 'lucide-react'
 import DoctorInput from '@/features/doctor-dashboard/components/DoctorInput'
 import DoctorButton from '@/features/doctor-dashboard/components/DoctorButton'

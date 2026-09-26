@@ -90,9 +90,9 @@ axiosInstance.interceptors.response.use(
                 toast.error("Session expired. Please log in again.");
                 toast.error("Session expired. Please log in againsssss.");
 
-                // setTimeout(() => {
-                //     window.location.href = '/';
-                // }, 2000);
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
                 return Promise.reject(refreshError);
             } finally {
                 isRefreshing = false;

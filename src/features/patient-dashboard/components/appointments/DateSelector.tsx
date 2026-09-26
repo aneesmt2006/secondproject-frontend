@@ -37,8 +37,8 @@ export const DateSelector = ({
       </span>
       <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
         <PopoverTrigger asChild>
-          <button className="flex items-center gap-2 text-[#5A3A2E] hover:text-[#E0825C] transition-colors font-bold text-sm md:text-base bg-white/40 px-3 py-1.5 rounded-full border border-white/40 backdrop-blur-md">
-            <CalendarIcon className="w-4 h-4 text-[#E0825C]" />
+          <button className="flex items-center gap-2 text-[#5A3A2E] hover:text-patient-primary transition-colors font-bold text-sm md:text-base bg-white/40 px-3 py-1.5 rounded-full border border-white/40 backdrop-blur-md">
+            <CalendarIcon className="w-4 h-4 text-patient-primary" />
             {format(viewStartDate, "MMMM yyyy")}
           </button>
         </PopoverTrigger>
@@ -55,8 +55,8 @@ export const DateSelector = ({
             }}
             initialFocus
             classNames={{
-              day_selected: "bg-[#E0825C] text-white hover:bg-[#cc7254] hover:text-white focus:bg-[#E0825C] focus:text-white",
-              day_today: "bg-orange-50 text-[#E0825C] font-bold",
+              day_selected: "bg-patient-primary text-white hover:bg-patient-primary/80 hover:text-white focus:bg-patient-primary focus:text-white",
+              day_today: "bg-patient-primary/10 text-patient-primary font-bold",
             }}
           />
         </PopoverContent>
@@ -96,7 +96,7 @@ export const DateSelector = ({
                     transition-all duration-200
                     ${index >= 5 ? 'md:hidden lg:flex' : 'flex'}
                     ${active
-                      ? "bg-[#E0825C] text-white border-[#E0825C]/30 shadow-[0_8px_20px_rgba(224,130,92,0.3)] scale-[1.05]"
+                      ? "bg-patient-primary text-white border-patient-primary/30 shadow-[0_8px_20px_rgba(224,130,92,0.3)] scale-[1.05]"
                       : "bg-white/50 text-[#5A3A2E] border-white/40 hover:bg-white/70"
                     }`}
                 >

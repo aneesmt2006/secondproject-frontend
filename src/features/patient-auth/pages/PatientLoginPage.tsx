@@ -1,4 +1,4 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import { loginAccount } from "../../../services/api/auth.service";
 import { getUserProfile } from "../../../services/api/medical.service";
@@ -14,7 +14,6 @@ const LoginPage = () => {
   const onSubmit = async (email: string, password: string) => {
      try {
        const loginResponse = await loginAccount(email, password);
-       console.log("Login Response Data:", loginResponse.data);
        toast.success(loginResponse.message);
        
        dispatch(setUserData({ ...loginResponse.data!, role: 'user' }));
@@ -35,7 +34,6 @@ const LoginPage = () => {
 
        navigate('/dashboard', { replace: true });
      } catch (error) {
-       console.log(error);
        toast.error(error.response?.data?.message || "Login failed, Try Later",{richColors:true});
      }
   };

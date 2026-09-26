@@ -1,4 +1,4 @@
-﻿import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -143,8 +143,13 @@ const handleSubmit = async () => {
   
 
   return (
-    <div className="min-h-screen bg-cream py-6 px-3 sm:px-6 md:px-8">
-      <div className="max-w-3xl mx-auto w-full">
+    <div className="min-h-screen relative overflow-hidden transition-colors duration-500 py-6 px-3 sm:px-6 md:px-8" style={{ background: 'var(--patient-bg-gradient)' }}>
+      {/* Decorative soft blobs */}
+      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-30 blur-3xl pointer-events-none transition-colors duration-500" style={{ background: 'var(--blob-1)' }} />
+      <div className="absolute -bottom-16 -left-16 w-80 h-80 rounded-full opacity-20 blur-3xl pointer-events-none transition-colors duration-500" style={{ background: 'var(--blob-2)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10 blur-3xl pointer-events-none transition-colors duration-500" style={{ background: 'var(--blob-3)' }} />
+
+      <div className="relative z-10 max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -153,29 +158,29 @@ const handleSubmit = async () => {
           <Button
             variant="ghost"
             onClick={handleBack}
-            className="mb-4 text-cocoa hover:text-wine"
+            className="mb-4 text-[color:var(--foreground)] hover:text-patient-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-cocoa tracking-tight mb-1">
-                {activeTab === 'profile' ? 'Profile Details' : 'Medical History'}
+            <div className="transition-opacity duration-300">
+              <h1 className="text-3xl font-bold text-[color:var(--foreground)] tracking-tight mb-1 transition-colors">
+                {activeTab === 'profile' ? 'Profile Details' : 'History & Records'}
               </h1>
-              <p className="text-sm text-cocoa/50 font-medium">
+              <p className="text-sm opacity-50 text-[color:var(--foreground)] font-medium transition-colors">
                 {activeTab === 'profile' 
-                  ? `Maintain your personal medical information` 
-                  : 'Track your previous prenatal consultation records'}
+                  ? 'Maintain your personal medical information' 
+                  : 'Your complete prenatal journey in one place'}
               </p>
             </div>
 
             {/* Pill Switcher */}
-            <div className="bg-cream/50 p-1.5 rounded-2xl flex items-center gap-1 border border-lilac/10 shadow-inner relative">
+            <div className="bg-white/50 p-1.5 rounded-2xl flex items-center gap-1 border border-white/60 shadow-inner relative ml-auto">
               <button
                 onClick={() => setActiveTab('profile')}
                 className={`relative z-10 flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${
-                  activeTab === 'profile' ? 'text-wine' : 'text-cocoa/40 hover:text-cocoa/60'
+                  activeTab === 'profile' ? 'text-patient-primary' : 'opacity-40 hover:opacity-60 text-[color:var(--foreground)]'
                 }`}
               >
                 {activeTab === 'profile' && (
@@ -185,14 +190,14 @@ const handleSubmit = async () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <User className={`w-4 h-4 relative z-20 ${activeTab === 'profile' ? 'text-periwinkle' : 'text-cocoa/30'}`} />
+                <User className={`w-4 h-4 relative z-20 ${activeTab === 'profile' ? 'text-patient-primary' : 'opacity-30 text-[color:var(--foreground)]'}`} />
                 <span className="relative z-20">Profile</span>
               </button>
               
               <button
                 onClick={() => setActiveTab('history')}
                 className={`relative z-10 flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${
-                  activeTab === 'history' ? 'text-wine' : 'text-cocoa/40 hover:text-cocoa/60'
+                  activeTab === 'history' ? 'text-patient-primary' : 'opacity-40 hover:opacity-60 text-[color:var(--foreground)]'
                 }`}
               >
                 {activeTab === 'history' && (
@@ -202,95 +207,110 @@ const handleSubmit = async () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <History className={`w-4 h-4 relative z-20 ${activeTab === 'history' ? 'text-periwinkle' : 'text-cocoa/30'}`} />
+                <History className={`w-4 h-4 relative z-20 ${activeTab === 'history' ? 'text-patient-primary' : 'opacity-30 text-[color:var(--foreground)]'}`} />
                 <span className="relative z-20">History</span>
               </button>
             </div>
           </div>
 
-          {progress !== null && (
+          {progress !== null && activeTab === 'profile' && (
             <div className="space-y-2 mb-4">
                <div className="flex justify-between items-end mb-1">
-                <span className="text-[10px] font-black text-periwinkle uppercase tracking-widest">Setup Progress</span>
-                <span className="text-[10px] font-black text-periwinkle/50 uppercase tracking-widest">Step {currentStep} of 2</span>
+                <span className="text-[10px] font-black text-patient-primary uppercase tracking-widest transition-colors">Setup Progress</span>
+                <span className="text-[10px] font-black text-patient-primary opacity-50 uppercase tracking-widest transition-colors">Step {currentStep} of 2</span>
               </div>
-              <Progress value={progress} className="h-1.5 bg-cream/50 rounded-full" />
+              <Progress value={progress} className="h-1.5 bg-white/50 rounded-full" />
             </div>
           )}
         </motion.div>
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-lilac/20 relative overflow-hidden"
-        >
-          <AnimatePresence>
-            {isLoading && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 z-[50] flex items-center justify-center bg-white/60 backdrop-blur-md"
-              >
-                <div className="flex flex-col items-center gap-3">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-cocoa"></div>
-                  <p className="text-cocoa font-semibold text-sm animate-pulse tracking-wide">
-                    Loading profile...
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+      <div className="relative z-10 w-full">
+        <AnimatePresence mode="wait">
+          {activeTab === 'profile' ? (
+            <motion.div
+              key="profile"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="max-w-3xl mx-auto w-full"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-white/60 relative overflow-hidden">
+                <AnimatePresence>
+                  {isLoading && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-[50] flex items-center justify-center bg-white/60 backdrop-blur-md"
+                    >
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-patient-primary"></div>
+                        <p className="text-[color:var(--foreground)] font-semibold text-sm animate-pulse tracking-wide transition-colors">
+                          Loading profile...
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-          <AnimatePresence mode="wait">
-            {activeTab === 'profile' ? (
-              currentStep === 1 ? (
-                <Step1Maternal
-                  profileData={profileData}
-                  handleChange={handleChange}
-                  setProfileData={setProfileData}
-                  errors={error}
-                />
-              ) : (
-                <Step2Medical
-                  profileData={profileData}
-                  handleChange={handleChange}
-                  setProfileData={setProfileData}
-                />
-              )
-            ) : (
-              <VisitHistory {...visitHistoryProps} />
-            )}
-          </AnimatePresence>
-
-          {activeTab === 'profile' && (
-            <div className="flex justify-between items-center mt-8 pt-6 border-t border-lilac/20">
-              {currentStep === 2 && (
-                <Button
-                  variant="outline"
-                  onClick={() => handleBack()}
-                  className="border-periwinkle/30 text-periwinkle hover:bg-periwinkle/10"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Back to Step 1
-                </Button>
-              )}
-
-              <Button
-                onClick={progress === 50 ? handleNext : handleSubmit}
-                className="ml-auto bg-periwinkle hover:bg-lavender text-white shadow-lg"
-              >
                 {currentStep === 1 ? (
-                  <>
-                    Next
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </>
+                  <Step1Maternal
+                    profileData={profileData}
+                    handleChange={handleChange}
+                    setProfileData={setProfileData}
+                    errors={error}
+                  />
                 ) : (
-                  "Finish"
+                  <Step2Medical
+                    profileData={profileData}
+                    handleChange={handleChange}
+                    setProfileData={setProfileData}
+                  />
                 )}
-              </Button>
-            </div>
+
+                <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/40">
+                  {currentStep === 2 && (
+                    <Button
+                      variant="outline"
+                      onClick={() => handleBack()}
+                      className="text-patient-primary hover:opacity-80 transition-colors"
+                      style={{ borderColor: 'color-mix(in srgb, var(--patient-primary) 30%, transparent)' }}
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-2" /> Back to Step 1
+                    </Button>
+                  )}
+
+                  <Button
+                    onClick={progress === 50 ? handleNext : handleSubmit}
+                    className="ml-auto bg-patient-primary hover:opacity-90 text-white shadow-lg transition-colors"
+                  >
+                    {currentStep === 1 ? (
+                      <>
+                        Next
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </>
+                    ) : (
+                      "Finish"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="history"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="w-full pt-4"
+            >
+              <div className="max-w-7xl mx-auto">
+                <VisitHistory {...visitHistoryProps} />
+              </div>
+            </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
       </div>
       <PredictionLottie
         show={showAnimation}

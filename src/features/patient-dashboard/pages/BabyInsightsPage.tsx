@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ChevronLeft, Ruler, Weight, Sparkles } from "lucide-react";
@@ -184,11 +184,9 @@ const BabyInsightsPage = () => {
               <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 h-full">
                 
                 {/* Stats Grid */}
-                <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+                {fetusData.week >= 4 && (
+                  <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
                   {/* Length */}
-                 {fetusData.week >= 4 && 
-                  (
-                    <>
                     <div className="bg-white/50 backdrop-blur-xl rounded-[2rem] p-5 border border-white/60 shadow-sm hover:shadow-md hover:bg-white/60 transition-all duration-300 group flex flex-col justify-between h-full">
                      <div className="flex justify-between items-start mb-2">
                         <div className="w-10 h-10 rounded-xl bg-[#FFE4D6] flex items-center justify-center text-[#E0825C] group-hover:scale-110 transition-transform">
@@ -213,9 +211,8 @@ const BabyInsightsPage = () => {
                       <p className="text-xl md:text-2xl font-bold text-[#5A2D0C]">{fetusData.weight.split(' ')[0].toString()}</p>
                     </div>
                   </div>
-                    </>
-                  )}
-                </motion.div>
+                  </motion.div>
+                )}
 
                 {/* Highlights Card */}
                 <motion.div

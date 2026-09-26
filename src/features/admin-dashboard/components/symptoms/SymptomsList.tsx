@@ -9,7 +9,6 @@ interface SymptomsListProps {
 }
 
 export const SymptomsList = ({ symptomsList, onEdit, onDelete, onCreate }: SymptomsListProps) => {
-  console.log("SYMptoms list ------------------->",symptomsList)
   if (symptomsList.length === 0) {
     return (
       <div className="text-center py-20 bg-white rounded-xl border border-rose/20 border-dashed">

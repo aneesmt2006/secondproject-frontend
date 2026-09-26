@@ -1,4 +1,4 @@
-﻿// import { Bell, User } from "lucide-react";
+// import { Bell, User } from "lucide-react";
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // // import { Badge } from "@/components/ui/badge";
 
@@ -26,7 +26,7 @@
 //               Hello, {doctorName}!
 //             </h1>
 //             <button className="text-xs text-primary hover:underline font-medium">
-//               View Your Profile & Settings →
+//               View Your Profile & Settings ?
 //             </button>
 //           </div>
 //         </div>
@@ -94,7 +94,7 @@ export const DoctorHeader = ({ doctorName, avatarUrl, rating = 4.9, patientCount
                 onClick={() => navigate("/doctor/profile")}
                 className="text-[10px] md:text-xs text-primary hover:underline font-medium"
               >
-                View Profile →
+                View Profile ?
               </button>
             </div>
           </div>

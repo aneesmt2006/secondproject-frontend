@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppSelector } from "../../../store/hooks";
 import { userSelector } from "../../patient-auth/slice/userSlice";
 import { doctorSelector } from "../../doctor-auth/slice/doctorSlice";

@@ -22,10 +22,8 @@ export const useMedicalRecord = () => {
   };
 
   const laodMedicalData= async(userId:string)=>{
-      console.log('iddddd',userId)
       try {
         const response = await getUserMedicalData(userId)
-        console.log('Medical Data Response:', response)
         setMedicalData(response.data)
       } catch (error) {
         console.error('Error loading medical data:', error)

@@ -3,11 +3,9 @@ import { pregnantProfile, updatePayload } from '@/types/profile.type';
 import { axiosInstance } from "./auth.service";
 import { MedicalPrescription, Patient } from "@/types/medical.overveiew.type";
 
-// import { IUser } from "../../features/patient-auth/slice/userSlice";
 
 
 export const updateProfile = async(data:updatePayload):Promise<APIResponse<pregnantProfile>>=>{
-   console.log("Updation data from API",data)
    const response  =  await axiosInstance.put<APIResponse<pregnantProfile>>('/medical/patient/profile/update',data);
     return response.data
 }
@@ -37,7 +35,6 @@ export const updatePrimaryDoctor = async(doctorId:string):Promise<APIResponse<an
 
 export const getPrimaryDoctor = async():Promise<APIResponse<{ doctorName: string; doctorId: string }>>=>{
     const response = await axiosInstance.get<APIResponse<{ doctorName: string; doctorId: string }>>('/medical/patient/profile/primaryDoctor');
-    console.log("Response of getPrimaryDR",response)
     return response.data;
 }
 
@@ -47,7 +44,13 @@ export const askChatbot = async(query:string):Promise<APIResponse<string>>=>{
 }
 
 export const priscriptionCreate = async(data:MedicalPrescription):Promise<APIResponse<string>>=>{
-    const response = await axiosInstance.post<APIResponse<string>>('/priscription/create',data)
+    const response = await axiosInstance.post<APIResponse<string>>('/medical/prescription/create',data)
     return response.data
 }
+
+export const getPrescriptionByAppointmentId = async(appointmentId: string): Promise<APIResponse<MedicalPrescription>> => {
+    const response = await axiosInstance.get<APIResponse<MedicalPrescription>>(`/medical/prescription?appointmentId=${appointmentId}`);
+    return response.data;
+}
+
 

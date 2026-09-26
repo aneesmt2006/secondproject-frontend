@@ -1,4 +1,4 @@
-﻿import axios from "axios";
+import axios from "axios";
 import {  DoctorProfileWithPageCounts, drProfile, IuploadFileResponse, ProfileData } from "@/types/profile.type";
 import { fetusForm } from "../../features/admin-dashboard/types";
 import { APIResponse } from "../types/api.response";
@@ -47,7 +47,7 @@ export const getFetusWeekData = async (week:number):Promise<APIResponse<fetusFor
 
 
 // admin apis
-export const uploadImageToCloundinary = async(selectedFiles:File[]):Promise<string[]|undefined>=>{
+export const uploadImageToCloudinary = async(selectedFiles:File[]):Promise<string[]|undefined>=>{
   console.log("FROM UPLOAD TO CLOUDINARY ------------------------------->")
     if(selectedFiles.length === 0) return []
     const formData = new FormData()
@@ -65,16 +65,13 @@ export const uploadImageToCloundinary = async(selectedFiles:File[]):Promise<stri
     }
 }
 
-
-
-
 export const fetusCreate = async(data: fetusForm):Promise<APIResponse<Response>>=>{
     const selectedFiles :File[]=[];
     selectedFiles.push(data.fetusFile!)
     selectedFiles.push(data.fruitFile!)
 
     if(selectedFiles.length > 0){
-        const images = await uploadImageToCloundinary(selectedFiles)
+        const images = await uploadImageToCloudinary(selectedFiles)
         console.log('uploaded urls',images)
         data.fetusImage = images![0]
         data.fruitImage = images![1]
@@ -100,7 +97,7 @@ export const fetusUpdate = async(data:fetusForm):Promise<APIResponse<Response>>=
     console.log("Both filess",hasBothFiles)
 
     if(hasBothFiles){
-        const images = await uploadImageToCloundinary(selectedFiles)
+        const images = await uploadImageToCloudinary(selectedFiles)
         console.log('uploaded urls',images)
         data.fetusImage = data.fetusFile! ? images![0]:data.fetusImage
         data.fruitImage = data.fruitFile! ? images![1]:data.fruitImage

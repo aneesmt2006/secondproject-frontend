@@ -20,9 +20,10 @@ interface DoctorAppointmentCardProps {
   onCancel?: (appointmentId: string) => void;
   toVideo?:()=>void;
   toChat?:()=>void;
+  isUpcoming?: boolean;
 }
 
-export const DoctorAppointmentCard = ({ appointment, onComplete, onViewRecords, onCancel,toVideo }: DoctorAppointmentCardProps) => {
+export const DoctorAppointmentCard = ({ appointment, onComplete, onViewRecords, onCancel,toVideo, isUpcoming }: DoctorAppointmentCardProps) => {
   const isOnline = appointment.consultationStatus === 'Online';
  
   return (
@@ -97,38 +98,40 @@ export const DoctorAppointmentCard = ({ appointment, onComplete, onViewRecords, 
         </div>
 
         {/* Actions Row */}
-        <div className="mt-1 space-y-2">
-          {/* Main Actions */}
-          <div className="flex flex-col gap-2">
-            <Button onClick={toVideo} className="bg-primary hover:bg-primary/90 text-white rounded-[0.9rem] h-11 text-[12px] font-bold shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
-              <Video className="w-4 h-4 mr-2" />
-              <button>Start Video Call</button>
-            </Button>
-            <Button variant="outline" className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-[0.9rem] h-11 text-[12px] font-bold transition-all active:scale-[0.98] shadow-sm">
-              <MessageSquare className="w-4 h-4 mr-2 text-primary" />
-              Chat Now
-            </Button>
-          </div>
+        {isUpcoming && (
+          <div className="mt-1 space-y-2">
+            {/* Main Actions */}
+            <div className="flex flex-col gap-2">
+              <Button onClick={toVideo} className="bg-primary hover:bg-primary/90 text-white rounded-[0.9rem] h-11 text-[12px] font-bold shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+                <Video className="w-4 h-4 mr-2" />
+                <span>Start Video Call</span>
+              </Button>
+              <Button variant="outline" className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-[0.9rem] h-11 text-[12px] font-bold transition-all active:scale-[0.98] shadow-sm">
+                <MessageSquare className="w-4 h-4 mr-2 text-primary" />
+                Chat Now
+              </Button>
+            </div>
 
-          {/* Status Actions - Minimalist pills */}
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={onComplete}
-              className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-emerald-100 hover:text-emerald-600 transition-all text-[10px] font-bold group/btn"
-            >
-              <CheckCircle2 className="w-3 h-3 opacity-60 group-hover/btn:opacity-100" />
-              Complete
-            </button>
-            
-            <button 
-              onClick={() => appointment.appointmentId && onCancel?.(appointment.appointmentId)}
-              className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-all text-[10px] font-bold group/btn"
-            >
-              <XCircle className="w-3 h-3 opacity-60 group-hover/btn:opacity-100" />
-              Cancel
-            </button>
+            {/* Status Actions - Minimalist pills */}
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={onComplete}
+                className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-emerald-100 hover:text-emerald-600 transition-all text-[10px] font-bold group/btn"
+              >
+                <CheckCircle2 className="w-3 h-3 opacity-60 group-hover/btn:opacity-100" />
+                Complete
+              </button>
+              
+              <button 
+                onClick={() => appointment.appointmentId && onCancel?.(appointment.appointmentId)}
+                className="flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 bg-slate-50/80 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-all text-[10px] font-bold group/btn"
+              >
+                <XCircle className="w-3 h-3 opacity-60 group-hover/btn:opacity-100" />
+                Cancel
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

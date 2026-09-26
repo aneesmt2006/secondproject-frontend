@@ -6,13 +6,13 @@ export const NotificationItem = ({ notification, isDoctor }: { notification: INo
   const getIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return <Calendar className={`w-5 h-5 ${isDoctor ? 'text-primary' : 'text-blue-500'}`} />;
+        return <Calendar className={`w-5 h-5 ${isDoctor ? 'text-primary' : 'text-patient-primary'}`} />;
       case 'reminder':
-        return <Info className={`w-5 h-5 ${isDoctor ? 'text-medical-info' : 'text-green-500'}`} />;
+        return <Info className={`w-5 h-5 ${isDoctor ? 'text-medical-info' : 'text-patient-primary/80'}`} />;
       case 'system':
         return <AlertTriangle className={`w-5 h-5 ${isDoctor ? 'text-medical-warning' : 'text-amber-500'}`} />;
       default:
-        return <Bell className="w-5 h-5 text-primary" />;
+        return <Bell className={`w-5 h-5 ${isDoctor ? 'text-primary' : 'text-patient-primary'}`} />;
     }
   };
 
@@ -25,14 +25,14 @@ export const NotificationItem = ({ notification, isDoctor }: { notification: INo
       className={`p-4 rounded-2xl mb-3 flex items-start gap-4 transition-all ${
         notification.isRead 
           ? 'bg-white/40' 
-          : `bg-white shadow-sm border-l-4 ${isDoctor ? 'border-primary' : 'border-primary'}`
+          : `bg-white shadow-sm border-l-4 ${isDoctor ? 'border-primary' : 'border-patient-primary'}`
       }`}
     >
-      <div className={`p-2 rounded-xl ${notification.isRead ? 'bg-gray-100' : 'bg-primary/10'}`}>
+      <div className={`p-2 rounded-xl ${notification.isRead ? 'bg-gray-100' : (isDoctor ? 'bg-primary/10' : 'bg-patient-primary/10')}`}>
         {getIcon(notification.type)}
       </div>
       <div className="flex-1">
-        <h4 className={`text-sm font-semibold ${notification.isRead ? 'text-gray-500' : (isDoctor ? 'text-foreground' : 'text-cocoa')}`}>
+        <h4 className={`text-sm font-semibold ${notification.isRead ? 'text-gray-500' : (isDoctor ? 'text-foreground' : 'text-patient-primary')}`}>
           {notification.title}
         </h4>
         <p className={`text-xs mt-1 ${notification.isRead ? 'text-gray-400' : 'text-muted-foreground'}`}>

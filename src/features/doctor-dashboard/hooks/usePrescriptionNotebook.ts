@@ -11,6 +11,8 @@ export const usePrescriptionNotebook = (doctorName:string) => {
 
   const roomCode = location.state?.roomCode;
 
+  const userId = location.state?.userId;
+
   const pastConsultations = [
     {
       id: 1,
@@ -47,14 +49,26 @@ export const usePrescriptionNotebook = (doctorName:string) => {
     setIsModalOpen(true);
   };
 
-   const handleSaveNote = async () => {
-      // Logic to save the note would go here
-      console.log("Saving note:", noteContent);
-      // You might want to clear the note or show a success message here
-      console.log("Content==>",noteContent)
-      console.log("Room code",roomCode)
-      console.log("DoctorName:",doctorName)
-    };
+  const handleSaveNote = async () => {
+    try {
+      if (!roomCode || !userId || !doctorName || !noteContent) {
+        console.error("Missing required fields");
+        return;
+      }
+
+      const response = await priscriptionCreate({
+        appointmentId: roomCode,
+        userId: userId,
+        doctorName: doctorName,
+        content: noteContent
+      });
+
+      console.log("Prescription created:", response);
+      setNoteContent("");
+    } catch (error) {
+      console.error("Error creating prescription:", error);
+    }
+  };
 
 
   const filteredConsultations = pastConsultations.filter(

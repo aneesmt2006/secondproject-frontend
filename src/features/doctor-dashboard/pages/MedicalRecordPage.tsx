@@ -16,8 +16,7 @@ import { PatientHeader } from "../components/medical-record/PatientHeader";
 import { VitalsGrid } from "../components/medical-record/VitalsGrid";
 import { OverviewTab } from "../components/medical-record/OverviewTab";
 import { ClinicalHistory } from "../components/medical-record/ClinicalHistory";
-import { LabResults } from "../components/medical-record/LabResults";
-import { PrescriptionNotebook } from "../components/medical-record/PrescriptionNotebook";
+import { PrescriptionHistory } from "../components/medical-record/PrescriptionHistory";
 import "../../../theme/doctor.css";
 
 const MedicalRecordPage = () => {
@@ -87,7 +86,6 @@ const MedicalRecordPage = () => {
                 {[
                   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
                   { id: 'clinical', label: 'Clinical History', icon: History },
-                  { id: 'lab', label: 'Lab Results', icon: FlaskConical },
                   { id: 'prescriptions', label: 'Prescription & Notes', icon: Pill },
                 ].map((tab) => (
                   <TabsTrigger 
@@ -108,15 +106,11 @@ const MedicalRecordPage = () => {
               </TabsContent>
 
               <TabsContent value="clinical" className="mt-0">
-                <ClinicalHistory />
-              </TabsContent>
-
-              <TabsContent value="lab" className="mt-0">
-                <LabResults />
+                <ClinicalHistory patientId={patient.id} />
               </TabsContent>
 
               <TabsContent value="prescriptions" className="mt-0">
-                <PrescriptionNotebook patient={patient} />
+                <PrescriptionHistory patientId={patient.id} patientName={patient.name} />
               </TabsContent>
             </AnimatePresence>
           </Tabs>

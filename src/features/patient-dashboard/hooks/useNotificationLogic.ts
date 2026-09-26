@@ -1,4 +1,4 @@
-﻿import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addNotifications, notificationSelector, setModalOpen, fetchNotifications } from '../slice/notificationSlice';
 import { userSelector } from '../../patient-auth/slice/userSlice';
@@ -35,7 +35,6 @@ export const useNotificationLogic = (shouldListen: boolean = false) => {
     const eventName = (drRole === 'doctor' || role === 'doctor') ? `doctor:${emittingId}` : `user:${emittingId}`;
     
     const handleNotification = (data: any) => {
-      console.log('🔔 Notification:', data.message);
       dispatch(addNotifications(data));
       playNotificationChime();
     };

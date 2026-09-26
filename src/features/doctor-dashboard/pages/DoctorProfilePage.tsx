@@ -55,7 +55,6 @@ const DoctorProfilePage = () => {
             fullName: response.data.fullName || (response.data as any).doctorName || "",
             clinicName: response.data.clinicName || (response.data as any).clinicName || ""
           };
-          console.log("Nothing data is there ---<><><>")
           setFormData(dataWithFallback);
         }
       } catch (error) {

@@ -34,14 +34,14 @@ export const NotificationModal = () => {
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed bottom-0 left-0 right-0 z-[70] md:max-w-md md:left-auto md:right-6 md:bottom-24"
           >
-            <div className={`${isDoctor ? 'bg-white/95 backdrop-blur-xl' : 'bg-[#F9F0E6]'} md:rounded-3xl rounded-t-[2.5rem] shadow-2xl overflow-hidden border border-white/40 max-h-[80vh] flex flex-col`}>
+            <div className={`${isDoctor ? 'bg-white/95 backdrop-blur-xl border-white/40' : 'bg-white/95 backdrop-blur-xl border-patient-primary/20'} md:rounded-3xl rounded-t-[2.5rem] shadow-2xl overflow-hidden border max-h-[80vh] flex flex-col`}>
               {/* Header */}
-              <div className="p-6 bg-white/60 backdrop-blur-md border-b border-white/40 flex items-center justify-between sticky top-0 z-10">
+              <div className={`p-6 bg-white/60 backdrop-blur-md border-b flex items-center justify-between sticky top-0 z-10 ${isDoctor ? 'border-white/40' : 'border-patient-primary/10'}`}>
                 <div>
-                  <h2 className={`text-xl font-bold ${isDoctor ? 'text-foreground' : 'text-cocoa'} flex items-center gap-2`}>
+                  <h2 className={`text-xl font-bold ${isDoctor ? 'text-foreground' : 'text-patient-primary'} flex items-center gap-2`}>
                     Notifications
                     {unreadCount > 0 && (
-                      <span className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full">
+                      <span className={`${isDoctor ? 'bg-primary' : 'bg-patient-primary'} text-white text-[10px] px-2 py-0.5 rounded-full`}>
                         {unreadCount} New
                       </span>
                     )}
@@ -54,16 +54,16 @@ export const NotificationModal = () => {
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllAsRead}
-                      className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
+                      className={`text-xs font-semibold transition-colors ${isDoctor ? 'text-primary hover:text-primary/80' : 'text-patient-primary hover:text-patient-primary/80'}`}
                     >
                       Mark all as read
                     </button>
                   )}
                   <button
                     onClick={handleClose}
-                    className="p-2 hover:bg-black/5 rounded-full transition-colors"
+                    className={`p-2 hover:bg-black/5 rounded-full transition-colors ${!isDoctor && 'text-patient-primary/70 hover:text-patient-primary'}`}
                   >
-                    <X className={`w-5 h-5 ${isDoctor ? 'text-foreground' : 'text-cocoa'}`} />
+                    <X className={`w-5 h-5 ${isDoctor ? 'text-foreground' : 'text-patient-primary'}`} />
                   </button>
                 </div>
               </div>
@@ -79,10 +79,10 @@ export const NotificationModal = () => {
                 ) : (
                   <div className="flex flex-col items-center justify-center py-20 text-center px-6">
                     <div className="w-16 h-16 bg-white/40 rounded-full flex items-center justify-center mb-4">
-                      <Bell className="w-8 h-8 text-gray-300" />
+                      <Bell className={`w-8 h-8 ${isDoctor ? 'text-gray-300' : 'text-patient-primary/30'}`} />
                     </div>
-                    <h3 className={`text-lg font-semibold ${isDoctor ? 'text-foreground' : 'text-cocoa'}`}>All caught up!</h3>
-                    <p className="text-sm text-gray-500 mt-2">
+                    <h3 className={`text-lg font-semibold ${isDoctor ? 'text-foreground' : 'text-patient-primary'}`}>All caught up!</h3>
+                    <p className={`text-sm mt-2 ${isDoctor ? 'text-gray-500' : 'text-patient-primary/60'}`}>
                       When you get notifications, they'll show up here.
                     </p>
                   </div>
@@ -90,10 +90,10 @@ export const NotificationModal = () => {
               </div>
 
               {/* Footer */}
-              <div className="p-4 bg-white/20 border-t border-white/40 text-center">
+              <div className={`p-4 bg-white/20 border-t text-center ${isDoctor ? 'border-white/40' : 'border-patient-primary/10'}`}>
                 <button
                   onClick={handleClose}
-                  className={`w-full py-3 ${isDoctor ? 'bg-primary/10 hover:bg-primary/20 text-primary' : 'bg-white/60 hover:bg-white/80 text-cocoa'} rounded-2xl font-semibold text-sm transition-all`}
+                  className={`w-full py-3 ${isDoctor ? 'bg-primary/10 hover:bg-primary/20 text-primary' : 'bg-patient-primary/10 hover:bg-patient-primary/20 text-patient-primary'} rounded-2xl font-semibold text-sm transition-all`}
                 >
                   Close
                 </button>

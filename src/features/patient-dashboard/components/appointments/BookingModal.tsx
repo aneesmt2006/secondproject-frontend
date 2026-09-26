@@ -1,4 +1,4 @@
-﻿import * as Dialog from "@radix-ui/react-dialog";
+import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { doctors, visitReasons } from '@/features/patient-dashboard/constants/appointments.data';
@@ -115,7 +115,7 @@ export const BookingModal = ({
                             </label>
                             {slotsLoading ? (
                                <div className="flex justify-center items-center py-12">
-                                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#E0825C]"></div>
+                                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-patient-primary"></div>
                                </div>
                             ) : (
                                 <>
@@ -135,13 +135,13 @@ export const BookingModal = ({
                                                 : isBooked 
                                                   ? "bg-red-50 text-red-400 border-red-100 cursor-not-allowed"
                                                   : selectTime === slot.time 
-                                                    ? "bg-[#E0825C] text-white border-[#E0825C] shadow-md"
-                                                    : "bg-white border-gray-200 text-gray-600 hover:border-[#E0825C] hover:text-[#E0825C]"
+                                                    ? "bg-patient-primary text-white border-patient-primary shadow-md"
+                                                    : "bg-white border-gray-200 text-gray-600 hover:border-patient-primary hover:text-patient-primary"
                                             }`}
                                             disabled={isDisabled}
                                             onClick={()=>setSelectTime(slot.time)}
                                           >
-                                            {slot.time.split(',')[1] }
+                                            {slot.time.includes(',') ? slot.time.split(',')[1].trim() : slot.time}
                                           </button>
                                         )
                                       })}
@@ -162,13 +162,13 @@ export const BookingModal = ({
                               onClick={() => setIsRecurring(!isRecurring)}
                               className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
                                 isRecurring 
-                                  ? "bg-orange-50 border-orange-200 shadow-sm" 
+                                  ? "bg-patient-primary/10 border-patient-primary/40 shadow-sm" 
                                   : "bg-gray-50/50 border-gray-100 hover:border-gray-200"
                               }`}
                             >
                               <div className="flex gap-3 items-center">
                                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                                  isRecurring ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-400"
+                                  isRecurring ? "bg-patient-primary text-white" : "bg-gray-200 text-gray-400"
                                 }`}>
                                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -179,7 +179,7 @@ export const BookingModal = ({
                                   <p className="text-[10px] text-gray-500 font-medium">Schedule this visit periodically</p>
                                 </div>
                               </div>
-                              <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ${isRecurring ? "bg-orange-500" : "bg-gray-300"}`}>
+                              <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ${isRecurring ? "bg-patient-primary" : "bg-gray-300"}`}>
                                 <motion.div 
                                   animate={{ x: isRecurring ? 24 : 0 }}
                                   className="w-4 h-4 bg-white rounded-full shadow-sm" 
@@ -220,7 +220,7 @@ export const BookingModal = ({
                             disabled={!selectTime || loading}
                             className={`w-full py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
                               selectTime && !loading
-                                ? "bg-[#E0825C] text-white shadow-[#E0825C]/20 hover:bg-[#d07550]" 
+                                ? "bg-patient-primary text-white shadow-patient-primary/20 hover:bg-patient-primary/80" 
                                 : "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
                             }`}
                           >

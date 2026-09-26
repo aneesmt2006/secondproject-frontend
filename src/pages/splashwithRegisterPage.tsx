@@ -1,4 +1,4 @@
-﻿
+
 import { useState } from 'react';
 import OnboardingScreen from '@/features/patient-auth/components/OnboardingScreen';
 import RegistrationForm from '../components/RegistrationForm';

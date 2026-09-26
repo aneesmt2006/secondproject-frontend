@@ -17,7 +17,6 @@ const DRregistrationPage = () => {
   const dispatch = useAppDispatch()
 
   const handleSubmit = async (data: drFormData) => {
-    console.log("going to call api", data);
     try {
       const response = await drRegisterAccount(data);
       localStorage.setItem("DRemail", response.data as unknown as string);
@@ -26,13 +25,11 @@ const DRregistrationPage = () => {
       return true;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.log("Error at dr register",error);
       return false;
     }
   };
 
   const onVerify = async (otp: string) => {
-    console.log(otp);
     try {
       const response = await drOTPverify(otp, localStorage.getItem("DRemail")!);
       
@@ -40,9 +37,7 @@ const DRregistrationPage = () => {
       dispatch(setDoctorData({ ...response.data!, role: 'doctor' }))
       localStorage.clear();
       navigate("/doctor/dashboard", { replace: true });
-      console.log(response);
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
     }
   };

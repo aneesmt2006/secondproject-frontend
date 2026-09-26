@@ -16,11 +16,11 @@ export const ChatSidebar = ({
   isDoctor = false
 }: ChatSidebarProps) => {
 
-  const themeColorText = isDoctor ? "text-primary" : "text-[#E0825C]";
-  const themeColorBorder = isDoctor ? "border-primary/20" : "border-[#E0825C]/20";
-  const themeColorBorderSelected = isDoctor ? "border-primary ring-primary/20" : "border-[#E0825C] ring-[#E0825C]/20";
-  const themeColorHoverBorder = isDoctor ? "hover:border-primary/30" : "hover:border-[#E0825C]/30";
-  const themeColorGradient = isDoctor ? "from-primary/20" : "from-[#E0825C]/20";
+  const themeColorText = isDoctor ? "text-primary" : "text-patient-primary";
+  const themeColorBorder = isDoctor ? "border-primary/20" : "border-patient-primary/20";
+  const themeColorBorderSelected = isDoctor ? "border-primary ring-primary/20" : "border-patient-primary ring-patient-primary/20";
+  const themeColorHoverBorder = isDoctor ? "hover:border-primary/30" : "hover:border-patient-primary/30";
+  const themeColorGradient = isDoctor ? "from-primary/20" : "from-patient-primary/20";
 
   return (
     <div
@@ -54,11 +54,17 @@ export const ChatSidebar = ({
               `}
             >
               <div className="relative">
-                <img
-                  src={doctor.avatarUrl}
-                  alt={doctor.name}
-                  className={`w-12 h-12 rounded-full object-cover shadow-sm bg-gradient-to-tr ${themeColorGradient} to-transparent`}
-                />
+                {doctor.avatarUrl ? (
+                  <img
+                    src={doctor.avatarUrl}
+                    alt={doctor.name}
+                    className={`w-12 h-12 rounded-full object-cover shadow-sm bg-gradient-to-tr ${themeColorGradient} to-transparent shrink-0`}
+                  />
+                ) : (
+                  <div className={`w-12 h-12 rounded-full shadow-sm flex items-center justify-center font-bold text-lg text-white shrink-0 ${isDoctor ? "bg-gradient-to-tr from-primary to-primary/60" : "bg-gradient-to-tr from-patient-primary to-patient-primary/80"}`}>
+                    {doctor.name ? doctor.name.charAt(0).toUpperCase() : "U"}
+                  </div>
+                )}
                 <div
                   className={`
                     absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white

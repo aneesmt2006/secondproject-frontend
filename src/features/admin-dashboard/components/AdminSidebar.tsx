@@ -21,10 +21,10 @@ const AdminSidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     { id: 'users', label: 'User Management', icon: Users },
     { id: 'doctors', label: 'Doctor Management', icon: Stethoscope },
     { id: 'appointments', label: 'Booking Management', icon: Calendar },
-    { id: 'payments', label: 'Payment & Revenue', icon: DollarSign },
+    // { id: 'payments', label: 'Payment & Revenue', icon: DollarSign },
     { id: 'content', label: 'Content Management', icon: FileText },
     { id: 'ai', label: 'AI System Management', icon: Bot },
-    { id: 'reports', label: 'Report & Analytics', icon: BarChart3 },
+    // { id: 'reports', label: 'Report & Analytics', icon: BarChart3 },
     { id: 'settings', label: 'Admin Settings', icon: Settings },
   ];
 

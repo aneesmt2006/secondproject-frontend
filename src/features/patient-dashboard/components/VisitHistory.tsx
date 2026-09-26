@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import {
   Calendar,
   Stethoscope,
@@ -18,6 +19,7 @@ import { toast } from "sonner";
 import { getTimeDisplayParts } from "@/utils/appointmentUtils";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { PrescriptionNotebookModal } from "./PrescriptionNotebookModal";
 
 type VisitHistoryProps = ReturnType<typeof useVisitHistory>;
 
@@ -38,15 +40,21 @@ export default function VisitHistory(props: VisitHistoryProps) {
     selectedDoctorId,
     setSelectedDoctorId,
     selectedDoctorName,
-    setSelectedDoctorName
+    setSelectedDoctorName,
+    isPrescriptionModalOpen,
+    selectedPrescription,
+    selectedAppointment,
+    isPrescriptionLoading,
+    handleViewPrescription,
+    handleClosePrescriptionModal,
   } = props;
   const navigate = useNavigate();
 
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-4">
-        <div className="w-12 h-12 border-4 border-periwinkle/20 border-t-periwinkle rounded-full animate-spin" />
-        <p className="text-sm font-bold text-cocoa/40 uppercase tracking-widest">
+        <div className="w-12 h-12 border-4 border-black/10 border-t-patient-primary rounded-full animate-spin transition-colors" />
+        <p className="text-sm font-bold text-[color:var(--foreground)] opacity-40 uppercase tracking-widest transition-colors">
           Fetching your Records...
         </p>
       </div>
@@ -60,11 +68,11 @@ export default function VisitHistory(props: VisitHistoryProps) {
     e.stopPropagation();
     if (upcoming) {
       toast.success(
-        `Connecting to video call with Dr. ${upcoming.doctorName}...`,
+        "Connecting to video call with Dr. " + upcoming.doctorName + "..."
       );
 
       navigate("/dashboard/video", {
-        state: { roomCode: data.upcoming?.appointmentId },
+        state: { roomCode: data?.upcoming?.appointmentId },
       });
     }
   };
@@ -74,19 +82,14 @@ export default function VisitHistory(props: VisitHistoryProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-      className="space-y-6"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="space-y-8 pb-12"
     >
-      <div className="flex items-center justify-between mb-4 gap-2">
-        <h2 className="text-base sm:text-lg md:text-xl font-sans font-semibold text-wine flex items-center gap-1.5 shrink-0">
-          <HistoryIcon className="w-4 h-4 md:w-5 md:h-5 shrink-0" />
-          History & Records
-        </h2>
-        <div className="flex items-center gap-1.5 sm:gap-3">
-          {/* Change Primary Doctor Button */}
+      <div className="flex justify-end gap-4 px-4 sm:px-8 max-w-4xl mx-auto mb-2">
+        <div className="flex items-center gap-3 pb-1">
           <button
             onClick={() => setIsDoctorModalOpen(true)}
-            className="px-3.5 py-1.5 md:px-5 md:py-2 rounded-full bg-wine/5 border border-wine/10 text-wine hover:bg-wine/10 active:scale-95 transition-all cursor-pointer font-black text-[9px] md:text-[10px] uppercase tracking-wider whitespace-nowrap"
+            className="flex items-center gap-2 px-4 py-2 md:px-5 rounded-xl bg-white border border-white shadow-sm text-patient-primary font-bold text-xs hover:bg-patient-primary/5 hover:border-patient-primary/20 hover:shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap group"
             title="My Doctor"
           >
             My Doctor
@@ -94,228 +97,156 @@ export default function VisitHistory(props: VisitHistoryProps) {
 
           <button
             onClick={refresh}
-            className="hidden md:flex p-2 rounded-full bg-periwinkle/5 border border-periwinkle/10 text-periwinkle hover:bg-wine/5 hover:text-wine active:scale-95 transition-all items-center justify-center cursor-pointer"
+            className="hidden md:flex p-2 md:px-4 md:py-2 rounded-xl bg-white/60 backdrop-blur-md border border-white/80 text-patient-primary hover:bg-white hover:shadow-md active:scale-95 transition-all items-center gap-2 cursor-pointer font-bold text-xs"
             title="Refresh History"
           >
-            <RefreshCw className="w-4 h-4 hover:rotate-45 transition-transform duration-300" />
+            <RefreshCw className="w-3.5 h-3.5 hover:rotate-180 transition-transform duration-500" />
+            <span className="hidden sm:inline">Refresh</span>
           </button>
         </div>
       </div>
 
-      {/* Upcoming Appointment Card */}
-      {upcoming && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="relative overflow-hidden bg-gradient-to-br from-wine to-cocoa rounded-[2.5rem] p-6 text-white shadow-2xl shadow-wine/20 group cursor-pointer transition-transform hover:scale-[1.01]"
-        >
-          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform duration-700">
-            <Star className="w-24 h-24 fill-white" />
-          </div>
-
-          <div className="relative flex flex-col gap-6">
-            <div className="flex flex-col sm:flex-row justify-between gap-6">
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300">
-                    Next Consultation
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold tracking-tight">
-                    Dr. {upcoming.doctorName}
-                  </h3>
-                  <div className="flex items-center gap-3 mt-1 text-white/60">
-                    <span className="text-xs font-medium flex items-center gap-1">
-                      <Activity className="w-3 h-3" /> {upcoming.specialization}
-                    </span>
-                    <span className="text-xs font-medium flex items-center gap-1">
-                      <MapPin className="w-3 h-3" />{" "}
-                      {upcoming.hospitalName || "Medical Center"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-4 border border-white/10 flex flex-col items-center justify-center min-w-[120px]">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">
-                  {upcoming.appointmentDate}
-                </span>
-                <span className="text-3xl font-black">
-                  {getTimeDisplayParts(upcoming.appointmentTime).time}
-                </span>
-                <span className="text-[10px] font-bold text-emerald-300 mt-1">
-                  {getTimeDisplayParts(upcoming.appointmentTime).ampm}
-                </span>
-              </div>
-            </div>
-
-            {/* Divider line */}
-            <div className="h-px bg-white/10" />
-
-            {/* Video Call Action Section */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-1">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span
-                    className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isTimeReached ? "bg-emerald-400" : "bg-white/30"}`}
-                  ></span>
-                  <span
-                    className={`relative inline-flex rounded-full h-2 w-2 ${isTimeReached ? "bg-emerald-500" : "bg-white/40"}`}
-                  ></span>
-                </span>
-                <span className="text-xs text-white/80 font-medium leading-none">
-                  {isTimeReached
-                    ? "Consultation is active. You can join the call now."
-                    : "The video call button will become active when the appointment time starts."}
-                </span>
-              </div>
-              <button
-                // disabled={!isTimeReached}
-                onClick={handleJoinCall}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl font-bold text-xs transition-all duration-300 shadow-md bg-white text-wine hover:bg-cream active:scale-[0.98] shadow-white/5 cursor-pointer disabled:bg-white/5 disabled:text-white/30 disabled:border-white/10 disabled:cursor-not-allowed"
-              >
-                <Video className="w-4 h-4" />
-                Join Video Call
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      {visits.length === 0 && !upcoming && (
-        <div className="bg-white border-2 border-dashed border-lilac/20 rounded-[2.5rem] p-12 text-center">
-          <div className="w-16 h-16 bg-cream rounded-full flex items-center justify-center mx-auto mb-4">
-            <FileText className="w-8 h-8 text-lilac/30" />
-          </div>
-          <p className="text-cocoa font-bold">No Records Found</p>
-          <p className="text-xs text-cocoa/40 mt-1">
-            Your consultation history will appear here once completed.
-          </p>
-        </div>
-      )}
-
-      <div className="space-y-4">
-        {visits.map((visit: UserAppointment, index: number) => (
-          <motion.div
-            key={visit.appointmentId}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="group relative bg-white border border-lilac/10 rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 transition-all duration-300 hover:shadow-2xl hover:shadow-periwinkle/10 hover:-translate-y-1 overflow-hidden"
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 space-y-10 w-full">
+        
+        {/* Upcoming Section */}
+        {upcoming && (
+          <motion.section
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
           >
-            {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-periwinkle/5 rounded-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110" />
-
-            <div className="relative flex flex-col md:flex-row md:items-start gap-4 md:gap-5">
-              {/* Date & Icon */}
-              <div className="flex md:flex-col items-center gap-3 shrink-0 relative">
-                <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-cream flex flex-col items-center justify-center text-wine shadow-inner border border-wine/5">
-                  <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter opacity-70">
-                    {new Date(visit.appointmentDate.split(",")[0])
-                      .toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })
-                      .substring(0, 3)
-                      .toUpperCase()}
-                  </span>
-                  <span className="text-lg md:text-xl font-bold leading-none">
-                    {new Date(visit.appointmentDate.split(",")[0])
-                      .toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })
-                      .split(" ")[1]
-                      .toUpperCase()}
-                  </span>
-                </div>
-
-                {/* Timeline Path Line */}
-                {index !== visits.length - 1 && (
-                  <div className="hidden md:block absolute top-14 left-1/2 -translate-x-1/2 w-0.5 h-24 z-0">
-                    <div className="w-full h-full bg-gradient-to-b from-periwinkle/40 via-periwinkle/20 to-transparent border-l-2 border-dashed border-periwinkle/20" />
+            <h3 className="text-[11px] font-black uppercase tracking-widest text-patient-primary/70 mb-3 ml-2 flex items-center gap-2">
+              <Star className="w-3.5 h-3.5" /> Next Consultation
+            </h3>
+            <div className="bg-patient-primary rounded-[2rem] p-6 md:p-8 text-white shadow-2xl shadow-patient-primary/20 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 border border-white/20">
+              <div className="absolute -top-10 -right-10 p-8 opacity-10 pointer-events-none transform rotate-12">
+                <Star className="w-64 h-64 fill-white" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent pointer-events-none"></div>
+              
+              <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-8 w-full md:w-auto">
+                <div className="bg-white/20 backdrop-blur-xl rounded-2xl p-4 md:p-5 text-center border border-white/30 shrink-0 min-w-[80px] shadow-inner flex flex-col justify-center h-full">
+                  <div className="text-[10px] md:text-xs font-black uppercase tracking-widest opacity-90 mb-1">
+                    {new Date(upcoming.appointmentDate.split(",")[0]).toLocaleDateString("en-US", { month: "short" })}
                   </div>
-                )}
+                  <div className="text-3xl md:text-4xl font-black leading-none tracking-tighter">
+                    {new Date(upcoming.appointmentDate.split(",")[0]).toLocaleDateString("en-US", { day: "2-digit" })}
+                  </div>
+                </div>
+                
+                <div className="pt-1">
+                  <h4 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5 drop-shadow-sm">Dr. {upcoming.doctorName}</h4>
+                  <p className="text-white/90 font-semibold text-[13px] md:text-sm flex items-center gap-2 mb-3">
+                    <Stethoscope className="w-4 h-4 opacity-80" /> {upcoming.specialization}
+                  </p>
+                  <div className="text-white/95 text-[11px] md:text-xs font-bold bg-black/10 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 inline-flex flex-wrap items-center gap-2.5 shadow-inner">
+                    <span className="tracking-wide flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 opacity-70" />
+                      {getTimeDisplayParts(upcoming.appointmentTime).time} {getTimeDisplayParts(upcoming.appointmentTime).ampm}
+                    </span>
+                    <span className="opacity-40">•</span>
+                    <span>{upcoming.reason || "General Consultation"}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Details */}
-              <div className="flex-1 space-y-3 min-w-0">
-                <div className="flex justify-between items-start">
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-1.5 md:gap-2">
-                      <h3 className="text-base md:text-lg font-bold text-cocoa group-hover:text-wine transition-colors truncate">
-                        Dr. {visit.doctorName}
-                      </h3>
-                      <span className="px-1.5 py-0.5 rounded bg-wine/5 text-[8px] md:text-[10px] font-bold text-wine tracking-wide uppercase whitespace-nowrap">
-                        {visit.specialization}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <div className="flex items-center gap-1 text-[10px] md:text-[11px] font-medium text-cocoa/60">
-                        <Clock className="w-3 h-3" />
-                        {visit.appointmentTime}
-                      </div>
-                      <span className="text-lilac/40 tracking-widest hidden md:inline">•</span>
-                      <div className="flex items-center gap-1 text-[10px] md:text-[11px] font-medium text-cocoa/60">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(visit.appointmentDate.split(",")[0])
-                          .toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })
-                          .toUpperCase()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-cream/30 rounded-xl md:rounded-2xl p-3 md:p-4 border border-lilac/5">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Stethoscope className="w-3 h-3 md:w-3.5 md:h-3.5 text-periwinkle" />
-                    <span className="text-[11px] md:text-xs font-bold text-cocoa">
-                      {visit.reason}
-                    </span>
-                  </div>
-                  <p className="text-[11px] md:text-xs text-cocoa/70 leading-relaxed italic line-clamp-2">
-                    {visit.notes
-                      ? `"${visit.notes}"`
-                      : "No consultation notes available."}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full shadow-sm ${visit.status === "Cancelled" ? "bg-rose-500" : "bg-emerald-500"}`}
-                    />
-                    <span
-                      className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest ${visit.status === "Cancelled" ? "text-rose-600" : "text-emerald-600"}`}
-                    >
-                      {visit.status}
-                    </span>
-                  </div>
-
-                  <button className="flex items-center gap-1 text-[10px] md:text-[11px] font-bold text-periwinkle hover:text-wine transition-colors">
-                    View Full Details
-                    <ArrowRight className="w-3 h-4" />
-                  </button>
-                </div>
+              <div className="relative z-10 w-full md:w-auto shrink-0 mt-4 md:mt-0">
+                <button
+                  onClick={(e) => handleJoinCall(e)}
+                  className="w-full md:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white text-patient-primary hover:bg-white/90 transition-all shadow-xl font-extrabold text-sm active:scale-95 whitespace-nowrap group"
+                >
+                  <Video className="w-5 h-5 transition-transform group-hover:scale-110" />
+                  Join Video Call
+                </button>
               </div>
             </div>
-          </motion.div>
-        ))}
+          </motion.section>
+        )}
+
+        {/* Past Records Section */}
+        <section>
+          <h3 className="text-[11px] font-black uppercase tracking-widest text-[color:var(--foreground)] opacity-40 mb-4 ml-2 flex items-center gap-2">
+            <HistoryIcon className="w-3.5 h-3.5" /> Past Records
+          </h3>
+          
+          {visits.length === 0 ? (
+            <div className="bg-white/60 backdrop-blur-md border-2 border-dashed border-white/80 rounded-[2rem] p-12 text-center shadow-sm">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                <FileText className="w-8 h-8 opacity-30 text-[color:var(--foreground)]" />
+              </div>
+              <p className="text-[color:var(--foreground)] font-bold transition-colors">No Records Found</p>
+              <p className="text-xs text-[color:var(--foreground)] opacity-50 mt-1 transition-colors">
+                Your completed consultations will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="relative space-y-4">
+              {/* Vertical Timeline Line */}
+              <div className="absolute left-[38px] md:left-[42px] top-4 bottom-4 w-[2px] bg-patient-primary/10 rounded-full hidden sm:block pointer-events-none"></div>
+
+              {visits.map((record, idx) => {
+                const visitDate = new Date(record.appointmentDate.split(",")[0]);
+                const isCancelled = record.status === 'Cancelled';
+                
+                return (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + (idx * 0.05), duration: 0.4 }}
+                    key={record.appointmentId}
+                    onClick={() => !isCancelled && handleViewPrescription(record as any)}
+                    className={`relative z-10 group bg-white/80 backdrop-blur-xl border border-white rounded-[1.5rem] p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300 shadow-sm ${!isCancelled ? 'cursor-pointer hover:bg-white hover:shadow-xl hover:-translate-y-1' : 'opacity-70 grayscale-[30%]'}`}
+                  >
+                    <div className="flex items-center gap-4 md:gap-5">
+                      <div className={`relative z-20 rounded-2xl p-3 md:p-4 text-center border min-w-[64px] shrink-0 transition-colors ${
+                        isCancelled ? 'bg-rose-50 border-rose-100 text-rose-900/60' : 'bg-white shadow-sm border-patient-primary/10 text-patient-primary group-hover:border-patient-primary/30'
+                      }`}>
+                        <div className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-0.5 leading-none">
+                          {visitDate.toLocaleDateString("en-US", { month: "short" })}
+                        </div>
+                        <div className="text-xl md:text-2xl font-black leading-none tracking-tighter">
+                          {visitDate.toLocaleDateString("en-US", { day: "2-digit" })}
+                        </div>
+                      </div>
+                      
+                      <div className="min-w-0 py-1">
+                        <div className="flex items-center gap-3 mb-1.5 flex-wrap">
+                          <h4 className="text-base md:text-lg font-extrabold text-[color:var(--foreground)] truncate tracking-tight">Dr. {record.doctorName}</h4>
+                          <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow-inner ${
+                            isCancelled ? 'bg-rose-100 text-rose-700' : 'bg-emerald-50 border border-emerald-100 text-emerald-600'
+                          }`}>
+                            {record.status}
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[color:var(--foreground)] opacity-70 mb-1.5 truncate flex items-center gap-1.5">
+                          <Stethoscope className="w-3.5 h-3.5 opacity-60" /> {record.specialization}
+                          <span className="opacity-30 mx-1">•</span> 
+                          {record.reason || "General Consultation"}
+                        </p>
+                        <p className="text-[11px] font-bold text-patient-primary/60 flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          {visitDate.toLocaleDateString('en-US', { year: 'numeric'})} at {getTimeDisplayParts(record.appointmentTime).time} {getTimeDisplayParts(record.appointmentTime).ampm}
+                        </p>
+                      </div>
+                    </div>
+
+                    {!isCancelled && (
+                      <div className="shrink-0 mt-2 sm:mt-0">
+                        <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-patient-primary/5 border border-patient-primary/10 text-patient-primary font-bold text-xs hover:bg-patient-primary/10 hover:border-patient-primary/30 transition-all duration-300 active:scale-95 group-hover:shadow-md">
+                          View Details
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </button>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+        </section>
       </div>
 
-      {/* Choose Primary Doctor Modal */}
+{/* Choose Primary Doctor Modal */}
       <Dialog open={isDoctorModalOpen} onOpenChange={setIsDoctorModalOpen}>
         <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto bg-gradient-to-br from-white to-[#FFF9E6]/30 rounded-3xl p-6 shadow-2xl border border-lilac/10">
           <DialogHeader className="mb-4">
@@ -484,6 +415,15 @@ export default function VisitHistory(props: VisitHistoryProps) {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Prescription Notebook Page Modal */}
+      <PrescriptionNotebookModal
+        isOpen={isPrescriptionModalOpen}
+        onClose={handleClosePrescriptionModal}
+        appointment={selectedAppointment}
+        prescription={selectedPrescription}
+        isLoading={isPrescriptionLoading}
+      />
     </motion.div>
   );
 }

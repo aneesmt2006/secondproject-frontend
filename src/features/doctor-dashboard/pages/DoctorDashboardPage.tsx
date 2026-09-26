@@ -1,4 +1,4 @@
-﻿import {
+import {
   Calendar,
   Clock,
   AlertCircle,
@@ -6,27 +6,27 @@
   Video,
   Settings,
   CalendarCheck,
+  Users,
 } from "lucide-react";
 import { DoctorHeader } from "../components/DoctorHeader";
 import { GlassyNavigation } from "../components/GlassyNavigation";
 import { StatsCard } from "../components/StatsCard";
 import { QuickActionCard } from "../components/QuickActionCard";
 import { BottomNavigation } from "../components/BottomNavigation";
-import { PerformanceCard } from "../components/PerformanceCard";
-import { NextAppointmentCard } from "../components/NextAppointmentCard";
 import "../../../theme/doctor.css";
 import { useAppSelector } from "../../../store/hooks";
 import { doctorSelector } from "../../doctor-auth/slice/doctorSlice";
 import { useEffect } from "react";
 import { animate } from "framer-motion";
+import { useDoctorDashboardStats } from "../hooks/useDoctorDashboardStats";
 // import { useToast } from "@/hooks/use-toast";
 
 const DoctorDashPage = () => {
   const {fullName} = useAppSelector(doctorSelector)
+  const { stats, isLoading } = useDoctorDashboardStats();
   //   const { toast } = useToast();
 
   const handleAction = (action: string) => {
-    console.log(action);
     // toast({
     //   title: "Action Triggered",
     //   description: `You clicked on ${action}`,
@@ -35,11 +35,10 @@ const DoctorDashPage = () => {
 
   useEffect(() => {
     const controls = animate(window.scrollY, 0, {
-    duration: 0.5,   // 👈 1 seconds slow scroll
+    duration: 0.5,   // ?? 1 seconds slow scroll
     ease: "easeInOut",
     onUpdate: (latest) => window.scrollTo(0, latest),
   });
-  console.log("top scrooling")
   return () => controls.stop();
   });
   return (
@@ -65,36 +64,27 @@ const DoctorDashPage = () => {
                 View All
               </button>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <StatsCard
                 icon={Calendar}
                 title="Today's Appointments"
-                value={7}
-                subtitle="5 completed, 2 pending"
-                trend="↑ 12% vs last week"
+                value={stats?.todayAppointments || 0}
+                subtitle="Scheduled for today"
                 iconColor="bg-primary/10 text-primary"
               />
               <StatsCard
                 icon={Clock}
                 title="Upcoming Appointments"
-                value={12}
-                subtitle="Next 7 days"
-                trend="↑ 8% vs last week"
+                value={stats?.upcomingAppointments || 0}
+                subtitle="Appointments ahead"
                 iconColor="bg-medical-info/10 text-medical-info"
               />
               <StatsCard
-                icon={AlertCircle}
-                title="Auto Booked Emergency"
-                value={3}
-                subtitle="Urgent consultations"
-                iconColor="bg-medical-warning/10 text-medical-warning"
-              />
-              <StatsCard
-                icon={MessageSquare}
-                title="Unread Messages"
-                value={5}
-                subtitle="From patients"
-                iconColor="bg-medical-success/10 text-medical-success"
+                icon={Users}
+                title="Total Patients"
+                value={stats?.totalPatients || 0}
+                subtitle="Active under your care"
+                iconColor="bg-indigo-100 text-indigo-600"
               />
             </div>
           </section>
@@ -132,15 +122,7 @@ const DoctorDashPage = () => {
             </div>
           </section>
 
-          {/* Performance and Next Appointment */}
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2">
-              <PerformanceCard />
-            </div>
-            <div>
-              <NextAppointmentCard />
-            </div>
-          </section>
+
         </main>
 
         <BottomNavigation />

@@ -73,7 +73,6 @@ export const useProfileData = () => {
         setCurrentStep(2); 
       }
     } catch (err) {
-      console.log("Validation Error:", err);
       if (err.inner) {
         const fieldErrors: Partial<Record<keyof profileError, string>> = {};
         err.inner.forEach((e) => {

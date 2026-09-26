@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { startOfToday, addDays, subDays } from "date-fns";
 import { doctorBooking, DoctorSlots } from '@/types/appointments.type';
 import { getAllDoctorsApmntProfile } from "@/services/api/users-management.service";
@@ -141,7 +141,15 @@ export const useAppointmentLogic = () => {
 
     const userId = userData.id;
     const doctorId = selectedDoctor.doctorId as string;
-    const [selectedDate, selectedTime] = selectedTimeDate.split(',');
+    let formattedDate = "";
+    let formattedTime = "";
+    if (selectedTimeDate.includes(',')) {
+      [formattedDate, formattedTime] = selectedTimeDate.split(',');
+    } else {
+      formattedDate = selectedDate.toLocaleDateString("en-US");
+      formattedTime = selectedTimeDate;
+    }
+
     const amount = selectedDoctor.consultationFee;
 
     setIsBookingLoading(true);
@@ -149,8 +157,8 @@ export const useAppointmentLogic = () => {
       const response = await appoinmentCreate({
         userId,
         doctorId,
-        appointmentDate: selectedDate,
-        appointmentTime: selectedTime,
+        appointmentDate: formattedDate,
+        appointmentTime: formattedTime,
         amount,
         isRecurring
       });

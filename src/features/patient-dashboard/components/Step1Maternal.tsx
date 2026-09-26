@@ -36,14 +36,14 @@ export default function Step1Maternal({
     >
       {/* Personal Information */}
       <div className="space-y-4">
-        <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
+        <h2 className="text-xl sm:text-2xl font-sans font-medium text-patient-primary flex items-center gap-2 mb-3 sm:mb-4 transition-colors">
           <User className="w-6 h-6" />
           Personal Information
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-2">
-            <Label htmlFor="fullName" className="text-cocoa">
+            <Label htmlFor="fullName" className="text-[color:var(--foreground)] transition-colors">
               Full Name
             </Label>
             <Input
@@ -53,7 +53,7 @@ export default function Step1Maternal({
               placeholder="e.g., Jane Doe"
               value={profileData.fullName}
               onChange={handleChange}
-              className={`border-periwinkle/30 focus:border-periwinkle ${errors?.fullName ? 'border-destructive' : ''}`}
+              className={`bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300 ${errors?.fullName ? 'border-destructive' : ''}`}
             />
             {errors?.fullName && (
               <p className="text-destructive text-xs mt-1">{errors.fullName}</p>
@@ -61,7 +61,7 @@ export default function Step1Maternal({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="dateOfBirth" className="text-cocoa">
+            <Label htmlFor="dateOfBirth" className="text-[color:var(--foreground)] transition-colors">
               Date of Birth
             </Label>
             <Input
@@ -70,7 +70,7 @@ export default function Step1Maternal({
               name="dateOfBirth"
               value={profileData.dateOfBirth}
               onChange={handleChange}
-              className={`border-periwinkle/30 focus:border-periwinkle ${errors?.dateOfBirth ? 'border-destructive' : ''}`}
+              className={`bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300 ${errors?.dateOfBirth ? 'border-destructive' : ''}`}
             />
             {errors?.dateOfBirth && (
               <p className="text-destructive text-xs mt-1">{errors.dateOfBirth}</p>
@@ -81,14 +81,14 @@ export default function Step1Maternal({
 
       {/* Maternal Health Details */}
       <div className="space-y-4">
-        <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
+        <h2 className="text-xl sm:text-2xl font-sans font-medium text-patient-primary flex items-center gap-2 mb-3 sm:mb-4 transition-colors">
           <Calendar className="w-6 h-6" />
           Maternal Health Details
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-2">
-            <Label htmlFor="lmp" className="text-cocoa">
+            <Label htmlFor="lmp" className="text-[color:var(--foreground)] transition-colors">
               Date of Last Menstrual Period (LMP)
             </Label>
             <Input
@@ -97,13 +97,13 @@ export default function Step1Maternal({
               name="lmp"
               value={profileData.lmp}
               onChange={handleChange}
-              className="border-periwinkle/30 focus:border-periwinkle"
+              className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300"
             />
           </div>
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-cream/50 rounded-xl">
-          <Label htmlFor="firstPregnancy" className="text-cocoa font-medium">
+        <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl transition-colors">
+          <Label htmlFor="firstPregnancy" className="text-[color:var(--foreground)] font-medium transition-colors">
             First Pregnancy
           </Label>
           <Switch
@@ -112,14 +112,14 @@ export default function Step1Maternal({
             onCheckedChange={(checked) =>
               setProfileData((prev) => ({ ...prev, isFirstPregnancy: checked }))
             }
-            className="data-[state=checked]:bg-periwinkle"
+            className="data-[state=checked]:bg-[color:var(--patient-primary)] transition-colors shadow-sm"
           />
         </div>
       </div>
 
       {/* Physical Attributes */}
-      <div className="space-y-4 pt-4 border-t border-lilac/10">
-        <h2 className="text-xl sm:text-2xl font-sans font-medium text-wine flex items-center gap-2 mb-3 sm:mb-4">
+      <div className="space-y-4 pt-4 border-t border-white/40 transition-colors">
+        <h2 className="text-xl sm:text-2xl font-sans font-medium text-patient-primary flex items-center gap-2 mb-3 sm:mb-4 transition-colors">
           <Activity className="w-6 h-6" />
           Physical Attributes
         </h2>
@@ -134,10 +134,10 @@ export default function Step1Maternal({
               setProfileData((prev) => ({ ...prev, bloodGroup: value }))
             }
           >
-            <SelectTrigger className="border-periwinkle/30 focus:border-periwinkle">
+            <SelectTrigger className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300">
               <SelectValue placeholder="Select blood group" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-periwinkle/30">
+            <SelectContent className="bg-white/95 backdrop-blur-xl border-white/60 shadow-xl">
               {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((g) => (
                 <SelectItem key={g} value={g}>
                   {g}
@@ -149,7 +149,7 @@ export default function Step1Maternal({
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="height" className="text-cocoa">
+            <Label htmlFor="height" className="text-[color:var(--foreground)] transition-colors">
               Height (cm)
             </Label>
             <Input
@@ -159,12 +159,12 @@ export default function Step1Maternal({
               placeholder="e.g., 165"
               value={profileData.height}
               onChange={handleChange}
-              className="border-periwinkle/30 focus:border-periwinkle"
+              className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="weight" className="text-cocoa">
+            <Label htmlFor="weight" className="text-[color:var(--foreground)] transition-colors">
               Weight (kg)
             </Label>
             <Input
@@ -174,7 +174,7 @@ export default function Step1Maternal({
               placeholder="e.g., 60"
               value={profileData.weight}
               onChange={handleChange}
-              className="border-periwinkle/30 focus:border-periwinkle"
+              className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300"
             />
           </div>
         </div>

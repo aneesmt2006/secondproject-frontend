@@ -10,6 +10,9 @@ interface ChatWindowProps {
   newMessage: string;
   onNewMessageChange: (val: string) => void;
   onSendMessage: () => void;
+  selectedFile: File | null;
+  onFileSelect: (file: File | null) => void;
+  isSending?: boolean;
   messagesEndRef: React.RefObject<HTMLDivElement>;
   onBack: () => void;
   isMobileSidebarOpen: boolean;
@@ -22,25 +25,33 @@ export const ChatWindow = ({
   newMessage,
   onNewMessageChange,
   onSendMessage,
+  selectedFile,
+  onFileSelect,
+  isSending = false,
   messagesEndRef,
   onBack,
   isMobileSidebarOpen,
   isDoctor = false
 }: ChatWindowProps) => {
 
-  const themeColorText = isDoctor ? "text-primary" : "text-[#E0825C]";
-  const themeColorHoverBg = isDoctor ? "hover:bg-primary/10" : "hover:bg-[#E0825C]/10";
-  const themeColorHoverText = isDoctor ? "hover:text-primary" : "hover:text-[#E0825C]";
-  const themeColorBorder = isDoctor ? "border-primary/20" : "border-[#E0825C]/20";
+  const themeColorText = isDoctor ? "text-primary" : "text-patient-primary";
+  const themeColorHoverBg = isDoctor ? "hover:bg-primary/10" : "hover:bg-patient-primary/10";
+  const themeColorHoverText = isDoctor ? "hover:text-primary" : "hover:text-patient-primary";
+  const themeColorBorder = isDoctor ? "border-primary/20" : "border-patient-primary/20";
+
+  const emptyStateBg = isDoctor ? "bg-primary/5" : "bg-[#F9F0E6]/30";
+  const emptyStateTextColor = isDoctor ? "text-primary/70" : "text-[#5A2D0C]/60";
+  const emptyStateSubTextColor = isDoctor ? "text-primary/50" : "text-[#5A2D0C]/40";
+  const emptyStateIconClass = isDoctor ? "opacity-30 grayscale" : "opacity-50";
 
   if (!doctor) {
     return (
-      <div className={`flex-1 flex flex-col items-center justify-center bg-[#F9F0E6]/30 backdrop-blur-sm ${isMobileSidebarOpen ? 'hidden md:flex' : 'flex'}`}>
+      <div className={`flex-1 flex flex-col items-center justify-center ${emptyStateBg} backdrop-blur-sm ${isMobileSidebarOpen ? 'hidden md:flex' : 'flex'}`}>
         <div className="w-24 h-24 bg-white/50 rounded-full flex items-center justify-center shadow-sm mb-4">
-          <img src="/splash1.png" alt="Select" className="w-16 h-16 opacity-50" />
+          <img src="/splash1.png" alt="Select" className={`w-16 h-16 ${emptyStateIconClass}`} />
         </div>
-        <p className="text-[#5A2D0C]/60 text-lg font-medium">Select a conversation</p>
-        <p className="text-[#5A2D0C]/40 text-sm mt-1">Choose a {isDoctor ? "patient" : "doctor"} from the list to start chatting.</p>
+        <p className={`${emptyStateTextColor} text-lg font-medium`}>Select a conversation</p>
+        <p className={`${emptyStateSubTextColor} text-sm mt-1`}>Choose a {isDoctor ? "patient" : "doctor"} from the list to start chatting.</p>
       </div>
     );
   }
@@ -58,12 +69,18 @@ export const ChatWindow = ({
             <ArrowLeft className="w-5 h-5 text-[#5A2D0C]" />
           </button>
           
-          <div className="relative">
-            <img
-              src={doctor.avatarUrl}
-              alt={doctor.name}
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shadow-sm"
-            />
+          <div className="relative shrink-0">
+            {doctor.avatarUrl ? (
+              <img
+                src={doctor.avatarUrl}
+                alt={doctor.name}
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shadow-sm"
+              />
+            ) : (
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full shadow-sm flex items-center justify-center font-bold text-lg text-white ${isDoctor ? "bg-gradient-to-tr from-primary to-primary/60" : "bg-gradient-to-tr from-patient-primary to-patient-primary/80"}`}>
+                {doctor.name ? doctor.name.charAt(0).toUpperCase() : "U"}
+              </div>
+            )}
             {doctor.isOnline && (
                <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-emerald-500" />
             )}
@@ -108,6 +125,7 @@ export const ChatWindow = ({
                 message={msg}
                 isMine={isDoctor ? msg.sender === "doctor" : msg.sender === "user"}
                 doctorAvatarUrl={isDoctor ? (msg.sender === "user" ? doctor.avatarUrl : undefined) : (msg.sender === "doctor" ? doctor.avatarUrl : undefined)}
+                doctorName={doctor.name}
                 isDoctor={isDoctor}
               />
             ))}
@@ -121,6 +139,9 @@ export const ChatWindow = ({
         value={newMessage}
         onChange={onNewMessageChange}
         onSend={onSendMessage}
+        selectedFile={selectedFile}
+        onFileSelect={onFileSelect}
+        isSending={isSending}
         isDoctor={isDoctor}
       />
 

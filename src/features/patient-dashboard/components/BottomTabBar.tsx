@@ -1,7 +1,7 @@
-﻿import { userSelector } from '@/features/patient-auth/slice/userSlice';
+import { userSelector } from '@/features/patient-auth/slice/userSlice';
 import { useAppSelector } from '@/store/hooks';
 import { motion } from 'framer-motion';
-import { Calendar, BarChart3, Dumbbell, Home, MessageCircle } from 'lucide-react';
+import { Calendar, Apple, Dumbbell, Home, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface TabItem {
@@ -12,7 +12,7 @@ interface TabItem {
 
 const tabs: TabItem[] = [
   { icon: Home, label: 'Today', path: '/dashboard' },
-  { icon: BarChart3, label: 'Insights', path: '/dashboard/baby-insights' },
+  { icon: Apple, label: 'Nutrition', path: '/dashboard/nutrition' },
   { icon: Calendar, label: 'Appts', path: '/dashboard/appointment' },
   { icon: Dumbbell, label: 'Exercise', path: '/dashboard/exercise' },
   { icon: MessageCircle, label: 'Chat', path: '/dashboard/chat' },
@@ -34,6 +34,7 @@ export const BottomTabBar = () => {
               return (
                 <Link
                   key={tab.label}
+                  id={tab.label === 'Chat' ? 'tour-mobile-chat' : undefined}
                   to={tab.path}
                   className="relative z-10 flex-1 flex flex-col items-center justify-center gap-1 py-3 rounded-[28px] transition-all duration-300 group tap-highlight-transparent"
                   style={{ WebkitTapHighlightColor: 'transparent' }}
@@ -42,7 +43,10 @@ export const BottomTabBar = () => {
                   {isActive && (
                     <motion.div
                       layoutId="activeTabPill"
-                      className="absolute inset-0 bg-[#E0825C]/10 rounded-[28px] shadow-sm border border-[#E0825C]/5"
+                      className="absolute inset-0 rounded-[28px] shadow-sm border border-transparent transition-colors"
+                      style={{ 
+                        backgroundColor: 'color-mix(in srgb, var(--patient-primary) 15%, transparent)',
+                      }}
                       transition={{ 
                         type: "spring", 
                         stiffness: 300, 
@@ -57,13 +61,13 @@ export const BottomTabBar = () => {
                     <tab.icon 
                       className={`w-[22px] h-[22px] transition-all duration-300 ${
                         isActive 
-                          ? 'text-[#E0825C] scale-105' 
-                          : 'text-[#9ca3af] group-hover:text-[#E0825C]/70'
+                          ? 'text-patient-primary scale-105' 
+                          : 'text-[#9ca3af] group-hover:text-patient-primary/70'
                       }`} 
                       strokeWidth={isActive ? 2.5 : 2}
                     />
                     {tab.label === 'Chat' && (
-                      <span className="absolute -top-1 -right-2 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#E0825C] border-2 border-white text-[8px] font-bold text-white">
+                      <span className="absolute -top-1 -right-2 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-patient-primary border-2 border-white text-[8px] font-bold text-white transition-colors">
                         1
                       </span>
                     )}
@@ -73,8 +77,8 @@ export const BottomTabBar = () => {
                   <span
                     className={`text-[9px] font-bold tracking-wide transition-all duration-300 relative z-20 ${
                       isActive 
-                        ? 'text-[#E0825C]' 
-                        : 'text-[#9ca3af] group-hover:text-[#E0825C]/70'
+                        ? 'text-patient-primary' 
+                        : 'text-[#9ca3af] group-hover:text-patient-primary/70'
                     }`}
                   >
                     {tab.label}
@@ -85,7 +89,10 @@ export const BottomTabBar = () => {
           </div>
           
           {/* Outer glow effect for the bar */}
-          <div className="absolute -inset-4 bg-[#E0825C]/5 blur-3xl -z-10 rounded-full" />
+          <div 
+            className="absolute -inset-4 blur-3xl -z-10 rounded-full transition-colors"
+            style={{ backgroundColor: 'color-mix(in srgb, var(--patient-primary) 10%, transparent)' }}
+          />
         </div>
       )}
     </>

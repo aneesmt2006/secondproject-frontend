@@ -1,4 +1,4 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { 
   Calendar as CalendarIcon, 
@@ -41,8 +41,6 @@ const DoctorAppointmentsPage = () => {
   const { 
     activeFilter, 
     setActiveFilter, 
-    selectedDate, 
-    setSelectedDate, 
     appointments, 
     counts,
     isLoading,
@@ -83,44 +81,12 @@ const DoctorAppointmentsPage = () => {
               Manage consultations and patient status
             </p>
           </div>
-
-          {activeFilter === 'Upcoming' && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="relative group"
-            >
-              <CalendarIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary z-10 group-hover:scale-110 transition-transform" />
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="pl-12 pr-12 py-3.5 bg-white border border-slate-200 rounded-[1.2rem] text-[13px] font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm hover:border-primary/40 hover:shadow-md appearance-none min-w-[220px]"
-              />
-              <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 rotate-90 z-10 pointer-events-none group-hover:text-primary transition-colors" />
-            </motion.div>
-          )}
         </div>
 
         {/* Mobile Header */}
         <div className="lg:hidden space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold text-slate-900">Appointments</h1>
-            {activeFilter === 'Upcoming' && (
-              <div className="relative group">
-                  <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="opacity-0 absolute inset-0 w-full cursor-pointer z-10"
-                />
-                <div className="px-5 py-2.5 bg-white rounded-xl border border-slate-200 text-xs font-bold text-slate-900 flex items-center gap-3 shadow-sm group-hover:border-primary/40 transition-all">
-                  <CalendarIcon className="w-4 h-4 text-primary" />
-                  {selectedDate || 'Select Date'}
-                  <ChevronRight className="w-4 h-4 text-slate-300 rotate-90" />
-                </div>
-              </div>
-            )}
           </div>
           <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
             <AppointmentStatusFilters
@@ -141,7 +107,6 @@ const DoctorAppointmentsPage = () => {
               <div className="flex flex-col gap-2">
                 {[
                   { id: 'Upcoming', icon: Dot, color: 'emerald' },
-                  { id: 'Emergency', icon: AlertTriangle, color: 'rose' },
                   { id: 'Completed', icon: History, color: 'indigo' },
                   { id: 'Canceled', icon: XCircle, color: 'slate' },
                 ].map((filter) => {
@@ -162,18 +127,9 @@ const DoctorAppointmentsPage = () => {
                       <div className="flex items-center gap-3">
                         <filter.icon className={`w-5 h-5 
                           ${isActive ? 'text-white' : `text-${filter.color}-500`}
-                          ${filter.id === 'Emergency' ? 'animate-pulse' : ''}
                         `} />
                         <span className="text-[14px] font-bold tracking-tight">{filter.id}</span>
                       </div>
-                      {count > 0 && (
-                        <span className={`
-                          text-[10px] font-bold px-2 py-0.5 rounded-lg min-w-[22px] text-center
-                          ${isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-400'}
-                        `}>
-                          {count}
-                        </span>
-                      )}
                     </button>
                   );
                 })}
@@ -182,7 +138,7 @@ const DoctorAppointmentsPage = () => {
             
             <div className="px-6">
                <p className="text-[12px] font-bold text-slate-400 leading-relaxed italic border-l-2 border-slate-100 pl-4">
-                 Showing all {activeFilter.toLowerCase()} sessions for today's schedule.
+                 Showing all {activeFilter.toLowerCase()} sessions for your schedule.
                </p>
             </div>
           </aside>
@@ -213,7 +169,8 @@ const DoctorAppointmentsPage = () => {
                     {appointments.map((appointment: AppointmentsDet, i: number) => (
                       <DoctorAppointmentCard 
                         key={i} 
-                        toVideo={()=>navigate('/doctor/video',{state:{roomCode:appointment?.appointmentId}})}
+                        isUpcoming={activeFilter === 'Upcoming'}
+                        toVideo={()=>navigate('/doctor/video',{state:{roomCode:appointment?.appointmentId,userId:appointment.userId}})}
                         appointment={appointment} 
                         onComplete={() => completion.handleOpen(appointment)}
                         onViewRecords={() => {

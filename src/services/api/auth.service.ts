@@ -1,4 +1,4 @@
-﻿import axios from "axios";
+import axios from "axios";
 import { RegistrationData } from "../../types/auth.type";
 import { IUser } from "../../features/patient-auth/slice/userSlice";
 import { APIResponse } from "../types/api.response";

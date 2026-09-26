@@ -146,12 +146,8 @@
    =================================== */
 @layer utilities {
   .gradient-peach {
-    background: radial-gradient(
-      circle at center,
-      hsl(24 100% 93%) 0%,
-      /* soft cream in the middle */ hsl(22 95% 82%) 40%,
-      /* light peach */ hsl(18 80% 70%) 100% /* darker peach-orange edges */
-    );
+    background: var(--patient-bg-gradient);
+    transition: background 0.5s ease-in-out;
   }
 
   .gradient-card {

@@ -1,5 +1,5 @@
-﻿import React, { useState, useEffect } from 'react';
-import useVideo from "../hook/useVideo";
+import React, { useState, useEffect } from 'react';
+import useVideo from "../hooks/useVideo";
 import { 
   Mic, 
   MicOff, 
@@ -296,7 +296,7 @@ const Room: React.FC<RoomProps> = ({ roomName, userName, onLeaveRoom }) => {
 
             <div className="text-xs text-white/40 flex items-center justify-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-500/80" />
-              Secured consult room • HIPAA Encrypted
+              Secured consult room � HIPAA Encrypted
             </div>
           </div>
         )}

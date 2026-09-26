@@ -23,8 +23,6 @@ const UserManagement = () => {
           getAllUserProfile()
         ]);
 
-        console.log("Profile data:", profileRes);
-        console.log("All users:", usersRes);
 
         const usersData = usersRes.data ?? [];
         const profilesData = profileRes.data ?? [];
@@ -80,7 +78,7 @@ const UserManagement = () => {
         onReset={resetFilters}
       />
 
-      <div className="flex gap-3 mb-6">
+      {/* <div className="flex gap-3 mb-6">
         <button className="flex items-center gap-2 px-4 py-2 bg-white border border-rose/20 rounded-lg hover:bg-rose/5 transition-all">
           <Download className="w-4 h-4" />
           Export to Excel
@@ -89,7 +87,7 @@ const UserManagement = () => {
           <Download className="w-4 h-4" />
           Export to PDF
         </button>
-      </div>
+      </div> */}
 
       <div className="bg-white rounded-xl border border-rose/20 overflow-hidden">
         <div className="overflow-x-auto">

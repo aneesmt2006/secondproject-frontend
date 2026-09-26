@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../../store/hooks";
 import { userSelector } from "../../patient-auth/slice/userSlice";
 import { getFetusWeekData } from "../../../services/api/users-management.service";
@@ -32,7 +32,6 @@ export const usePregnancyDashboard = () => {
         const response = await getFetusWeekData(currentWeek);
         setFetusWeekData(response.data);
       } catch (err) {
-        console.log("Failed to fetch fetus data:", err);
       }finally{
         setLoading(false)
       }

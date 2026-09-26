@@ -1,4 +1,4 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { doctors } from '@/features/patient-dashboard/constants/appointments.data';
 
@@ -22,7 +22,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
           >
             {/* Doctor Image Container */}
             <div className="relative shrink-0 self-center sm:self-start">
-              <div className="w-16 h-16 md:w-28 md:h-28 rounded-[14px] md:rounded-[18px] overflow-hidden shadow-sm group-hover:border-[#E0825C]/20 transition-colors">
+              <div className="w-16 h-16 md:w-28 md:h-28 rounded-[14px] md:rounded-[18px] overflow-hidden shadow-sm group-hover:border-patient-primary/20 transition-colors">
                 <img
                   src={doctor.image}
                   alt={doctor.fullName}
@@ -42,7 +42,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
             <div className="flex-1 w-full space-y-1.5 md:space-y-3 flex flex-col min-h-0 md:min-h-[110px]">
               <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-1">
                 <div className="w-full">
-                  <h3 className="text-sm md:text-lg font-bold text-[#4B2E05] leading-tight md:leading-snug group-hover:text-[#d07550] transition-colors truncate">
+                  <h3 className="text-sm md:text-lg font-bold text-[#4B2E05] leading-tight md:leading-snug group-hover:text-patient-primary/80 transition-colors truncate">
                     {doctor.fullName}
                   </h3>
                   <p className="text-[11px] md:text-sm text-[#d99a5b] font-semibold mt-0.5 truncate">
@@ -87,7 +87,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                 <div className="flex flex-col items-center sm:items-start leading-none">
                   <span className="hidden md:block text-[10px] text-[#7a6f66] font-bold uppercase tracking-wider mb-0.5">Consultation Fee</span>
                   <span className="text-sm md:text-lg font-bold text-[#4B2E05]">
-                    ₹{doctor.consultationFee}
+                    {doctor.consultationFee}
                   </span>
                 </div>
 
@@ -96,8 +96,8 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                     setSelectedDoctor(doctor);
                     setIsModalOpen(true);
                   }}
-                  className="w-full sm:w-auto bg-[#E0825C] text-white hover:bg-[#d07550] px-3 py-1.5 md:px-5 md:py-2 rounded-lg md:rounded-xl
-                  text-xs md:text-sm font-semibold shadow-md shadow-[#E0825C]/20 hover:shadow-[#d07550]/30 
+                  className="w-full sm:w-auto bg-patient-primary text-white hover:bg-patient-primary/80 px-3 py-1.5 md:px-5 md:py-2 rounded-lg md:rounded-xl
+                  text-xs md:text-sm font-semibold shadow-md shadow-patient-primary/20 hover:shadow-patient-primary/80 
                   transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 group/btn"
                 >
                   <span className="hidden lg:inline">Book Visit</span>
@@ -109,8 +109,8 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
           </motion.div>
         )) : (
           <div className="col-span-2 flex flex-col items-center justify-center py-16 md:py-24 px-4">
-             <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 animate-pulse">
-               <CalendarIcon className="w-10 h-10 text-orange-300 opacity-50" />
+             <div className="w-24 h-24 bg-patient-primary/10 rounded-full flex items-center justify-center mb-6 animate-pulse">
+               <CalendarIcon className="w-10 h-10 text-patient-primary/60 opacity-50" />
              </div>
              <h3 className="text-xl md:text-2xl font-bold text-[#4B2E05] mb-2 text-center">
                No Doctors Available

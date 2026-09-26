@@ -1,4 +1,4 @@
-﻿import { toast } from "sonner";
+import { toast } from "sonner";
 import { googleAuthforRolesProps } from "../features/patient-auth/types/register.type"; 
 import { googleAuth } from "../services/api/auth.service";
 import { GoogleAuthResult } from "../features/patient-auth/types/register.type";
@@ -41,7 +41,6 @@ export const useGoogleAuthforRoles = ({
         navigate(`${pathRedirect}`, { replace: true });
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
     }
   };

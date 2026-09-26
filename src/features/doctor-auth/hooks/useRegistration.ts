@@ -81,7 +81,6 @@ const useRegistration = ({onSubmit}:useRegistrationProps) => {
       try {
         if(validateForm() && await drRegisterSchema.validate(formData,{abortEarly:false})){
         
-            console.log('Doctor Registration:', formData);
            const res = await  onSubmit(formData);
            if(res){
             setIsLoading(!isLoading)
@@ -97,7 +96,6 @@ const useRegistration = ({onSubmit}:useRegistrationProps) => {
           fieldErrors[err.path as keyof drFormData] = err.message;
         });
 
-        console.log(fieldErrors)
 
         setErrors(fieldErrors);
       }

@@ -70,7 +70,6 @@ export const useSymptoms = () => {
 
   const handleEdit = (data: SymptomsData) => {
     setIsEdit(true)
-    console.log('editing data---------------->',data)
     setFormData(data);
     setIsCreating(true);
   };

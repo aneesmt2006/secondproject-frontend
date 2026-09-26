@@ -11,7 +11,7 @@ export const NotificationButton = () => {
   }, [refreshNotifications]);
 
   return (
-    <div className={`relative ${isDoctor ? 'doctor-theme' : ''}`}>
+    <div className="relative">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -22,7 +22,7 @@ export const NotificationButton = () => {
             : 'bg-white/80 backdrop-blur-sm border border-white/40 hover:bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]'
         }`}
       >
-        <Bell className={`w-5 h-5 ${isDoctor ? 'text-primary' : 'text-primary'}`} />
+        <Bell className={`w-5 h-5 ${isDoctor ? 'text-primary' : 'text-patient-primary transition-colors'}`} />
         {unreadCount > 0 && (
           <motion.span
             initial={{ scale: 0 }}

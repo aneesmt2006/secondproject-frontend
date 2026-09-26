@@ -72,7 +72,6 @@ export default function OTPModal({ isOpen, onClose, onVerify, onResend }: OTPMod
     setError('');
     try {
       setTimeout(()=>{
-        console.log("sending..")
       },3000)
        await onVerify(otpValue);
     } catch (err) {

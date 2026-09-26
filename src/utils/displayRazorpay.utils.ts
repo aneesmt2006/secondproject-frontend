@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "sonner";
 import { loadScript } from "./loadScript.utils";
-import { axiosInstance } from "../services/api/auth.service";
+import { axiosInstance } from '@/services/api/auth.service';
 import { APIResponse } from "@/services/types/api.response";
 export type TRazorpayOrderResponse = {
   keyId: string;
@@ -54,10 +54,8 @@ export const displayRazorpay = async (paymentData:{userId:string,doctorId:string
         };
 
         const res = await axiosInstance.post("/payment/create/verify", verifyBody);
-        console.log('Payment result---->',res)
         toast.info("Payment Verified");
       } catch (error) {
-        console.log(error)
         toast.error("Payment verification failed");
       }
     },

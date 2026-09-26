@@ -27,10 +27,8 @@ export const useSlotManagement = () => {
     const loadDoctorSlot = async()=>{
       try {
         const response = await getSlot()
-        console.log("Fetched Slot Data:", response.data);
         const scheduleData = response.data?.schedule || response.data?.days;
         if (scheduleData) {
-          console.log("Schedule from API:", scheduleData);
           setSchedule((prevSchedule) => {
             const newSchedule = { ...prevSchedule };
             Object.keys(scheduleData).forEach((day) => {
@@ -54,7 +52,6 @@ export const useSlotManagement = () => {
 
       } catch (error) {
         toast.error(error.data?.message)
-        console.log("Error",error)
       } finally {
         setIsFetching(false);
       }
@@ -123,7 +120,6 @@ export const useSlotManagement = () => {
         unavailableDates,
       };
 
-      console.log('---------------------->',slotData)
       
       await upsertSlot(slotData);
       toast.success("Work hours saved successfully");

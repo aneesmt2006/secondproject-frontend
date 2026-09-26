@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../../store/hooks";
 import { userSelector } from "../../patient-auth/slice/userSlice";
 import { calculatePregnancyWeek } from "../../../utils/pregnancyUtils";

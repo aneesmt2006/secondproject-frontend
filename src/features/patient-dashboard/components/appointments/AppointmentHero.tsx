@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Search, ArrowRight, ChevronLeft } from "lucide-react";
 import appoinmentImage from "../../../../assets/images/appoinment1.png";
+import appoinmentLavenderImage from "../../../../assets/images/appointment_lavender.jpg";
+import { useTheme } from "@/context/ThemeContext";
 
 interface AppointmentHeroProps {
   searchQuery: string;
@@ -9,6 +11,9 @@ interface AppointmentHeroProps {
 
 export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHeroProps) => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const heroImage = theme === 'theme-lavender' ? appoinmentLavenderImage : appoinmentImage;
+  
   return (
     <div className="w-full flex justify-center bg-transparent">
         <div className="origin-top scale-[0.90] pt-28 pb-1 md:pb-14 lg:pb-16 px-4 md:px-6 lg:px-10 max-w-7xl mx-auto bg-transparent relative">
@@ -17,7 +22,7 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="absolute top-16 md:top-28 left-4 md:left-10 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md shadow-sm border border-white/50 flex md:hidden items-center justify-center text-[#5A3A2E] hover:bg-white transition-all lg:hidden"
+            className="absolute top-16 md:top-28 left-4 md:left-10 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md shadow-sm border border-white/50 flex md:hidden items-center justify-center text-[color:var(--foreground)] hover:bg-white transition-all lg:hidden"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -29,21 +34,21 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
                 className="inline-flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-3 md:py-1.5 lg:px-5 lg:py-2 bg-white/70 backdrop-blur-xl rounded-full 
         border border-white/60 shadow-card transition-smooth"
               >
-                <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-[#E0825C] animate-pulse" />
-                <span className="text-[8px] md:text-[9px] lg:text-[11px] font-semibold text-[#E0825C] tracking-[0.15em] md:tracking-[0.2em] uppercase">
+                <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-patient-primary animate-pulse transition-colors" />
+                <span className="text-[8px] md:text-[9px] lg:text-[11px] font-semibold text-patient-primary tracking-[0.15em] md:tracking-[0.2em] uppercase transition-colors">
                   Verified Specialists in Payyanur
                 </span>
               </div>
 
-              <h1 className="font-bold leading-tight tracking-tight text-[#5A3A2E] text-4xl md:text-5xl lg:text-[4.5rem]">
+              <h1 className="font-bold leading-tight tracking-tight text-[color:var(--foreground)] text-4xl md:text-5xl lg:text-[4.5rem] transition-colors">
                 Find the Perfect
                 <br />
-                <span className="text-[#E0825C] font-semibold">
+                <span className="text-patient-primary font-semibold transition-colors">
                   Care Partner
                 </span>
               </h1>
 
-              <p className="text-sm md:text-[17px] text-[#7C6C64] max-w-md mx-auto md:mx-0 leading-relaxed font-normal opacity-90">
+              <p className="text-sm md:text-[17px] text-[color:var(--foreground)] max-w-md mx-auto md:mx-0 leading-relaxed font-normal opacity-80 transition-colors">
                 Book appointments with top-rated gynecologists and obstetricians
                 near you. Expert care for your beautiful journey.
               </p>
@@ -51,8 +56,9 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
               {/* Desktop Search */}
               <div className="hidden md:block relative max-w-lg group pt-4">
                 <div
-                  className="absolute inset-0 bg-[#E0825C]/15 rounded-full blur-2xl 
+                  className="absolute inset-0 bg-patient-primary/15 rounded-full blur-2xl 
         opacity-0 group-hover:opacity-100 transition-all"
+                  style={{ backgroundColor: 'color-mix(in srgb, var(--patient-primary) 15%, transparent)' }}
                 />
                 <div
                   className="relative flex items-center bg-white rounded-full pl-6 pr-2 py-3
@@ -62,14 +68,14 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
                   <input
                     type="text"
                     placeholder="Search doctor, hospital or specialty..."
-                    className="flex-1 bg-transparent outline-none ml-3 text-[15px] text-[#5A3A2E] 
+                    className="flex-1 bg-transparent outline-none ml-3 text-[15px] text-[color:var(--foreground)] 
             placeholder:text-[#B6AFA7]"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <button
-                    className="w-12 h-12 bg-[#E0825C] rounded-full text-white flex items-center justify-center shadow-card 
-          hover:bg-[#CC7254] active:scale-95 transition-smooth"
+                    className="w-12 h-12 bg-patient-primary rounded-full text-white flex items-center justify-center shadow-card 
+          hover:opacity-90 active:scale-95 transition-colors"
                   >
                     <ArrowRight className="w-5 h-5" />
                   </button>
@@ -79,11 +85,11 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
 
             {/* Right Hero Image */}
             <div className="flex-1 flex justify-center relative w-full">
-              <div className="rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.10)] w-full max-w-md md:max-w-full">
+              <div className="rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.10)] w-full max-w-md md:max-w-full bg-white/30">
                 <img
-                  src={appoinmentImage}
+                  src={heroImage}
                   alt="Doctor Consultation"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-opacity duration-500"
                 />
               </div>
             </div>
@@ -98,14 +104,14 @@ export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHero
                   <input
                     type="text"
                     placeholder="Search doctor..."
-                    className="flex-1 bg-transparent outline-none ml-3 text-sm text-[#5A3A2E] 
+                    className="flex-1 bg-transparent outline-none ml-3 text-sm text-[color:var(--foreground)] 
             placeholder:text-[#B6AFA7]"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <button
-                    className="w-9 h-9 bg-[#E0825C] rounded-full text-white flex items-center justify-center shadow-card 
-          hover:bg-[#CC7254] active:scale-95 transition-smooth"
+                    className="w-9 h-9 bg-patient-primary rounded-full text-white flex items-center justify-center shadow-card 
+          hover:opacity-90 active:scale-95 transition-colors"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </button>

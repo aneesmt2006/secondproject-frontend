@@ -1,4 +1,4 @@
-import OnlineSlotForm from "./OnlinSlotForm";
+import OnlineSlotForm from "./OnlineSlotForm";
 
 interface SlotTabsProps {
   unavailableDates: Date[];

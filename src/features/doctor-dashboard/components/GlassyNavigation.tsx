@@ -6,7 +6,7 @@ const navItems = [
   { icon: Calendar, label: "Appointments", path: "/doctor/appointments" },
   { icon: Users, label: "Patients", path: "/doctor/patients" },
   { icon: MessageSquare, label: "Messages", path: "/doctor/chat" },
-  { icon: CreditCard, label: "Payments", path: "/doctor/payments" },
+  // { icon: CreditCard, label: "Payments", path: "/doctor/payments" },
   { icon: Settings, label: "Settings", path: "/doctor/settings" },
 ];
 

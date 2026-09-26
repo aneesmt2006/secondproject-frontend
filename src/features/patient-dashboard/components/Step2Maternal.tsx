@@ -30,7 +30,7 @@ export default function Step2Medical({
     >
       {/* --- Medical Conditions Section --- */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-sans font-medium text-wine mb-2">
+        <h2 className="text-2xl font-sans font-medium text-patient-primary mb-2 transition-colors">
           Medical Conditions
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
@@ -38,9 +38,9 @@ export default function Step2Medical({
         </p>
 
         {/* 🔹 Gestational Diabetes */}
-        <div className="p-4 bg-cream/50 rounded-xl space-y-3">
+        <div className="p-4 bg-white/50 rounded-xl space-y-3 transition-colors">
           <div className="flex items-center justify-between">
-            <Label className="text-cocoa font-medium">
+            <Label className="text-[color:var(--foreground)] font-medium transition-colors">
               Gestational Diabetes
             </Label>
             <Switch
@@ -52,7 +52,7 @@ export default function Step2Medical({
                   gestationalSugar: checked ? prev.gestationalSugar : "",
                 }))
               }
-              className="data-[state=checked]:bg-periwinkle"
+              className="data-[state=checked]:bg-[color:var(--patient-primary)] transition-colors shadow-sm"
             />
           </div>
 
@@ -63,7 +63,7 @@ export default function Step2Medical({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <Label className="text-cocoa text-sm block mb-1">
+                <Label className="text-[color:var(--foreground)] text-sm block mb-1 transition-colors">
                   Enter your blood sugar level (mg/dL)
                 </Label>
                 <Input
@@ -72,7 +72,7 @@ export default function Step2Medical({
                   placeholder="e.g., 95"
                   value={profileData.gestationalSugar || ""}
                   onChange={handleChange}
-                  className="border-periwinkle/30 focus:border-periwinkle"
+                  className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300"
                 />
               </motion.div>
             )}
@@ -80,9 +80,9 @@ export default function Step2Medical({
         </div>
 
         {/* 🔹 Blood Pressure */}
-        <div className="p-4 bg-cream/50 rounded-xl space-y-3">
+        <div className="p-4 bg-white/50 rounded-xl space-y-3 transition-colors">
           <div className="flex items-center justify-between">
-            <Label className="text-cocoa font-medium">Blood Pressure</Label>
+            <Label className="text-[color:var(--foreground)] font-medium transition-colors">Blood Pressure</Label>
             <Switch
               checked={profileData.bloodPressure}
               onCheckedChange={(checked) =>
@@ -92,7 +92,7 @@ export default function Step2Medical({
                   bpReading: checked ? prev.bpReading : "",
                 }))
               }
-              className="data-[state=checked]:bg-periwinkle"
+              className="data-[state=checked]:bg-[color:var(--patient-primary)] transition-colors shadow-sm"
             />
           </div>
 
@@ -103,7 +103,7 @@ export default function Step2Medical({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <Label className="text-cocoa text-sm block mb-1">
+                <Label className="text-[color:var(--foreground)] text-sm block mb-1 transition-colors">
                   Enter your BP reading (mmHg)
                 </Label>
                 <Input
@@ -112,7 +112,7 @@ export default function Step2Medical({
                   placeholder="e.g., 120/80"
                   value={profileData.bpReading || ""}
                   onChange={handleChange}
-                  className="border-periwinkle/30 focus:border-periwinkle"
+                  className="bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] transition-all duration-300"
                 />
               </motion.div>
             )}
@@ -120,8 +120,8 @@ export default function Step2Medical({
         </div>
 
         {/* 🔹 Thyroid Problems */}
-        <div className="flex items-center justify-between p-4 bg-cream/50 rounded-xl">
-          <Label className="text-cocoa font-medium">Thyroid Problems</Label>
+        <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl transition-colors">
+          <Label className="text-[color:var(--foreground)] font-medium transition-colors">Thyroid Problems</Label>
           <Switch
             checked={profileData.thyroidProblems}
             onCheckedChange={(checked) =>
@@ -130,13 +130,13 @@ export default function Step2Medical({
                 thyroidProblems: checked,
               }))
             }
-            className="data-[state=checked]:bg-periwinkle"
+            className="data-[state=checked]:bg-[color:var(--patient-primary)] transition-colors shadow-sm"
           />
         </div>
 
         {/* 🔹 PCOS/PCOD */}
-        <div className="flex items-center justify-between p-4 bg-cream/50 rounded-xl">
-          <Label className="text-cocoa font-medium">PCOS / PCOD</Label>
+        <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl transition-colors">
+          <Label className="text-[color:var(--foreground)] font-medium transition-colors">PCOS / PCOD</Label>
           <Switch
             checked={profileData.pcosPcod}
             onCheckedChange={(checked) =>
@@ -145,7 +145,7 @@ export default function Step2Medical({
                 pcosPcod: checked,
               }))
             }
-            className="data-[state=checked]:bg-periwinkle"
+            className="data-[state=checked]:bg-[color:var(--patient-primary)] transition-colors shadow-sm"
           />
         </div>
       </div>
@@ -154,7 +154,7 @@ export default function Step2Medical({
       <div className="space-y-6">
         {/* Supplements / Medications */}
         <div className="space-y-3">
-          <Label className="text-cocoa font-medium">
+          <Label className="text-[color:var(--foreground)] font-medium transition-colors">
             Are you currently taking any supplements or medications?
           </Label>
           <RadioGroup
@@ -169,11 +169,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="no"
                   id="supplements-no"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="supplements-no"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   No
                 </Label>
@@ -182,11 +182,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="yes"
                   id="supplements-yes"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="supplements-yes"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   Yes
                 </Label>
@@ -197,7 +197,7 @@ export default function Step2Medical({
 
         {/* Allergies */}
         <div className="space-y-3">
-          <Label className="text-cocoa font-medium">
+          <Label className="text-[color:var(--foreground)] font-medium transition-colors">
             Do you have any known allergies?
           </Label>
           <RadioGroup
@@ -211,11 +211,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="no"
                   id="allergies-no"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="allergies-no"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   No
                 </Label>
@@ -224,11 +224,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="yes"
                   id="allergies-yes"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="allergies-yes"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   Yes
                 </Label>
@@ -239,7 +239,7 @@ export default function Step2Medical({
 
         {/* Family Relation */}
         <div className="space-y-3">
-          <Label className="text-cocoa font-medium">
+          <Label className="text-[color:var(--foreground)] font-medium transition-colors">
             Is your family related to your spouse's family?
           </Label>
           <RadioGroup
@@ -253,11 +253,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="no"
                   id="family-no"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="family-no"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   No
                 </Label>
@@ -266,11 +266,11 @@ export default function Step2Medical({
                 <RadioGroupItem
                   value="yes"
                   id="family-yes"
-                  className="border-periwinkle text-periwinkle"
+                  className="border-[color:var(--patient-primary)] text-[color:var(--patient-primary)] transition-colors"
                 />
                 <Label
                   htmlFor="family-yes"
-                  className="text-cocoa font-normal cursor-pointer"
+                  className="text-[color:var(--foreground)] font-normal cursor-pointer transition-colors"
                 >
                   Yes
                 </Label>
@@ -281,7 +281,7 @@ export default function Step2Medical({
 
         {/* Other Health Issues */}
         <div className="space-y-3">
-          <Label htmlFor="otherHealthIssues" className="text-cocoa font-medium">
+          <Label htmlFor="otherHealthIssues" className="text-[color:var(--foreground)] font-medium transition-colors">
             Other Health Issues (Optional)
           </Label>
           <Textarea
@@ -290,7 +290,7 @@ export default function Step2Medical({
             placeholder="e.g., Diabetes, previous surgeries, mental health concerns, etc."
             value={profileData.otherHealthIssues}
             onChange={handleChange}
-            className="min-h-[120px] border-periwinkle/30 focus:border-periwinkle resize-none"
+            className="min-h-[120px] bg-white/50 border-white/60 focus:bg-white/80 focus:border-[color:var(--patient-primary)] focus:ring-1 focus:ring-[color:var(--patient-primary)] resize-none transition-all duration-300"
           />
         </div>
       </div>

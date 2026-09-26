@@ -1,10 +1,11 @@
-﻿import  { useState } from 'react'
+import  { useState } from 'react'
 import AdminHeader from '../components/AdminHeader';
-import AdminDashboard from './adminDashPage';
-import UserManagement from './adminUserPage';
-import DoctorManagement from './adminDrPage';
+import AdminDashboard from './AdminDashPage';
+import UserManagement from './AdminUserPage';
+import DoctorManagement from './AdminDrPage';
 import AdminSidebar from '@/features/admin-dashboard/components/AdminSidebar';
 import ContentManagement from '../components/ContentManagement';
+import AdminBookingPage from './AdminBookingPage';
 
 const AdminMainPage = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -18,12 +19,7 @@ const AdminMainPage = () => {
       case 'doctors':
         return <DoctorManagement />;
       case 'appointments':
-        return (
-          <div className="p-8">
-            <h1 className="text-4xl font-bold text-cocoa">Appointment Management</h1>
-            <p className="mt-4 text-cocoa/60">This section is under development.</p>
-          </div>
-        );
+        return <AdminBookingPage />;
       case 'payments':
         return (
           <div className="p-8">

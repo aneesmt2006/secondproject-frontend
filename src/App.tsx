@@ -1,4 +1,5 @@
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import LoginPage from "./features/patient-auth/pages/PatientLoginPage";
 import OtpVerifcationPage from "./features/patient-auth/pages/OtpVerificationPage";
 import SplashWithRegistration from "./features/patient-auth/pages/PatientRegisterPage";
@@ -13,18 +14,29 @@ import DoctorDashPage from "./features/doctor-dashboard/pages/DoctorDashboardPag
 import Profile from "./features/patient-dashboard/pages/PatientProfilePage";
 import ProtectedLayout from "./utils/protectedRoute";
 import DoctorProfile from "./features/doctor-dashboard/pages/DoctorProfilePage";
-import ProtectedLayoutDR from "./utils/protectedRouteDR";
 import DoctorAppointmentsPage from "./features/doctor-dashboard/pages/DoctorAppointmentsPage";
+import DoctorPatientsPage from "./features/doctor-dashboard/pages/DoctorPatientsPage";
 import MedicalRecordPage from "./features/doctor-dashboard/pages/MedicalRecordPage";
 import DoctorChatPage from "./features/doctor-dashboard/pages/DoctorChatPage";
 import BabyInsightsPage from "./features/patient-dashboard/pages/BabyInsightsPage";
+import BodyInsightsPage from "./features/patient-dashboard/pages/BodyInsightsPage";
+import DosAndDontsPage from "./features/patient-dashboard/pages/DosAndDontsPage";
 import SymptomsPage from "./features/patient-dashboard/pages/SymptomsPage";
 import AppointmentPage from "./features/patient-dashboard/pages/AppointmentPage";
 import ChatPage from "./features/patient-dashboard/pages/ChatPage";
+import NutritionPage from "./features/patient-dashboard/pages/NutritionPage";
+import SleepGuidePage from "./features/patient-dashboard/pages/SleepGuidePage";
 import VideoCallPage from "./features/video-call/pages/VideoCallPage";
+import ExercisePage from "./features/patient-dashboard/pages/ExercisePage";
 import "./services/api/interceptor";
 
 const App = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   const routes = useRoutes([
     {
       path: "/",
@@ -46,16 +58,21 @@ const App = () => {
         { path: "/dashboard", element: <UserDashPage /> },
         { path: "/profile", element: <Profile /> },
         { path: "/dashboard/baby-insights", element: <BabyInsightsPage /> },
+        { path: "/dashboard/body-insights", element: <BodyInsightsPage /> },
+        { path: "/dashboard/dos-and-donts", element: <DosAndDontsPage /> },
         { path: "/dashboard/symptoms", element: <SymptomsPage /> },
         { path: "/dashboard/appointment", element: <AppointmentPage /> },
         { path: "/dashboard/chat", element: <ChatPage /> },
+        { path: "/dashboard/nutrition", element: <NutritionPage /> },
+        { path: "/dashboard/sleep-guide", element: <SleepGuidePage /> },
         { path: "/dashboard/video", element: <VideoCallPage /> },
+        { path: "/dashboard/exercise", element: <ExercisePage /> },
         
       ],
     },
     // DOCTOR ROUTES * PROTECTED
     {
-      element: <ProtectedLayoutDR allowedRoles={["doctor"]} />,
+      element: <ProtectedLayout allowedRoles={["doctor"]} />,
       children: [
         { path: "/doctor/dashboard", element: <DoctorDashPage /> },
         { path: "/doctor/profile", element: <DoctorProfile /> },
@@ -63,7 +80,7 @@ const App = () => {
         { path: "/doctor/medical-record/:id", element: <MedicalRecordPage /> },
         { path: "/doctor/chat", element: <DoctorChatPage /> },
         { path: "/doctor/video", element: <VideoCallPage /> },
-
+        { path: "/doctor/patients", element: <DoctorPatientsPage /> },
       ],
     },
     {

@@ -1,0 +1,73 @@
+/* Default Peach & Rose Theme */
+:root,
+.theme-peach {
+  --patient-bg-gradient: radial-gradient(
+    circle at center,
+    hsl(24, 100%, 93%) 0%,
+    hsl(22, 95%, 82%) 40%,
+    hsl(18, 80%, 70%) 100%
+  );
+  --patient-primary: hsl(15, 85%, 65%);
+  --patient-card-bg: rgba(255, 255, 255, 0.8);
+  --patient-card-border: rgba(255, 255, 255, 0.4);
+  
+  --background: #fff9e6; /* cream */
+  --foreground: #4b2e05; /* cocoa */
+  --patient-surface: #F9F0E6; 
+  --blob-1: hsl(20, 100%, 85%);
+  --blob-2: hsl(355, 80%, 80%);
+  --blob-3: hsl(30, 100%, 90%);
+}
+
+/* Lavender & Amethyst Theme */
+.theme-lavender {
+  --patient-bg-gradient: radial-gradient(
+    circle at center,
+    hsl(270, 80%, 95%) 0%,
+    hsl(265, 70%, 85%) 40%,
+    hsl(260, 60%, 75%) 100%
+  );
+  --patient-primary: hsl(265, 80%, 65%);
+  --patient-card-bg: rgba(255, 255, 255, 0.75);
+  --patient-card-border: rgba(255, 255, 255, 0.5);
+  
+  --background: #f8f6fc; /* soft light purple */
+  --foreground: #3b2a50; /* deep dark purple */
+  --patient-surface: #eee8f8; 
+  --blob-1: hsl(270, 100%, 85%);
+  --blob-2: hsl(285, 80%, 80%);
+  --blob-3: hsl(260, 100%, 90%);
+}
+
+/* Serene Aqua & Mint Theme */
+.theme-aqua {
+  --patient-bg-gradient: radial-gradient(
+    circle at center,
+    hsl(170, 80%, 93%) 0%,
+    hsl(175, 70%, 82%) 40%,
+    hsl(180, 60%, 70%) 100%
+  );
+  --patient-primary: hsl(175, 75%, 45%);
+  --patient-card-bg: rgba(255, 255, 255, 0.8);
+  --patient-card-border: rgba(255, 255, 255, 0.4);
+  
+  --background: #f4fbfb;
+  --foreground: #1c3b3a; 
+  --patient-surface: #e6f6f5; 
+  --blob-1: hsl(170, 100%, 85%);
+  --blob-2: hsl(190, 80%, 80%);
+  --blob-3: hsl(180, 100%, 90%);
+}
+
+.bg-patient-theme {
+  background: var(--patient-bg-gradient);
+}
+.text-patient-primary {
+  color: var(--patient-primary);
+}
+.bg-patient-primary {
+  background-color: var(--patient-primary);
+}
+.border-patient-primary {
+  border-color: var(--patient-primary);
+}

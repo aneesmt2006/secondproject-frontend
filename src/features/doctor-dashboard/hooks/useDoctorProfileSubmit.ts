@@ -6,7 +6,7 @@ import {
   // uploadFileToSignedUrl,
   updateProfileDR,
   uploadFileToSignedUrl,
-  uploadImageToCloundinary,
+  uploadImageToCloudinary,
 } from '../../../services/api/users-management.service';
 import { IselectedFile, ProfileData } from '@/types/profile.type';
 
@@ -66,11 +66,9 @@ export const useDoctorProfileSubmit = () => {
 
        if (hasNewProfileImage) {
            try {
-            const profileImageUploaded = await uploadImageToCloundinary([data.profileImageFile!])
-            console.log("profile image---",profileImageUploaded)
+            const profileImageUploaded = await uploadImageToCloudinary([data.profileImageFile!])
            data.profileImageLink = profileImageUploaded?.length?profileImageUploaded[0].toString():''
            } catch (error) {
-            console.log("Profile image uplaod err",error)
             toast.error("Profile image issue , try again later")
            }
             

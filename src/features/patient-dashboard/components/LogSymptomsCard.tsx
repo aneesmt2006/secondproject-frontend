@@ -24,24 +24,25 @@ export const LogSymptomsCard = ({ delay = 0, onClick }: LogSymptomsCardProps) =>
     flex flex-col items-center justify-center gap-3 
     transition-all duration-200 ease-in-out 
     border-2 
-    bg-gradient-to-br from-[rgba(243,139,102,0.2)] to-[rgba(249,182,120,0.2)] 
-    border-[rgba(243,139,102,0.4)] 
-    shadow-[0_2px_12px_-2px_hsl(15_60%_70%_/_0.12)] 
-    hover:shadow-[0_4px_20px_-2px_hsl(15_85%_65%_/_0.15)]
+    shadow-card hover:shadow-soft
   "
+  style={{
+    backgroundColor: 'color-mix(in srgb, var(--patient-primary) 20%, transparent)',
+    borderColor: 'color-mix(in srgb, var(--patient-primary) 40%, transparent)',
+  }}
 >
   <div
     className="
       w-16 h-16 
       rounded-full 
-      bg-[#f38b66] 
+      bg-patient-primary transition-colors
       flex items-center justify-center
     "
   >
     <Plus className="w-8 h-8 text-white" strokeWidth={3} />
   </div>
 
-  <h3 className="text-sm font-bold text-center text-[#7a4432]">
+  <h3 className="text-sm font-bold text-center text-[color:var(--foreground)] transition-colors">
     Log Symptoms
   </h3>
 </motion.div>

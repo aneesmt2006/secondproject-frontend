@@ -1,4 +1,4 @@
-﻿import { toast } from 'sonner'
+import { toast } from 'sonner'
 import { AdminLoginAccount } from '../../../services/api/auth.service'
 import Drlogin from '../../doctor-auth/components/Drlogin'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +10,6 @@ const AdminLoginPage = () => {
     const dispatch = useAppDispatch()
     const role = "Admin"
     const onSubmit = async(email:string,password:string)=>{
-         console.log(email,password)
          try {
             const response =  await AdminLoginAccount(email,password);
             toast.success(response.message)
@@ -18,7 +17,6 @@ const AdminLoginPage = () => {
             navigate('/super-admin/dashboard',{replace:true})
             return true
          } catch (error: any) {
-            console.log("ERROR admin login",error)
             toast.error(error.response?.data?.message || "Login failed");
             return false
          }

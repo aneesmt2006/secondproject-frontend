@@ -1,4 +1,4 @@
-﻿import {  useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import OnboardingScreen from '@/features/patient-auth/components/OnboardingScreen';
 import {  registerAccount } from "../../../services/api/auth.service";

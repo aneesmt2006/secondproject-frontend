@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { Sparkles, Baby } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, Baby, X } from "lucide-react";
+import { useState } from "react";
 import { LogSymptomsCard } from "../LogSymptomsCard";
 import { DailyInsightCard } from "../DailyInsightCard";
 
@@ -21,6 +22,7 @@ const DailyInsightsSection = ({
   lmp,
 }: DailyInsightsSectionProps) => {
   const navigate = useNavigate();
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
   const dailyInsights = [
     {
@@ -37,27 +39,31 @@ const DailyInsightsSection = ({
         "Your baby bump may start showing. Energy levels often improve during the second trimester.",
       color: "#F6A192",
       emoji: "🤰",
+      action: "body-insights",
     },
     {
-      title: "Symptoms",
+      title: "Your nutrition",
       description:
-        "Morning sickness usually decreases. You might experience mild headaches and dizziness.",
+        "Discover the best foods for you and your baby's growth during this stage of pregnancy.",
       color: "#87CEEB",
-      emoji: "💊🍪💊",
+      emoji: "🥗🍎",
+      action: "nutrition",
     },
     {
-      title: "Watch-outs",
+      title: "Sleep Guide",
       description:
-        "Stay hydrated and maintain a balanced diet. Contact your doctor if you experience severe pain.",
+        "Learn the best sleeping positions and tips for a restful night based on your trimester.",
+      color: "#D4A5A5",
+      emoji: "🌙💤",
+      action: "sleep-guide",
+    },
+    {
+      title: "Do's & Don'ts",
+      description:
+        "Learn what activities and foods to avoid, and safe practices during this stage.",
       color: "#FFD700",
-      emoji: "➕",
-    },
-    {
-      title: "Cravings",
-      description:
-        "Track your food cravings and what you're enjoying this week.",
-      color: "#FF9AA2",
-      emoji: "🍕🍫",
+      emoji: "✅❌",
+      action: "dos-and-donts",
     },
     {
       title: "Weight Changes",
@@ -65,12 +71,23 @@ const DailyInsightsSection = ({
         "Monitor your weight gain and stay within healthy ranges for your stage.",
       color: "#B4F8C8",
       emoji: "⚖️",
+      action: "weight",
     },
   ];
 
   const handleInsightClick = (action?: string) => {
     if (action === "baby-insights") {
       navigate("/dashboard/baby-insights", { state: { date: currentDate.toISOString() } });
+    } else if (action === "body-insights") {
+      navigate("/dashboard/body-insights", { state: { date: currentDate.toISOString() } });
+    } else if (action === "nutrition") {
+      navigate("/dashboard/nutrition");
+    } else if (action === "dos-and-donts") {
+      navigate("/dashboard/dos-and-donts", { state: { date: currentDate.toISOString() } });
+    } else if (action === "sleep-guide") {
+      navigate("/dashboard/sleep-guide", { state: { date: currentDate.toISOString() } });
+    } else if (action === "weight") {
+      setShowComingSoon(true);
     }
   };
 
@@ -112,6 +129,51 @@ const DailyInsightsSection = ({
           </div>
         ))}
       </div>
+
+      {/* Coming Soon Modal */}
+      <AnimatePresence>
+        {showComingSoon && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowComingSoon(false)}
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-sm bg-white/70 backdrop-blur-2xl border border-white/60 p-6 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] flex flex-col items-center text-center overflow-hidden"
+            >
+              <button 
+                onClick={() => setShowComingSoon(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/50 flex items-center justify-center hover:bg-white text-cocoa transition-all"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-300 to-rose-300 flex items-center justify-center shadow-lg shadow-pink-300/30 mb-4 rotate-12">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
+
+              <h3 className="text-xl font-extrabold text-cocoa mb-2">Coming Soon!</h3>
+              <p className="text-sm font-medium text-cocoa/70 mb-4">
+                We're currently brewing up this feature. Check back in a little while!
+              </p>
+              
+              <button 
+                onClick={() => setShowComingSoon(false)}
+                className="px-6 py-2.5 rounded-full bg-cocoa text-white text-sm font-bold shadow-md hover:bg-cocoa/90 transition-all"
+              >
+                Got it
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { getUserVisitHistory, bookedDoctors } from "@/services/api/appoinment.service";
-import { UserVisitHistory } from "@/types/appointments.type";
+import { UserVisitHistory, UserAppointment } from "@/types/appointments.type";
 import { getAppointmentDateTime } from "@/utils/appointmentUtils";
-import { updatePrimaryDoctor, getPrimaryDoctor } from "@/services/api/medical.service";
+import { updatePrimaryDoctor, getPrimaryDoctor, getPrescriptionByAppointmentId } from "@/services/api/medical.service";
+import { MedicalPrescription } from "@/types/medical.overview.type";
 import { ChatContact } from "@/components/chat/types";
 import { toast } from "sonner";
 
@@ -61,6 +62,12 @@ export const useVisitHistory = () => {
     const [isDoctorsLoading, setIsDoctorsLoading] = useState(false);
     const [isUpdatingDoctor, setIsUpdatingDoctor] = useState(false);
 
+    // Prescription Notebook Modal States
+    const [isPrescriptionModalOpen, setIsPrescriptionModalOpen] = useState(false);
+    const [selectedPrescription, setSelectedPrescription] = useState<MedicalPrescription | null>(null);
+    const [selectedAppointment, setSelectedAppointment] = useState<UserAppointment | null>(null);
+    const [isPrescriptionLoading, setIsPrescriptionLoading] = useState(false);
+
     // Current primary doctor fetched from backend
     const [currentPrimaryDoctor, setCurrentPrimaryDoctor] = useState<{ doctorName: string; doctorId: string } | null>(null);
     const [isCurrentDoctorLoading, setIsCurrentDoctorLoading] = useState(false);
@@ -86,6 +93,33 @@ export const useVisitHistory = () => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleViewPrescription = async (appointment: UserAppointment) => {
+        setSelectedAppointment(appointment);
+        setIsPrescriptionModalOpen(true);
+        setIsPrescriptionLoading(true);
+        setSelectedPrescription(null);
+
+        try {
+            const res = await getPrescriptionByAppointmentId(appointment.appointmentId);
+            if (res.success && res.data) {
+                setSelectedPrescription(res.data);
+            } else {
+                setSelectedPrescription(null);
+            }
+        } catch (err) {
+            console.error("Failed to fetch prescription details:", err);
+            setSelectedPrescription(null);
+        } finally {
+            setIsPrescriptionLoading(false);
+        }
+    };
+
+    const handleClosePrescriptionModal = () => {
+        setIsPrescriptionModalOpen(false);
+        setSelectedPrescription(null);
+        setSelectedAppointment(null);
     };
 
     // Load booked doctors & current primary doctor on demand
@@ -188,6 +222,14 @@ export const useVisitHistory = () => {
         selectedDoctorId,
         setSelectedDoctorId,
         selectedDoctorName,
-        setSelectedDoctorName
+        setSelectedDoctorName,
+        // Prescription notebook modal props
+        isPrescriptionModalOpen,
+        selectedPrescription,
+        selectedAppointment,
+        isPrescriptionLoading,
+        handleViewPrescription,
+        handleClosePrescriptionModal
     };
 };
+

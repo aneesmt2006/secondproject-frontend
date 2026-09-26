@@ -65,7 +65,6 @@ export const userSlice = createSlice({
         
             state.userData = {...action.payload}
           
-          console.log("state data",state.userData)
         },
         setUpdateUserField:(state,action:PayloadAction<Partial<IUser>>)=>{
             state.userData = {...state.userData,...action.payload}

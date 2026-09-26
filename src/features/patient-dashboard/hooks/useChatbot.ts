@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { userSelector } from '@/features/patient-auth/slice/userSlice';
 import { askChatbot } from '@/services/api/medical.service';
@@ -21,7 +21,7 @@ export const useChatbot = () => {
     setMessages([
       {
         id: 'welcome',
-        text: `Hi ${firstName}! 👋 I'm your AI pregnancy assistant. How can I help you today?`,
+        text: `Hi ${firstName}! ?? I'm your AI pregnancy assistant. How can I help you today?`,
         sender: 'bot',
         timestamp: new Date(),
       }

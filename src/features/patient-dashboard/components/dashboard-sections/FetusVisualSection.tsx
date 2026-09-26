@@ -1,10 +1,11 @@
-﻿import React from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, Baby } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from '@/components/ui/button';
 import { fetusForm } from "../../../admin-dashboard/types";
-
+import "driver.js/dist/driver.css";
+import { driver } from "driver.js";
 
 interface FetusVisualSectionProps {
   currentDate: Date;
@@ -47,6 +48,39 @@ const FetusVisualSection = ({
     setImgLoaded(false);
   }, [fetusWeekData?.fetusImage]);
 
+  const startTour = () => {
+    const isDesktop = window.innerWidth >= 768;
+
+    const steps: any[] = [
+      { element: '#tour-profile', popover: { title: 'Profile', description: 'View and update your medical profile and history.', side: "bottom" } },
+      { element: '#tour-notifications', popover: { title: 'Notifications', description: 'Check your upcoming appointments and reminders.', side: "bottom" } },
+    ];
+
+    if (!isDesktop) {
+      // Theme switcher is only visible on mobile header
+      steps.push({ element: '#tour-theme', popover: { title: 'Themes', description: 'Personalize your app colors with beautifully crafted themes.', side: "bottom" } });
+      // Mobile Chat is in the bottom bar
+      steps.push({ element: '#tour-mobile-chat', popover: { title: 'Doctor Chat', description: 'Securely message your attending physician.', side: "top" } });
+    } else {
+      // Chat button is only visible on desktop header
+      steps.push({ element: '#tour-chat', popover: { title: 'Doctor Chat', description: 'Securely message your attending physician.', side: "bottom" } });
+      // Theme switcher on desktop is in the navbar
+      steps.push({ element: '#tour-desktop-theme', popover: { title: 'Themes', description: 'Personalize your app colors with beautifully crafted themes.', side: "bottom" } });
+    }
+
+    steps.push(
+      { element: '#tour-calendar', popover: { title: 'Calendar', description: 'Pick any date to see insights or past records.', side: "bottom" } },
+      { element: '#tour-chatbot', popover: { title: 'AI Assistant', description: 'Click here to chat with our intelligent pregnancy assistant!', side: "left" } }
+    );
+
+    const driverObj = driver({
+      showProgress: true,
+      animate: true,
+      steps: steps
+    });
+    driverObj.drive();
+  };
+
   return (
     <AnimatePresence mode="wait" custom={direction}>
       <motion.div
@@ -66,7 +100,7 @@ const FetusVisualSection = ({
                {/* Loader - Show when either fetching data OR downloading image */}
                {(laoding || !imgLoaded) && (
                   <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cocoa"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-patient-primary"></div>
                   </div>
                )}
 
@@ -94,34 +128,34 @@ const FetusVisualSection = ({
             </div>
 
             <motion.h1 className="text-4xl md:text-5xl font-bold mb-4 flex items-center gap-2">
-              <span className="text-[1.8rem] font-bold text-[#8B4513]">
+              <span className="text-[1.8rem] font-bold text-[color:var(--foreground)] transition-colors">
                 {currentWeek} weeks
                 {currentDay > 0 ? `, ${currentDay} days` : ""}
               </span>
-              <Info className="w-5 h-5 text-primary/60" />
+              <Info className="w-5 h-5 text-patient-primary/60 transition-colors" />
             </motion.h1>
 
-            <Button className="mt-4 bg-[#F28C64] text-white px-6 py-2 rounded-full shadow-md hover:bg-[#e8754a] transition-smooth">
-              Details
+            <Button onClick={startTour} className="mt-4 bg-patient-primary text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition-colors">
+              Take a Tour
             </Button>
           </>
         ) : (
           <>
-            {/* NO LMP → SHOW CLEAN PROFILE CARD */}
+            {/* NO LMP ? SHOW CLEAN PROFILE CARD */}
             <div className="w-full max-w-md bg-white/80 backdrop-blur-lg shadow-card p-6 rounded-2xl text-center border border-[#F28C64]/20">
-              <Baby className="w-16 h-16 text-primary mx-auto mb-4" />
+              <Baby className="w-16 h-16 text-patient-primary mx-auto mb-4 transition-colors" />
 
-              <h2 className="text-xl font-bold text-[#5A2D0C] mb-2">
+              <h2 className="text-xl font-bold text-[color:var(--foreground)] mb-2 transition-colors">
                 Complete Your Profile
               </h2>
 
-              <p className="text-[#7A4A2B]/80 mb-4 text-sm">
+              <p className="text-[color:var(--foreground)] opacity-80 mb-4 text-sm transition-colors">
                 Add your last menstrual period (LMP) to show your due date,
                 pregnancy week, and weekly fetus insights.
               </p>
 
               <Link to="/profile">
-                <Button className="bg-[#F28C64] text-white px-6 py-2 rounded-full shadow-md hover:bg-[#e8754a] transition-smooth">
+                <Button className="bg-patient-primary text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition-colors">
                   Update Profile
                 </Button>
               </Link>

@@ -93,10 +93,8 @@ export const useCompleteAppointment = () => {
 
     try {
       setIsSubmitting(true);
-      console.log("Sending completion data to backend:", data);
       const response = await completeAppointment(data);
       if (response.success) {
-        console.log("Appointment successfully updated:", response.message);
         handleClose();
       }
     } catch (error) {

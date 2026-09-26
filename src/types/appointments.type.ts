@@ -66,7 +66,7 @@ export interface UserAppointment {
   appointmentTime: string;
   reason: string;
   notes?: string;
-  status: 'Completed' | 'Upcoming' | 'Cancelled' | 'Scheduled';
+  status: 'Completed' | 'Upcoming' | 'Cancelled' | 'Scheduled' | 'Expired' | string;
   doctorImage?: string;
   hospitalName?: string;
 }
@@ -83,4 +83,10 @@ export interface AppointmentCompletionData {
   notes: string;
   time: string;
   previewDates: string[];
+}
+
+export interface DoctorDashboardStatsData {
+  todayAppointments: number;
+  upcomingAppointments: number;
+  totalPatients: number;
 }

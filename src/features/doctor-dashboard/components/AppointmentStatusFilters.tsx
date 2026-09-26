@@ -16,7 +16,6 @@ const filters: { label: AppointmentStatus; icon: any; color: string }[] = [
   { label: 'Upcoming', icon: Dot, color: 'text-medical-success' },
   { label: 'Completed', icon: History, color: 'text-primary' },
   { label: 'Canceled', icon: XCircle, color: 'text-destructive' },
-  { label: 'Emergency', icon: AlertTriangle, color: 'text-medical-warning' },
 ];
 
 export const AppointmentStatusFilters = ({ activeFilter, onFilterChange, counts }: AppointmentStatusFiltersProps) => {
@@ -42,14 +41,6 @@ export const AppointmentStatusFilters = ({ activeFilter, onFilterChange, counts 
             >
               <Icon className={`w-3.5 h-3.5 ${isActive ? 'animate-pulse' : ''} ${isActive ? 'text-white' : filter.color}`} />
               {filter.label}
-              {count > 0 && (
-                <span className={`
-                  ml-1 px-1.5 py-0.5 rounded-full text-[10px] 
-                  ${isActive ? 'bg-white/20 text-white' : 'bg-muted text-muted-foreground'}
-                `}>
-                  {count}
-                </span>
-              )}
             </button>
           );
         })}

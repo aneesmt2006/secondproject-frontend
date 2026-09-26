@@ -5,11 +5,12 @@ import { motion } from "framer-motion";
 interface MessageBubbleProps {
   message: ChatMessage;
   doctorAvatarUrl?: string;
+  doctorName?: string;
   isMine: boolean;
   isDoctor?: boolean;
 }
 
-export const MessageBubble = ({ message, doctorAvatarUrl, isMine, isDoctor = false }: MessageBubbleProps) => {
+export const MessageBubble = ({ message, doctorAvatarUrl, doctorName, isMine, isDoctor = false }: MessageBubbleProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -20,11 +21,17 @@ export const MessageBubble = ({ message, doctorAvatarUrl, isMine, isDoctor = fal
       }`}
     >
       {!isMine && (
-        <img
-          src={doctorAvatarUrl}
-          alt="Avatar"
-          className="w-8 h-8 rounded-full shadow-sm mb-1 object-cover"
-        />
+        doctorAvatarUrl ? (
+          <img
+            src={doctorAvatarUrl}
+            alt="Avatar"
+            className="w-8 h-8 rounded-full shadow-sm mb-1 object-cover shrink-0"
+          />
+        ) : (
+          <div className={`w-8 h-8 rounded-full shadow-sm mb-1 flex items-center justify-center font-bold text-xs text-white shrink-0 ${isDoctor ? "bg-gradient-to-tr from-primary to-primary/60" : "bg-gradient-to-tr from-patient-primary to-patient-primary/80"}`}>
+            {doctorName ? doctorName.charAt(0).toUpperCase() : "U"}
+          </div>
+        )
       )}
 
       <div className={`flex flex-col ${isMine ? "items-end" : "items-start"}`}>
@@ -35,7 +42,7 @@ export const MessageBubble = ({ message, doctorAvatarUrl, isMine, isDoctor = fal
               isMine
                 ? isDoctor
                   ? "bg-gradient-to-br from-primary to-primary/80 text-white rounded-br-none"
-                  : "bg-gradient-to-br from-[#E0825C] to-[#C96743] text-white rounded-br-none"
+                  : "bg-gradient-to-br from-patient-primary to-patient-primary/80 text-white rounded-br-none"
                 : "bg-white text-gray-800 rounded-bl-none border border-gray-100"
             }
           `}
@@ -45,7 +52,7 @@ export const MessageBubble = ({ message, doctorAvatarUrl, isMine, isDoctor = fal
             <img
               src={message.attachmentUrl}
               alt="attachment"
-              className="mt-2 rounded-lg max-w-full h-auto"
+              className="mt-2 rounded-lg max-w-[240px] md:max-w-[320px] max-h-[350px] w-full h-auto object-contain"
             />
           )}
         </div>

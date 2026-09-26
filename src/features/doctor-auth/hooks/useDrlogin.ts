@@ -75,7 +75,6 @@ const useDrlogin = ({handleSubmitLogin,role}:LoginProps) => {
  
      try {
     //    await new Promise((resolve) => setTimeout(resolve, 1500));
-       console.log('Doctor Login:', formData,role);
        const res = await handleSubmitLogin(formData.email,formData.password);
        if(res){
         setIsLoading(true)
@@ -90,7 +89,6 @@ const useDrlogin = ({handleSubmitLogin,role}:LoginProps) => {
           fieldErrors[err.path as keyof LoginFormData] = err.message;
         });
 
-        console.log(fieldErrors)
 
         setErrors(fieldErrors);
       }

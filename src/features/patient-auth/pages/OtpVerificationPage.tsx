@@ -1,4 +1,4 @@
-﻿
+
 import { toast } from "sonner";
 import { otpVerify, resendOTP } from "../../../services/api/auth.service"
 import OtpInput from "../components/otpInput"
@@ -17,7 +17,6 @@ const OtpVerifcationPage = () => {
     const  response =  await otpVerify(code,localStorage.getItem('email')!)
     
    if(response){
-    console.log("OTP response-->",response)
     toast.success(response.message)
     
     dispatch(setUserData({
@@ -33,7 +32,6 @@ const OtpVerifcationPage = () => {
       updatedAt:response.data?.updatedAt??null,
     }))
 
-    console.log("state after update",statedata)
     await navigate('/dashboard',{replace:true})
    }
    

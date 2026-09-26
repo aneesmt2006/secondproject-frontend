@@ -23,14 +23,12 @@ export class PeerConnection {
 
     // Setup event handlers
     this.peerConnection.onicecandidate = (event) => {
-      console.log("<<< [1] >>>>")
       if (event.candidate) {
         this.onIceCandidateCallback(event.candidate);
       }
     };
 
     this.peerConnection.ontrack = (event) => {
-        console.log("<<< [2] >>>> ")
       event.streams[0].getTracks().forEach((track) => {
     //     console.log(
     //   "Track:",
@@ -46,7 +44,6 @@ export class PeerConnection {
   }
 
   async setLocalStream(stream: MediaStream) {
-        console.log("<<< [3] >>>> ")
 
     this.localStream = stream;
     stream.getTracks().forEach((track) => {
@@ -58,7 +55,6 @@ export class PeerConnection {
 
   async createOffer() {
     try {
-        console.log("<<< [4] >>>>")
 
       const offer = await this.peerConnection.createOffer();
       await this.peerConnection.setLocalDescription(offer);
@@ -71,7 +67,6 @@ export class PeerConnection {
 
   async createAnswer(offer: RTCSessionDescriptionInit) {
     try {
-        console.log("<<< [5] >>>>")
 
       await this.peerConnection.setRemoteDescription(
         new RTCSessionDescription(offer),
@@ -87,7 +82,6 @@ export class PeerConnection {
 
   async setRemoteAnswer(answer:RTCSessionDescriptionInit){
     try {
-        console.log("<<< [6] >>>>")
 
         await this.peerConnection.setRemoteDescription(new RTCSessionDescription(answer))
     } catch (error) {
@@ -98,7 +92,6 @@ export class PeerConnection {
 
   addIceCandidate(candidate:RTCIceCandidateInit){
     try {
-        console.log("<<< [7] >>>> ")
 
         this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
     } catch (error) {
@@ -114,7 +107,6 @@ export class PeerConnection {
 
 export const getUserMedia = async()=>{
     try {
-      console.log("<<< [0] >>>>")
         const stream = await navigator.mediaDevices.getUserMedia({
             video:true,
             audio:true

@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import {
   UserCircle,
   Mail,
@@ -33,7 +33,7 @@ const DoctorRegistration: React.FC<DRregistrationProps> = ({isOpen,onResend,onCl
         <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
           {/* Background image */}
           <img
-            src="/dr-signup2.png" // 👈 replace with your desired image URL
+            src="/dr-signup2.png" // ?? replace with your desired image URL
             alt="Doctor background"
             className="absolute inset-0 w-full h-full object-cover"
           />

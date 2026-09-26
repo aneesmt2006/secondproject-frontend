@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Home, Apple, Dumbbell, Calendar, FileText, Baby, Moon } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface NavItem {
   icon: LucideIcon;
@@ -16,7 +17,7 @@ const navItems: NavItem[] = [
   { icon: Dumbbell, label: 'Exercise', path: '/dashboard/exercise' },
   { icon: Calendar, label: 'Appointment', path: '/dashboard/appointment' },
   { icon: FileText, label: "Do's and Donts", path: '/dashboard/dos-and-donts' },
-  { icon: Baby, label: 'Fetus Knowledge', path: '/dashboard/fetus-knowledge' },
+  { icon: Baby, label: 'Fetus Knowledge', path: '/dashboard/baby-insights' },
   { icon: Moon, label: 'Sleep Guide', path: '/dashboard/sleep-guide' },
 ];
 
@@ -25,8 +26,8 @@ export const DesktopNavbar = () => {
   return (
     <nav className="hidden md:block fixed top-6 left-0 right-0 z-50 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white/30 backdrop-blur-xl border border-white/40 shadow-soft rounded-full px-4 lg:px-8 py-4">
-          <div className="flex justify-center items-center gap-2 lg:gap-6">
+        <div className="bg-white/30 backdrop-blur-xl border border-white/40 shadow-soft rounded-full px-4 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex justify-center items-center gap-2 lg:gap-6 flex-1">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path
               return (
@@ -36,8 +37,8 @@ export const DesktopNavbar = () => {
                     whileTap={{ scale: 0.95 }}
                     className={`flex flex-col lg:flex-row items-center gap-1 lg:gap-2 px-2 lg:px-4 py-2 rounded-full transition-smooth ${
                       isActive
-                        ? 'bg-white/50 text-primary font-semibold shadow-sm'
-                        : 'text-foreground/70 hover:text-foreground hover:bg-white/30'
+                        ? 'bg-white/50 text-patient-primary font-semibold shadow-sm'
+                        : 'text-[color:var(--foreground)]/70 hover:text-[color:var(--foreground)] hover:bg-white/30'
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
@@ -46,6 +47,9 @@ export const DesktopNavbar = () => {
                 </Link>
               )
             })}
+          </div>
+          <div id="tour-desktop-theme" className="hidden lg:flex items-center ml-4">
+            <ThemeSwitcher />
           </div>
         </div>
       </div>

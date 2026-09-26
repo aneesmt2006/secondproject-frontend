@@ -55,8 +55,6 @@ export const LogSymptomsDialog = ({ open, onOpenChange }: LogSymptomsDialogProps
   };
 
   const handleApply = () => {
-    console.log('Selected moods:', selectedMoods);
-    console.log('Selected symptoms:', selectedSymptoms);
     onOpenChange(false);
   };
 

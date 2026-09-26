@@ -1,7 +1,15 @@
 import { StrictMode } from "react";
+import { registerSW } from 'virtual:pwa-register'
+
+if ('serviceWorker' in navigator) {
+  registerSW({ immediate: true })
+}
+
 import App from "./App.tsx";
 import "./index.css";
+import "./theme/patient.css";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import { createRoot } from "react-dom/client";
@@ -13,7 +21,9 @@ createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     </StrictMode>
