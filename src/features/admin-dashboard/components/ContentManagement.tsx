@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FileText, Baby, Pill, Activity } from 'lucide-react';
-import FetusKnowledge from '../pages/adminFetusPage';
+import FetusKnowledge from '../pages/AdminFetusPage';
 import AdminSymptomsPage from '../pages/AdminSymptomsPage';
 
 const ContentManagement = () => {
