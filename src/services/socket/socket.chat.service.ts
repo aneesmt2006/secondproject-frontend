@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 let socket: Socket | null = null;
 export const socketForChat = (userId: string) => {
   if (!socket) {
-    socket = io("http://localhost:3035/chat", {
+    socket = io(import.meta.env.VITE_CHAT_SOCKET_URL, {
       transports: ["websocket"],
       query: {
         userId,

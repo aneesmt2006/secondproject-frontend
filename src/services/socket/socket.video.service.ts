@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { io } from "socket.io-client";
 
-export const socket = io("http://localhost:3035");
+export const socket = io(import.meta.env.VITE_VIDEO_SOCKET_URL);
 
 export const joinRoom = (roomName: string, userName: string) => {
   console.log("EMIT-0-[join-room]")

@@ -12,13 +12,13 @@ import { EmptyPatients } from "../components/EmptyPatients";
 import "../../../theme/doctor.css";
 
 const DoctorPatientsPage = () => {
-  const { fullName } = useAppSelector(doctorSelector);
+  const { full_name } = useAppSelector(doctorSelector);
   const { patients, isLoading, searchQuery, setSearchQuery, handlePatientClick } = useDoctorPatients();
 
   return (
     <div className="doctor-theme min-h-screen pb-48 md:pb-8">
       <DoctorHeader
-        doctorName={fullName ? `Dr. ${fullName}` : "Sarah"}
+        doctorName={full_name ? `Dr. ${full_name}` : "Sarah"}
         avatarUrl="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop"
         rating={4.9}
         patientCount={850}

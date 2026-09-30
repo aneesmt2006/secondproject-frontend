@@ -4,7 +4,7 @@ let socket: Socket | null = null;
 
 export const connectSocket = (userId:string) => {
   if (!socket) {
-    socket = io("http://localhost:3015", {
+    socket = io(import.meta.env.VITE_SOCKET_URL, {
       transports: ["websocket"],
       query:{
         userId
