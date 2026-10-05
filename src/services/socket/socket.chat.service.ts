@@ -4,6 +4,7 @@ let socket: Socket | null = null;
 export const socketForChat = (userId: string) => {
   if (!socket) {
     socket = io(import.meta.env.VITE_CHAT_SOCKET_URL, {
+      path: '/communication/socket.io',
       transports: ["websocket"],
       query: {
         userId,
