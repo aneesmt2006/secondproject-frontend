@@ -17,6 +17,7 @@
 // export default VideoCallPage
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Room from '../components/Room';
 import VideoHome from '../components/Home';
 import "../../../theme/doctor.css";
@@ -25,6 +26,7 @@ const VideoCallPage = () => {
   const [isInRoom, setIsInRoom] = useState(false)
   const [roomName, setRoomName] = useState('')
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
 
   const isDoctor = window.location.pathname.startsWith('/doctor');
 
@@ -35,8 +37,10 @@ const VideoCallPage = () => {
   }
 
   const handleLeaveRoom = () => {
-    window.location.reload()
     setIsInRoom(false);
+    // Navigate back to the previous page in history
+    // If you meant a specific route, you can change this to navigate('/your-route')
+    navigate(-1);
   };
 
   return (
