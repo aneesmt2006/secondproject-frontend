@@ -11,12 +11,12 @@ const TypingIndicator = () => (
     animate={{ opacity: 1, y: 0 }}
     className="flex justify-start"
   >
-    <div className="bg-white/80 border border-patient-primary/20 rounded-2xl rounded-tl-none p-3 max-w-[80px]">
+    <div className="bg-white/80 border border-patient-primary rounded-2xl rounded-tl-none p-3 max-w-[80px]" style={{ borderColor: 'color-mix(in srgb, var(--patient-primary) 20%, transparent)' }}>
       <div className="flex items-center space-x-1">
         {[0, 0.15, 0.3].map((delay, idx) => (
           <motion.div
             key={idx}
-            className="w-2 h-2 bg-patient-primary/60 rounded-full"
+            className="w-2 h-2 bg-patient-primary rounded-full opacity-60"
             animate={{ y: [0, -4, 0] }}
             transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut', delay }}
           />
