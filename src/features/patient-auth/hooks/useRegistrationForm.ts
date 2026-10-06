@@ -103,6 +103,8 @@ const useRegistrationForm = (onSubmit:(data:RegistrationData)=>void) => {
 
     if (checkAge(`${formData.dateOfBirth}`) < 18) {
       newErrors.dateOfBirth = "You must be at least 18 year's Old";
+    } else if (checkAge(`${formData.dateOfBirth}`) > 100) {
+      newErrors.dateOfBirth = "Please enter a valid date of birth";
     }
 
     setErrors(newErrors);

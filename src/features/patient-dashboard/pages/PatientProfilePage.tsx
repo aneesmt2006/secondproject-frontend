@@ -78,23 +78,6 @@ export default function ProfilePage() {
 
 const handleSubmit = async () => {
   try {
-    const today = new Date();
-    if (profileData.lmp) {
-      const lmpDate = new Date(profileData.lmp);
-
-      if (lmpDate > today) {
-        toast("Invalid LMP date.", {
-          style: {
-            background: "#FFF7E8",
-            color: "#4B2E05",
-            border: "1px solid #F5D0A9",
-            fontWeight: "500",
-          },
-        });
-        return;
-      }
-    }
-
     // Validate inputs
     await updateProfileSchema.validate(profileData, { abortEarly: false });
 

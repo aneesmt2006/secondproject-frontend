@@ -4,6 +4,7 @@ import { pregnantProfile,profileError } from '@/types/profile.type';
 import { animate } from "framer-motion";
 import { step1Schema } from "../schemas/user.profile.schema";
 import { toast } from "sonner";
+import { checkAge } from "../../../utils/checkAge";
 
 export const useProfileData = () => {
   const navigate = useNavigate();
@@ -70,6 +71,45 @@ export const useProfileData = () => {
       if (currentStep === 1) {
         // Validate Step 1 fields only
         await step1Schema.validate(profileData, { abortEarly: false });
+
+        if (!profileData.dateOfBirth || isNaN(new Date(profileData.dateOfBirth).getTime())) {
+          setError({ dateOfBirth: "Date of birth is required and must be valid." } as profileError);
+          toast.error("Date of birth is required and must be valid.");
+          return;
+        }
+
+        const age = checkAge(`${profileData.dateOfBirth}`);
+
+        if (age < 18) {
+          setError({ dateOfBirth: "You must be at least 18 year's Old" } as profileError);
+          toast.error("You must be at least 18 year's Old");
+          return;
+        }
+
+        if (age > 100) {
+          setError({ dateOfBirth: "Please enter a valid date of birth." } as profileError);
+          toast.error("Please enter a valid date of birth.");
+          return;
+        }
+
+        if (profileData.lmp) {
+          const lmpDate = new Date(profileData.lmp);
+          const today = new Date();
+          const fortyWeeksInMs = 40 * 7 * 24 * 60 * 60 * 1000;
+
+          if (lmpDate > today) {
+            setError({ lmp: "Invalid LMP date. Date cannot be in the future." } as profileError);
+            toast.error("Invalid LMP date. Date cannot be in the future.");
+            return;
+          }
+
+          if (today.getTime() - lmpDate.getTime() > fortyWeeksInMs) {
+            setError({ lmp: "Invalid LMP date. Date indicates pregnancy is over 40 weeks." } as profileError);
+            toast.error("Invalid LMP date. Date indicates pregnancy is over 40 weeks.");
+            return;
+          }
+        }
+
         setCurrentStep(2); 
       }
     } catch (err) {
