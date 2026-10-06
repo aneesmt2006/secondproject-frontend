@@ -33,8 +33,13 @@ const LoginPage = () => {
        }
 
        navigate('/dashboard', { replace: true });
-     } catch (error) {
-       toast.error(error.response?.data?.message || "Login failed, Try Later",{richColors:true});
+     } catch (error: unknown) {
+       // Safely extract server message — avoids crash if error is not an Axios response
+       const message =
+         (error as { response?: { data?: { message?: string } } })?.response?.data?.message
+         || (error instanceof Error ? error.message : null)
+         || 'Login failed. Please try again.';
+       toast.error(message, { richColors: true });
      }
   };
 

@@ -1,4 +1,4 @@
-import { Lock, Mail } from "lucide-react"
+import { Lock, Mail, Loader2 } from "lucide-react"
 import Input from "../../../components/Input"
 import useLogin from "../hooks/useLogin"
 import Button from "../../../components/Button"
@@ -8,7 +8,7 @@ import { LoginProps } from "../types/login.types"
 
 const Login:React.FC<LoginProps> = ({onForgotPassword,onGoogleSignIn,onSignUpClick,onSubmit}) => {
     
-    const {handleChange,handleSubmit,rememberMe,formData,setRememberMe,errors} = useLogin({onSubmit})
+    const {handleChange,handleSubmit,rememberMe,formData,setRememberMe,errors,isLoading} = useLogin({onSubmit})
   return (
    <>
     <div className="min-h-screen bg-cream flex items-center justify-center py-8 px-4">
@@ -70,8 +70,15 @@ const Login:React.FC<LoginProps> = ({onForgotPassword,onGoogleSignIn,onSignUpCli
               </button>
             </div>
 
-            <Button type="submit" variant="primary" size="lg" fullWidth>
-              Sign In
+            <Button type="submit" variant="primary" size="lg" fullWidth disabled={isLoading}>
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Signing in...
+                </span>
+              ) : (
+                'Sign In'
+              )}
             </Button>
           </form>
 

@@ -17,9 +17,14 @@ const DrloginPage = () => {
       navigate('/doctor/dashboard',{replace:true})
       return true
       
-      } catch (error) {
-        toast.error(error.response.data.message)
-        return false
+      } catch (error: unknown) {
+        // Safely extract server message — avoids crash if error has no response (e.g. network error)
+        const message =
+          (error as { response?: { data?: { message?: string } } })?.response?.data?.message
+          || (error instanceof Error ? error.message : null)
+          || 'Login failed. Please try again.';
+        toast.error(message, { richColors: true });
+        return false;
       }
     }
   return (

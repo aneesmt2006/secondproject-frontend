@@ -66,36 +66,38 @@ const useDrlogin = ({handleSubmitLogin,role}:LoginProps) => {
  
    const handleSubmit = async (e: React.FormEvent) => {
      e.preventDefault();
- 
-     if (!validateForm() && !await drLoginSchema.validate(formData)) {
+     if (isLoading) return; // guard against double-submit
+
+     if (!validateForm()) {
+       return;
+     }
+
+     try {
+       await drLoginSchema.validate(formData);
+     } catch {
        return;
      }
  
      setErrors({});
+     setIsLoading(true);
  
      try {
-    //    await new Promise((resolve) => setTimeout(resolve, 1500));
-       const res = await handleSubmitLogin(formData.email,formData.password);
-       if(res){
-        setIsLoading(true)
-       }
+       await handleSubmitLogin(formData.email, formData.password);
      } catch (error) {
-       setIsLoading(false)
-        console.error('Registration error:', error)
-            if (error instanceof ValidationError) {
-        const fieldErrors: LoginErrors = {}
-
-        error.inner.forEach((err) => {
-          fieldErrors[err.path as keyof LoginFormData] = err.message;
-        });
-
-
-        setErrors(fieldErrors);
-      }
-     } 
+       console.error('Login error:', error);
+       if (error instanceof ValidationError) {
+         const fieldErrors: LoginErrors = {};
+         error.inner.forEach((err) => {
+           fieldErrors[err.path as keyof LoginFormData] = err.message;
+         });
+         setErrors(fieldErrors);
+       }
+     } finally {
+       setIsLoading(false);
+     }
    };
 
-   return {handleSubmit,isLoading,handleChange,errors,formData}
+   return {handleSubmit, isLoading, handleChange, errors, formData}
  
 }
 
