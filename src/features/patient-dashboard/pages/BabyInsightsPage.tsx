@@ -136,9 +136,8 @@ const BabyInsightsPage = () => {
                     
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-[#5A2D0C] leading-[1.1] mb-6">
                       {fetusData.week >= 4 &&" Size of a"} <br/>
-                      <span className="bg-gradient-to-r from-[#E0825C] to-[#F28C64] bg-clip-text text-transparent font-bold">
-                         {fetusData.week >= 4 ? "Fruit":""} {fetusData.weight.split(' ').slice(1).join(' ')
-}
+                      <span className="text-patient-primary font-bold">
+                         {fetusData.week >= 4 ? "Fruit":""} {fetusData.weight.split(' ').slice(1).join(' ')}
                       </span>
                     </h2>
                     <p className="text-[#7A5C50] text-lg leading-relaxed max-w-[55%] font-medium">
