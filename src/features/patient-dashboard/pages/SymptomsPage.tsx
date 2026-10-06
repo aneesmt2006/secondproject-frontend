@@ -62,7 +62,7 @@ const SymptomsPage = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-4 md:px-8 pb-10 overflow-y-auto z-10">
+      <div className="flex-1 px-4 md:px-8 pb-28 md:pb-10 overflow-y-auto z-10">
         <div className="max-w-6xl mx-auto w-full">
             <motion.p 
               initial={{ opacity: 0, y: 10 }}
@@ -175,7 +175,7 @@ const SymptomsPage = () => {
                 </div>
 
                 {/* Apply Button - Placed inline after content */}
-                <div className="mt-8 md:mt-12 mb-8 flex justify-center w-full">
+                <div className="mt-8 md:mt-12 mb-6 md:mb-8 flex justify-center w-full">
                   <Button 
                     className="w-full max-w-md h-14 rounded-full bg-gradient-to-r from-[#5A2D0C] to-[#4A250A] hover:to-[#5A2D0C] text-white font-bold text-lg shadow-[0_8px_25px_-5px_rgba(90,45,12,0.3)] transition-all hover:shadow-[0_12px_30px_-5px_rgba(90,45,12,0.4)] active:scale-[0.98] border border-white/10"
                     onClick={handleSaveLog}
