@@ -83,9 +83,6 @@ export const PregnancyDashboard = () => {
             <div id="tour-notifications">
               <NotificationButton />
             </div>
-            <div id="tour-theme" className="md:hidden">
-              <ThemeSwitcher />
-            </div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -111,6 +108,11 @@ export const PregnancyDashboard = () => {
                 </div>
               </motion.button>
             </Link>
+
+            {/* Theme Switcher — mobile only, left of calendar */}
+            <div id="tour-theme" className="md:hidden">
+              <ThemeSwitcher />
+            </div>
 
             <motion.button
               id="tour-calendar"
