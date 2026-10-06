@@ -31,6 +31,13 @@ const ProtectedLayout = ({ allowedRoles }: ProtectedLayoutProps) => {
     return <Navigate to='/unauthorized' replace />
   }
 
+  // Force profile completion
+  // If the user hasn't updated their profile (lmp is missing) and tries to access anything other than /dashboard or /profile, redirect them to /dashboard!
+  const isUser = currentUser.role === 'user';
+  if (isUser && !user.lmp && location.pathname !== '/dashboard' && location.pathname !== '/profile') {
+    return <Navigate to='/dashboard' replace />
+  }
+
   return (
    <>
      <Outlet /> 

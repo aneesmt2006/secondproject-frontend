@@ -53,6 +53,19 @@ export const useChatbot = () => {
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
+
+    if (!user?.lmp) {
+      setTimeout(() => {
+        setMessages((prev) => [...prev, {
+          id: (Date.now() + 1).toString(),
+          text: "First update your profile then only message ...",
+          sender: 'bot',
+          timestamp: new Date(),
+        }]);
+      }, 500);
+      return;
+    }
+
     setIsLoading(true);
 
     try {

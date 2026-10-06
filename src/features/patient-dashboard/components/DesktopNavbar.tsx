@@ -3,6 +3,8 @@ import { Home, Apple, Dumbbell, Calendar, FileText, Baby, Moon } from 'lucide-re
 import { LucideIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from './ThemeSwitcher';
+import { useAppSelector } from '@/store/hooks';
+import { userSelector } from '@/features/patient-auth/slice/userSlice';
 
 interface NavItem {
   icon: LucideIcon;
@@ -22,7 +24,8 @@ const navItems: NavItem[] = [
 ];
 
 export const DesktopNavbar = () => {
-  const location = useLocation()
+  const location = useLocation();
+
   return (
     <nav className="hidden md:block fixed top-6 left-0 right-0 z-50 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
