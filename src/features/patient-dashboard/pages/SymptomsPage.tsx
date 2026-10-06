@@ -86,10 +86,16 @@ const SymptomsPage = () => {
                       className="bg-white/40 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] p-6 md:p-8 shadow-[0_20px_40px_-15px_rgba(90,45,12,0.05)]"
                     >
                       <div className="flex items-center gap-4 mb-6">
-                        <div className="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-br from-pink-600 to-rose-300 flex items-center justify-center shadow-lg  text-white">
+                        {/* <div className="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-br from-pink-600 to-rose-300 flex items-center justify-center shadow-lg  text-white">
                             <Heart className="w-5 h-5 fill-white/20" />
+                        </div> */}
+                        <div>
+                        <h2 className="text-xl font-bold text-[#5A2D0C]">Have you feel this Mama ❤️😊?</h2> 
+
+                        <p className="text-xs text-[#7A5C50] opacity-80">Just keeping track of the little things</p>
+
                         </div>
-                        <h2 className="text-xl font-bold text-[#5A2D0C]">  Common Symptoms.Have you feel this Mama 😊?</h2>
+
                       </div>
                       
                       <div className="flex flex-wrap gap-3">
@@ -132,11 +138,11 @@ const SymptomsPage = () => {
                       className="bg-white/40 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] p-6 md:p-8 shadow-[0_20px_40px_-15px_rgba(90,45,12,0.05)]"
                     >
                       <div className="flex items-center gap-4 mb-6">
-                        <div className="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-br from-[#80CBC4] to-[#26A69A] flex items-center justify-center shadow-lg shadow-teal-500/20 text-white">
+                        {/* <div className="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-br from-[#80CBC4] to-[#26A69A] flex items-center justify-center shadow-lg shadow-teal-500/20 text-white">
                             <Activity className="w-5 h-5" />
-                        </div>
+                        </div> */}
                         <div>
-                            <h2 className="text-xl font-bold text-[#5A2D0C]">Noticed anything new Mama? 😊</h2>
+                            <h2 className="text-xl font-bold text-[#5A2D0C]">Noticed anything new Mama 😊💚? </h2>
                             <p className="text-xs text-[#7A5C50] opacity-80">Just keeping track of the little things</p>
                         </div>
                       </div>
