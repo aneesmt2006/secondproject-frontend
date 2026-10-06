@@ -38,6 +38,7 @@ export const PregnancyDashboard = () => {
     dueDate,
     handlePrevDate,
     handleNextDate,
+    handleDateSelect,
     goToToday,
     laoding,
   } = usePregnancyDashboard();
@@ -161,7 +162,7 @@ export const PregnancyDashboard = () => {
 
           <WeekCalendar
             currentDate={currentDate}
-            onDateSelect={setCurrentDate}
+            onDateSelect={handleDateSelect}
           />
         </div>
 

@@ -60,6 +60,15 @@ export const usePregnancyDashboard = () => {
     setCurrentDate(today);
   };
 
+  const handleDateSelect = (date: Date) => {
+    // Compare day-only (strip time) to determine correct slide direction
+    const newDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const curDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+    if (newDay.getTime() === curDay.getTime()) return; // same day, no animation needed
+    setDirection(newDay > curDay ? 1 : -1);
+    setCurrentDate(date);
+  };
+
   return {
     currentDate,
     setCurrentDate,
@@ -76,6 +85,7 @@ export const usePregnancyDashboard = () => {
     dueDate,
     handlePrevDate,
     handleNextDate,
+    handleDateSelect,
     goToToday,
     laoding
   };
