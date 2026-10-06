@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, ArrowRight, ChevronLeft } from "lucide-react";
 import appoinmentImage from "../../../../assets/images/appoinment1.png";
 import appoinmentLavenderImage from "../../../../assets/images/appointment_lavender.jpg";
+import appoinmentAquaImage from "../../../../assets/images/appointment_aqua.jpg";
 import { useTheme } from "@/context/ThemeContext";
 
 interface AppointmentHeroProps {
@@ -12,7 +13,10 @@ interface AppointmentHeroProps {
 export const AppointmentHero = ({ searchQuery, setSearchQuery }: AppointmentHeroProps) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const heroImage = theme === 'theme-lavender' ? appoinmentLavenderImage : appoinmentImage;
+  const heroImage = 
+    theme === 'theme-lavender' ? appoinmentLavenderImage : 
+    theme === 'theme-aqua' ? appoinmentAquaImage : 
+    appoinmentImage;
   
   return (
     <div className="w-full flex justify-center bg-transparent">
