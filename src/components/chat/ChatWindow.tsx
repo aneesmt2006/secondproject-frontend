@@ -57,7 +57,7 @@ export const ChatWindow = ({
   }
 
   return (
-    <div className={`flex-1 h-full min-h-0 flex flex-col bg-[#F9F0E6]/50 transition-all duration-300 relative ${isMobileSidebarOpen ? 'hidden md:flex' : 'flex'}`}>
+    <div className={`flex-1 h-full min-h-0 flex flex-col gradient-peach transition-all duration-300 relative ${isMobileSidebarOpen ? 'hidden md:flex' : 'flex'}`}>
       
       {/* Header */}
       <div className={`flex items-center justify-between p-3 md:p-4 bg-white/80 backdrop-blur-xl border-b ${themeColorBorder} shadow-sm z-10 sticky top-0`}>
@@ -77,7 +77,7 @@ export const ChatWindow = ({
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shadow-sm"
               />
             ) : (
-              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full shadow-sm flex items-center justify-center font-bold text-lg text-white ${isDoctor ? "bg-gradient-to-tr from-primary to-primary/60" : "bg-gradient-to-tr from-patient-primary to-patient-primary/80"}`}>
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full shadow-sm flex items-center justify-center font-bold text-lg text-white ${isDoctor ? "bg-primary" : "bg-patient-primary"}`}>
                 {doctor.name ? doctor.name.charAt(0).toUpperCase() : "U"}
               </div>
             )}

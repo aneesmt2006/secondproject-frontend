@@ -28,7 +28,7 @@ export const MessageBubble = ({ message, doctorAvatarUrl, doctorName, isMine, is
             className="w-8 h-8 rounded-full shadow-sm mb-1 object-cover shrink-0"
           />
         ) : (
-          <div className={`w-8 h-8 rounded-full shadow-sm mb-1 flex items-center justify-center font-bold text-xs text-white shrink-0 ${isDoctor ? "bg-gradient-to-tr from-primary to-primary/60" : "bg-gradient-to-tr from-patient-primary to-patient-primary/80"}`}>
+          <div className={`w-8 h-8 rounded-full shadow-sm mb-1 flex items-center justify-center font-bold text-xs text-white shrink-0 ${isDoctor ? "bg-primary" : "bg-patient-primary"}`}>
             {doctorName ? doctorName.charAt(0).toUpperCase() : "U"}
           </div>
         )
@@ -41,9 +41,9 @@ export const MessageBubble = ({ message, doctorAvatarUrl, doctorName, isMine, is
             ${
               isMine
                 ? isDoctor
-                  ? "bg-gradient-to-br from-primary to-primary/80 text-white rounded-br-none"
-                  : "bg-gradient-to-br from-patient-primary to-patient-primary/80 text-white rounded-br-none"
-                : "bg-white text-gray-800 rounded-bl-none border border-gray-100"
+                  ? "bg-primary text-white rounded-br-none"
+                  : "bg-patient-primary text-white rounded-br-none"
+                : "bg-white/95 text-gray-800 rounded-bl-none border border-white shadow-md"
             }
           `}
         >
