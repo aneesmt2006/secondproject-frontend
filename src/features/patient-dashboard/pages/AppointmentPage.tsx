@@ -53,7 +53,13 @@ const AppointmentPage = () => {
         style={{ transformOrigin: 'top center' }}
       >
         
-        <AppointmentHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <AppointmentHero 
+          searchQuery={searchQuery} 
+          setSearchQuery={(query) => {
+            setSearchQuery(query);
+            setPage(1);
+          }} 
+        />
 
         {/* Date + Filter Row */}
         <motion.div 
@@ -80,7 +86,10 @@ const AppointmentPage = () => {
           <CategoryFilter
             categories={categories}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={(cat) => {
+              setSelectedCategory(cat);
+              setPage(1);
+            }}
           />
         </motion.div>
 
@@ -127,7 +136,7 @@ const AppointmentPage = () => {
           {/* <span className="text-sm font-medium text-gray-600">Page {page + 1}</span> */}
           <button
             onClick={() => setPage((p) => p + 1)}
-            disabled={loading || filteredDoctors.length <= totalPage-filteredDoctors.length}
+            disabled={loading || page >= totalPage}
             className="px-4 py-2 rounded-lg bg-white/50 hover:bg-white/80 disabled:opacity-50 transition-colors text-sm font-medium text-gray-700"
           >
             Next
