@@ -50,6 +50,8 @@ export default function VisitHistory(props: VisitHistoryProps) {
   } = props;
   const navigate = useNavigate();
 
+  const [visibleCount, setVisibleCount] = useState(3);
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-4">
@@ -63,6 +65,12 @@ export default function VisitHistory(props: VisitHistoryProps) {
 
   const visits = data?.history || [];
   const upcoming = data?.upcoming;
+
+  const visibleVisits = visits.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 3, visits.length));
+  };
 
   const handleJoinCall = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -184,7 +192,7 @@ export default function VisitHistory(props: VisitHistoryProps) {
               {/* Vertical Timeline Line */}
               <div className="absolute left-[38px] md:left-[42px] top-4 bottom-4 w-[2px] bg-patient-primary/10 rounded-full hidden sm:block pointer-events-none"></div>
 
-              {visits.map((record, idx) => {
+              {visibleVisits.map((record, idx) => {
                 const visitDate = new Date(record.appointmentDate.split(",")[0]);
                 const isCancelled = record.status === 'Cancelled';
                 
@@ -241,7 +249,20 @@ export default function VisitHistory(props: VisitHistoryProps) {
                   </motion.div>
                 );
               })}
+              
+              {visibleCount < visits.length && (
+                <div className="py-6 flex justify-center">
+                  <button 
+                    onClick={handleLoadMore}
+                    className="flex items-center gap-2 px-6 py-2.5 bg-patient-primary/10 text-patient-primary font-bold text-xs uppercase tracking-widest rounded-full hover:bg-patient-primary/20 transition-all active:scale-95"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    Load More
+                  </button>
+                </div>
+              )}
             </div>
+
           )}
         </section>
       </div>

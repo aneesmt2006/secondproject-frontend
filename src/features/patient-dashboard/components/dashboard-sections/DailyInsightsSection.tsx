@@ -33,6 +33,15 @@ const DailyInsightsSection = ({
       emoji: "👶🍋",
       action: "baby-insights",
     },
+
+     {
+      title: "Your nutrition",
+      description:
+        "Discover the best foods for you and your baby's growth during this stage of pregnancy.",
+      color: "#87CEEB",
+      emoji: "🥗🍎",
+      action: "nutrition",
+    },
     {
       title: `Your body at ${currentWeek} weeks`,
       description:
@@ -40,14 +49,6 @@ const DailyInsightsSection = ({
       color: "#F6A192",
       emoji: "🤰",
       action: "body-insights",
-    },
-    {
-      title: "Your nutrition",
-      description:
-        "Discover the best foods for you and your baby's growth during this stage of pregnancy.",
-      color: "#87CEEB",
-      emoji: "🥗🍎",
-      action: "nutrition",
     },
     {
       title: "Sleep Guide",
