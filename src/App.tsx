@@ -28,6 +28,7 @@ import NutritionPage from "./features/patient-dashboard/pages/NutritionPage";
 import SleepGuidePage from "./features/patient-dashboard/pages/SleepGuidePage";
 import VideoCallPage from "./features/video-call/pages/VideoCallPage";
 import ExercisePage from "./features/patient-dashboard/pages/ExercisePage";
+import PublicRoute from "./utils/publicRoute";
 import "./services/api/interceptor";
 
 const App = () => {
@@ -39,18 +40,36 @@ const App = () => {
 
   const routes = useRoutes([
     {
-      path: "/",
-      element: <SplashWithRegistration />,
-    },
-    {
-      path: "/login",
-      element: <LoginPage />,
-    },
-    {
-      path: "/otp-verify",
-      element: <OtpVerifcationPage />,
+      element: <PublicRoute />,
+      children: [
+        {
+          path: "/",
+          element: <SplashWithRegistration />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/otp-verify",
+          element: <OtpVerifcationPage />,
+        },
+        {
+          path: "/doctor/register",
+          element: <DRregistrationPage />,
+        },
+        {
+          path: "/doctor/login",
+          element: <DrloginPage />,
+        },
+        {
+          path: "/super-admin/login",
+          element: <AdminLoginPage />,
+        },
+      ],
     },
     
+
     // USER ROUTES * PROTECTED
     {
       element: <ProtectedLayout allowedRoles={["user"]} />,
@@ -87,22 +106,10 @@ const App = () => {
       path: "/check/dashboard",
       element: <UserDashPage />,
     },
-    {
-      path: "/doctor/register",
-      element: <DRregistrationPage />,
-    },
-    {
-      path: "/doctor/login",
-      element: <DrloginPage />,
-    },
     // {
     //   path:'/doctor/dashboard',
     //   element:<DoctorDashPage/>
     // }
-    {
-      path: "/super-admin/login",
-      element: <AdminLoginPage />,
-    },
     {
       path: "/super-admin/dashboard",
       element: <AdminMainPage />,
