@@ -91,7 +91,7 @@ const DoctorDetailModal = ({
           </div>
           <div className="bg-cream p-4 rounded-lg">
             <p className="text-sm text-cocoa/60 mb-1">Consultation Fee</p>
-            <p className="font-semibold text-cocoa">${doctor.fee}</p>
+            <p className="font-semibold text-cocoa">₹{doctor.fee}</p>
           </div>
           <div className="bg-cream p-4 rounded-lg">
             <p className="text-sm text-cocoa/60 mb-1">Total Appointments</p>

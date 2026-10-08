@@ -87,7 +87,7 @@ export const DoctorList = ({ filteredDoctors, setSelectedDoctor, setIsModalOpen 
                 <div className="flex flex-col items-center sm:items-start leading-none">
                   <span className="hidden md:block text-[10px] text-[#7a6f66] font-bold uppercase tracking-wider mb-0.5">Consultation Fee</span>
                   <span className="text-sm md:text-lg font-bold text-[#4B2E05]">
-                    {doctor.consultationFee}
+                    ₹{doctor.consultationFee}
                   </span>
                 </div>
 

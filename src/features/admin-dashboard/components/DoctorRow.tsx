@@ -43,7 +43,7 @@ const DoctorRow = ({ doctor, onViewProfile, onUpdateStatus }: DoctorRowProps) =>
       </td>
       <td className="px-6 py-4 text-cocoa">{doctor.specialization}</td>
       <td className="px-6 py-4 text-cocoa">{doctor.location}</td>
-      <td className="px-6 py-4 text-cocoa font-semibold">${doctor.fee}</td>
+      <td className="px-6 py-4 text-cocoa font-semibold">₹{doctor.fee}</td>
       <td className="px-6 py-4">
         <span
           className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
