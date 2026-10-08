@@ -8,7 +8,7 @@ import DoctorsTable from '../components/DoctorsTable';
 import DoctorDetailModal from '../components/DoctorDetailModal';
 
 const DoctorManagement = () => {
-  const { doctors, updateStatus } = useDoctors();
+  const { doctors, updateStatus, loading } = useDoctors();
   const {
     searchTerm,
     setSearchTerm,
@@ -50,7 +50,13 @@ const DoctorManagement = () => {
     <div className="p-8">
       <h1 className="text-4xl font-bold text-cocoa mb-8">Doctor Management</h1>
 
-      <div className="mb-8">
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="w-12 h-12 border-4 border-rose/20 border-t-rose rounded-full animate-spin" />
+        </div>
+      ) : (
+        <>
+          <div className="mb-8">
         <h2 className="text-2xl font-bold text-cocoa mb-4">
           Doctor Applications Overview
         </h2>
@@ -83,6 +89,8 @@ const DoctorManagement = () => {
         doctor={selectedDoctor}
         onUpdateStatus={handleUpdateStatus}
       />
+      </>
+      )}
     </div>
   );
 };

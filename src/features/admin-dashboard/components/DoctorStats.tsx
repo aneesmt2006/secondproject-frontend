@@ -24,10 +24,6 @@ const DoctorStats = ({ doctors }: DoctorStatsProps) => {
             <Users className="w-6 h-6 text-yellow-600" />
           </div>
         </div>
-        <button className="w-full py-2 px-4 bg-gradient-to-r bg-rose text-white rounded-lg hover:shadow-lg transition-all font-semibold flex items-center justify-center gap-2">
-          Review Applications
-          <ArrowRight className="w-4 h-4" />
-        </button>
       </div>
 
       <div className="bg-white rounded-xl p-6 border border-rose/20 hover:shadow-lg transition-shadow">
@@ -40,10 +36,6 @@ const DoctorStats = ({ doctors }: DoctorStatsProps) => {
             <Stethoscope className="w-6 h-6 text-blue-600" />
           </div>
         </div>
-        <button className="w-full py-2 px-4 bg-gradient-to-r bg-rose text-white rounded-lg hover:shadow-lg transition-all font-semibold flex items-center justify-center gap-2">
-          View All Doctors
-          <ArrowRight className="w-4 h-4" />
-        </button>
       </div>
 
       <div className="bg-white rounded-xl p-6 border border-rose/20 hover:shadow-lg transition-shadow">
@@ -56,10 +48,6 @@ const DoctorStats = ({ doctors }: DoctorStatsProps) => {
             <CheckCheck className="w-6 h-6 text-green-600" />
           </div>
         </div>
-        <button className="w-full py-2 px-4 bg-gradient-to-r bg-rose text-white rounded-lg hover:shadow-lg transition-all font-semibold flex items-center justify-center gap-2">
-          Manage Approved
-          <ArrowRight className="w-4 h-4" />
-        </button>
       </div>
     </div>
   );

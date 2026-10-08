@@ -15,12 +15,20 @@ const FetusKnowledge = () => {
   const [selectedWeek, setSelectedWeek] = useState<fetusForm | null>(null);
   const [editingWeek, setEditingWeek] = useState<number | null>(null);
   const [loading,setLoading] = useState<boolean>(false)
+  const [isFetching, setIsFetching] = useState(true);
 
 
   useEffect(()=>{
     const loadWeek = async ()=>{
-       const response = await getWeeks()
-       setWeeklyData(response.data!)
+       try {
+         setIsFetching(true);
+         const response = await getWeeks()
+         setWeeklyData(response.data!)
+       } catch (error) {
+         console.error('Error loading fetus data', error);
+       } finally {
+         setIsFetching(false);
+       }
     }
 
     loadWeek()
@@ -78,6 +86,14 @@ const FetusKnowledge = () => {
   const handleViewWeek = (data: fetusForm) => {
     setSelectedWeek(data);
   };
+
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="w-12 h-12 border-4 border-rose/20 border-t-rose rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">

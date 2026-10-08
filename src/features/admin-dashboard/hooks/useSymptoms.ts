@@ -13,11 +13,12 @@ export const useSymptoms = () => {
   });
   const [symptomsList, setSymptomsList] = useState<SymptomsData[]>([]);
   const [isEdit,setIsEdit] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(()=>{
     const loadSymptoms = async()=>{
         try {
+          setIsLoading(true);
           const resposne = await AllWeekSymptoms();
           toast.success(resposne.message)
           setSymptomsList([...resposne.data!]);
@@ -25,6 +26,8 @@ export const useSymptoms = () => {
           setFormData({ week: 1, normalSymptoms: '', abnormalSymptoms: '' });
         } catch (error) {
           toast.error(error.response?.data?.message)
+        } finally {
+          setIsLoading(false);
         }
 
       }
@@ -91,6 +94,7 @@ export const useSymptoms = () => {
     handleCancel,
     handleEdit,
     handleDelete,
-    isEdit
+    isEdit,
+    isLoading
   };
 };

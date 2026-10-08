@@ -18,7 +18,16 @@ const AdminSymptomsPage = () => {
     handleCancel,
     handleEdit,
     handleDelete,
+    isLoading
   } = useSymptoms();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="w-12 h-12 border-4 border-rose/20 border-t-rose rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (isCreating) {
     return (

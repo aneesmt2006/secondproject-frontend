@@ -14,10 +14,12 @@ import { pregnantProfile } from '@/types/profile.type';
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [,setProfiles] = useState<pregnantProfile[]>([])
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     const loadData = async () => {
       try {
+        setIsLoading(true);
         const [usersRes, profileRes] = await Promise.all([
           getAllUsers(),
           getAllUserProfile()
@@ -38,6 +40,8 @@ const UserManagement = () => {
         setProfiles(profilesData);
       } catch (error) {
         console.error("Failed to load users/profile", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -59,13 +63,15 @@ const UserManagement = () => {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-4xl font-bold text-cocoa">User Management</h1>
-        <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r bg-rose text-white rounded-lg hover:shadow-lg transition-all font-semibold">
-          <UserCheck className="w-5 h-5" />
-          Add New User
-        </button>
       </div>
 
-      <Filters
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="w-12 h-12 border-4 border-rose/20 border-t-rose rounded-full animate-spin" />
+        </div>
+      ) : (
+        <>
+          <Filters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         weekFilter={weekFilter}
@@ -118,6 +124,8 @@ const UserManagement = () => {
           goToPage={goToPage}
         />
       </div>
+      </>
+      )}
     </div>
   );
 };
