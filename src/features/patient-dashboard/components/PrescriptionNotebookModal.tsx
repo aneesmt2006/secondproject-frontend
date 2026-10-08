@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { UserAppointment } from "@/types/appointments.type";
 import { MedicalPrescription } from "@/types/medical.overview.type";
-import { FileText, Calendar, Clock, X } from "lucide-react";
+import { FileText, Calendar, Clock, X, Download } from "lucide-react";
+import html2canvas from "html2canvas";
 
 interface PrescriptionNotebookModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const PrescriptionNotebookModal: React.FC<PrescriptionNotebookModalProps>
   // Preserve last valid data during exit animation so closing content doesn't snap away
   const appointmentRef = useRef(appointment);
   const prescriptionRef = useRef(prescription);
+  const notebookRef = useRef<HTMLDivElement>(null);
 
   if (appointment) appointmentRef.current = appointment;
   if (prescription) prescriptionRef.current = prescription;
@@ -59,6 +61,35 @@ export const PrescriptionNotebookModal: React.FC<PrescriptionNotebookModalProps>
   const timeStr = currentAppointment?.appointmentTime || "";
   const reason = currentAppointment?.reason || "General Consultation";
   const notesText = currentPrescription?.content || currentAppointment?.notes || "No prescription notes logged for this consultation.";
+
+  const handleDownload = async () => {
+    if (!notebookRef.current) return;
+    
+    // Temporarily hide buttons for capture
+    const buttons = notebookRef.current.querySelectorAll('button');
+    
+    try {
+      buttons.forEach(btn => btn.style.display = 'none');
+      
+      const canvas = await html2canvas(notebookRef.current, {
+        scale: 2,
+        backgroundColor: '#F9F9F9',
+        useCORS: true,
+        logging: false
+      });
+      
+      const image = canvas.toDataURL("image/jpeg", 1.0);
+      const link = document.createElement('a');
+      link.download = `Prescription_Dr_${doctorName.replace(/\s+/g, '_')}_${dateStr.replace(/[^a-zA-Z0-9]/g, '_')}.jpg`;
+      link.href = image;
+      link.click();
+    } catch (error) {
+      console.error("Error generating prescription image", error);
+    } finally {
+      // Always restore buttons, even if capture fails
+      buttons.forEach(btn => btn.style.display = '');
+    }
+  };
 
   return createPortal(
     <AnimatePresence>
@@ -190,7 +221,7 @@ export const PrescriptionNotebookModal: React.FC<PrescriptionNotebookModalProps>
               </div>
             ) : (
               // Realistic Spiral Notebook Patient View
-              <div className="relative w-full min-h-[600px] flex flex-col bg-[#F9F9F9] border-[6px] border-[#656565] rounded-lg shadow-2xl pb-6 mt-6">
+              <div ref={notebookRef} className="relative w-full min-h-[600px] flex flex-col bg-[#F9F9F9] border-[6px] border-[#656565] rounded-lg shadow-2xl pb-6 mt-6">
                 
                 {/* Spiral Binding Overlay */}
                 <div className="absolute -top-[24px] left-0 w-full h-[36px] flex justify-evenly items-center z-30 px-6 pointer-events-none">
@@ -206,6 +237,16 @@ export const PrescriptionNotebookModal: React.FC<PrescriptionNotebookModalProps>
                 
                 {/* Header Shadow (from spirals/cover) */}
                 <div className="absolute top-0 left-0 w-full h-6 bg-gradient-to-b from-black/20 to-transparent z-20 pointer-events-none"></div>
+
+                {/* Download Button */}
+                <button
+                  onClick={handleDownload}
+                  className="absolute top-5 right-14 z-40 p-2 rounded-full hover:bg-black/5 text-[#555555] hover:text-black transition-colors cursor-pointer group"
+                  aria-label="Download Prescription"
+                  title="Download as Image"
+                >
+                  <Download className="w-6 h-6 stroke-[2.5] opacity-80 group-hover:opacity-100 transition-opacity" style={{ filter: 'drop-shadow(1px 2px 0px rgba(0,0,0,0.1))' }} />
+                </button>
 
                 {/* Close Button */}
                 <button
