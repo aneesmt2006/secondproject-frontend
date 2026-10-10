@@ -7,7 +7,6 @@ import Step2Medical from '../components/Step2Maternal';
 import { useProfileData } from "../hooks/useProfileData";
 import { updateProfileSchema } from "../schemas/user.profile.schema";
 import { ValidationError } from "yup";
-import { PredictionLottie } from '../components/PredictionAnimation';
 import VisitHistory from '../components/VisitHistory';
 import { useVisitHistory } from '../hooks/useVisitHistory';
 import {  History, User } from "lucide-react";
@@ -295,12 +294,24 @@ const handleSubmit = async () => {
           )}
         </AnimatePresence>
       </div>
-      <PredictionLottie
-        show={showAnimation}
-        onComplete={() => setShowAnimation(false)}
-        animationPath="https://lottie.host/7ab69c90-f711-4ba5-b901-d10d2201a608/U7r6qvgQrz.lottie" // change this to your loader animation
-        darkMode={window.matchMedia("(prefers-color-scheme: dark)").matches}
-      />
+      
+      <AnimatePresence>
+        {showAnimation && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-md"
+          >
+            <div className="flex flex-col items-center gap-6">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-patient-primary"></div>
+              <p className="text-patient-primary font-bold tracking-widest uppercase text-sm animate-pulse">
+                Saving Profile...
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { useRoutes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import tomomeLogo from "./assets/images/tomome.png";
 import LoginPage from "./features/patient-auth/pages/PatientLoginPage";
 import OtpVerifcationPage from "./features/patient-auth/pages/OtpVerificationPage";
 import SplashWithRegistration from "./features/patient-auth/pages/PatientRegisterPage";
@@ -33,10 +35,18 @@ import "./services/api/interceptor";
 
 const App = () => {
   const { pathname } = useLocation();
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500); // 2.5 seconds splash screen
+    return () => clearTimeout(timer);
+  }, []);
 
   const routes = useRoutes([
     {
@@ -122,8 +132,28 @@ const App = () => {
 
   return (
     <>
-      {routes}
-      <Toaster position="top-center" />
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            key="global-splash"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }}
+            className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <img src={tomomeLogo} alt="Tomome Logo" className="w-48 h-48 object-contain" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div style={{ display: showSplash ? 'none' : 'block' }}>
+        {routes}
+        <Toaster position="top-center" />
+      </div>
     </>
   );
 };
